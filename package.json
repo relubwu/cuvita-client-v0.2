@@ -1,0 +1,27 @@
+{
+  "name": "cuvita-dist",
+  "version": "0.1.6",
+  "description": "",
+  "main": "app.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "dependencies": {
+    "redux-thunk": "^2.3.0",
+    "redux-logger": "^3.0.6"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/relubwu/cuvita-client.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/relubwu/cuvita-client/issues"
+  },
+  "homepage": "https://github.com/relubwu/cuvita-client#readme"
+}
