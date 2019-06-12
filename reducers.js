@@ -1,8 +1,7 @@
 import { combineReducers } from 'lib/redux.min';
 import detectInset from 'utils/detect-inset';
+import changeTabLocal from 'utils/change-tab-locale';
 import {
-  SWITCH_TABBAR,
-  SWITCH_PAGE,
   SET_LOCALE,
   SET_REGION,
   SET_SYSTEM_INFO,
@@ -16,13 +15,13 @@ import {
 } from './actions';
 
 /**
- * Reducer Initial Values
+ * Constants
  */
 const DEFAULT_SYSTEM_INFO = null;
-const DEFAULT_LOCALE = wx.getStorageSync("locale") || "zh_CN";
+const DEFAULT_LOCALE = wx.getStorageSync("locale") || 0;
 const DEFAULT_LOCALE_MAPPING = ["zh_CN", "en_US"];
+const DEFAULT_ROUTER = { path: "/pages/index/index", delta: 0 };
 const DEFAULT_REGION = "sd";
-const DEFUALT_TABBAR_ITEMS = ["discovery", "vitae", "me"];
 
 /**
  * Global Reducers
@@ -42,8 +41,21 @@ function systemInfo(state = DEFAULT_SYSTEM_INFO, { type, res }) {
   }
 }
 
+function locale(state = DEFAULT_LOCALE, { type, locale }) {
+  switch (type) {
+    case SET_LOCALE:
+      changeTabLocal(DEFAULT_LOCALE_MAPPING[locale]);
+      return locale;
+      break;
+    default:
+      return state;
+      break;
+  }
+}
+
 const GLOBAL_REDUCERS = combineReducers({
-  systemInfo
+  systemInfo,
+  locale
 });
 
 /**

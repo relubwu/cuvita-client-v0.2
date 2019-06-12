@@ -1,0 +1,30 @@
+<wxs module="controller" src="controller.wxs" />
+
+<view class="fvw nav-enclosure" style="height: {{ systemInfo.navigationBarHeight }}px; opacity: {{ controller.navOpacity(scrollTop, 0.4 * systemInfo.screenWidth) }}; background: {{ controller.navBackground(scrollTop, 0.4 * systemInfo.screenWidth) }}">
+  <view class="fvw fh nav d-flex-row align-items-center hairline-row-bold" style="padding-top: {{ systemInfo.statusBarHeight }}px;">
+    <!-- inner van-field property custom-style::padding modified: ```3px 0``` -->
+    <van-search custom-class="nav-search" shape="round" background="none" placeholder="搜点什么" />
+  </view>
+</view>
+<view class="bg-enclosure">
+  <view class="fvw bg">
+    <image class="fw fh" src="" mode="" />
+    <view class="fvw bgcol-light container d-flex-column align-items-center justify-content-center">
+      <label class="descriptive">Copyright © 2019 Chinese Union</label>
+      <label class="descriptive" style="font-weight: bold;">Made by ReLU. with ❤️</label>
+    </view>
+  </view>
+</view>
+<scroll-view class="fvw fvh bd-enclosure" scroll-y enable-back-to-top bind:scroll="onScroll">
+  <view class="fvw bd-banner d-flex-column" style="padding: {{ systemInfo.navigationBarHeight }}px 30px;">
+    <text class="bd-banner-header">Headline</text>
+    <text class="bd-banner-description">A very elaborated longer than you expect subheadline</text>
+  </view>
+  <view class="fvw bd-banner-overlay bgcol-primary" style="opacity: {{ controller.bannerOverlayOpacity(scrollTop, systemInfo.screenWidth * 0.4) }};" />
+  <view class="fvw bd-tray-enclosure" style="top: {{ systemInfo.screenWidth * 0.7 }}px;">
+    <view class="fw bd-tray"></view>
+  </view>
+  <view class="fvw bd-content bgcol-light" style="height: 200vh;">
+    
+  </view>
+</scroll-view>

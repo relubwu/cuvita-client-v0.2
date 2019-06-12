@@ -1,8 +1,6 @@
 /**
  * Action Types
  */
-export const SWITCH_TABBAR = "SWITCH_TABBAR";
-export const SWITCH_PAGE = "SWITCH_PAGE";
 export const SET_LOCALE = "SET_LOCALE";
 export const SET_REGION = "SET_REGION";
 export const SET_SYSTEM_INFO = "SET_SYSTEM_INFO";
@@ -17,13 +15,6 @@ export const SET_GEO_LOCATION = "SET_GEO_LOCATION";
 /**
  * Action Constructors
  */
-export function switchTabBar(index) {
-  return { type: SWITCH_TABBAR, index };
-}
-
-export function switchPage(path, delta) {
-  return { type: SWITCH_PAGE, path, delta };
-}
 
 export function setLocale(locale) {
   return { type: SET_LOCALE, locale };

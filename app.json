@@ -1,12 +1,43 @@
 {
   "pages": [
-    "pages/index/index"
+    "pages/discovery/discovery",
+    "pages/vitae/vitae",
+    "pages/me/me"
   ],
   "window": {
     "backgroundTextStyle": "light",
-    "navigationBarBackgroundColor": "#fff",
-    "navigationBarTitleText": "WeChat",
-    "navigationBarTextStyle": "black"
+    "navigationBarBackgroundColor": "#d1233e",
+    "navigationBarTitleText": "CUVita",
+    "navigationBarTextStyle": "white"
+  },
+  "tabBar": {
+    "color": "#2b2b2b",
+    "selectedColor": "#d1233e",
+    "backgroundColor": "#f6f6f6",
+    "borderStyle": "white",
+    "list": [
+      {
+        "pagePath": "pages/discovery/discovery",
+        "text": "发现",
+        "iconPath": "/assets/icons/tab-discovery-ia.png",
+        "selectedIconPath": "/assets/icons/tab-discovery-a.png"
+      },
+      {
+        "pagePath": "pages/vitae/vitae",
+        "text": "Vitae",
+        "iconPath": "/assets/icons/tab-vitae-ia.png",
+        "selectedIconPath": "/assets/icons/tab-vitae-a.png"
+      },
+      {
+        "pagePath": "pages/me/me",
+        "text": "我",
+        "iconPath": "/assets/icons/tab-me-ia.png",
+        "selectedIconPath": "/assets/icons/tab-me-a.png"
+      }
+    ]
+  },
+  "usingComponents": {
+    "van-search": "miniprogram_npm/vant-weapp/search/index"
   },
   "sitemapLocation": "sitemap.json"
 }

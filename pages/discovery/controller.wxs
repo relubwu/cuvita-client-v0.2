@@ -1,0 +1,15 @@
+module.exports = {
+  bannerOverlayOpacity: function (scrollTop, size) {
+    return Math.max(0, Math.min(1, scrollTop / size));
+  },
+  navOpacity: function (scrollTop, size) {
+    return Math.max(0, Math.min(1, scrollTop / size));
+  },
+  navBackground: function (scrollTop, size) {
+    if (scrollTop / size >= 1) {
+      return "#d1233e";
+    } else {
+      return "none";
+    }
+  }
+}

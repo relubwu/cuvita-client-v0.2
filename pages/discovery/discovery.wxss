@@ -1,0 +1,96 @@
+/* 
+  | index |      selector      |
+  |:-----:|:------------------:|
+  |   -1  |    .bg-enclosure   |
+  |   0   |    .bd-enclosure   |
+  |   0   |     .bd-banner     |
+  |   1   | .bd-banner-overlay |
+  |   2   | .bd-tray-enclosure |
+  |   99  |   .nav-enclosure   |
+*/
+
+.bg-enclosure {
+  position: absolute;
+  z-index: -1;
+}
+
+.bg {
+  height: 120vw;
+  background-color: #d1233e;
+}
+
+.bg-whitespace {
+  height: calc(100vh - 120vw);
+}
+
+.bd-enclosure {
+  position: absolute;
+  z-index: 0;
+  white-space: nowrap;
+}
+
+.bd-banner {
+  position: absolute;
+  top: 0;
+  height: 80vw;
+  z-index: 0;
+  box-sizing: border-box;
+
+}
+
+.bd-banner-overlay {
+  position: absolute;
+  top: 0;
+  height: 80vw;
+  z-index: 1;
+}
+
+.bd-content {
+  position: absolute;
+  top: 80vw;
+}
+
+.bd-banner-header {
+  color: white;
+  font-size: 20pt;
+  font-weight: bold;
+}
+
+.bd-banner-description {
+  color: white;
+  font-size: 14pt;
+  white-space: normal;
+  word-wrap: break-all;
+}
+
+.bd-tray-enclosure {
+  position: absolute;
+  box-sizing: border-box;
+  padding: 0 15px;
+  z-index: 2;
+}
+
+.bd-tray {
+  height: 25vw;
+  background: white;
+  border-radius: 10px;
+  box-sizing: border-box;
+  box-shadow: 0 0 5px #b2b2b2b2;
+}
+
+.nav-enclosure {
+  position: fixed;
+  top: 0;
+  z-index: 99;
+  transition: height 0.1s linear;
+}
+
+.nav {
+  box-sizing: border-box;
+}
+
+.nav-search {
+  width: calc(100vw - 260rpx);
+  height: 30px;
+  padding: 0px !important;
+}

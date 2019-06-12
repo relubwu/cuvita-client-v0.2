@@ -29,21 +29,6 @@ export function request(directory, method, data) {
   });
 }
 /**
- * 封装wx.getSystemInfo()
- */
-export function getSystemInfo() {
-  return new Promise((resolve, reject) => {
-    wx.getSystemInfo({
-      success(res) {
-        resolve(res);
-      },
-      fail(e) {
-        reject(e);
-      }
-    });
-  });
-}
-/**
  * 封装wx.login()
  */
 export function login() {
