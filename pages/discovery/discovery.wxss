@@ -50,6 +50,28 @@
   top: 80vw;
 }
 
+.section-info {
+  box-sizing: border-box;
+  padding: 0 15px;
+}
+
+.section-info-title {
+  font-weight: bold;
+  font-size: 14pt;
+  text-transform: uppercase;
+  color: #2b2b2b;
+}
+
+.section-info-description {
+  text-transform: uppercase;
+  color: #888;
+}
+
+.section-info-description-hover {
+  -webkit-transform: translateX(3px);
+  transform: translateX(3px);
+}
+
 .bd-banner-header {
   color: white;
   font-size: 20pt;
@@ -65,6 +87,7 @@
 
 .bd-tray-enclosure {
   position: absolute;
+  top: 70vw;
   box-sizing: border-box;
   padding: 0 15px;
   z-index: 2;
@@ -76,6 +99,38 @@
   border-radius: 10px;
   box-sizing: border-box;
   box-shadow: 0 0 5px #b2b2b2b2;
+  padding: 14px 15px;
+}
+
+.bd-tray-item {
+  width: 20%;
+  -webkit-transform: perspective(1px) translateZ(0);
+  transform: perspective(1px) translateZ(0);
+}
+
+.bd-tray-item-hover {
+  -webkit-transform: translateY(-4px);
+  transform: translateY(-4px);
+}
+
+.bd-tray-icon {
+  width: 80rpx;
+  height: 80rpx;
+}
+
+.bd-content {
+  box-sizing: border-box;
+  padding-top: calc(15vw + 5px);
+}
+
+.bd-services {
+  box-sizing: border-box;
+  flex-wrap: wrap;
+}
+
+.bd-services-item {
+  width: 25%;
+  padding: 7px 0;
 }
 
 .nav-enclosure {
@@ -93,4 +148,58 @@
   width: calc(100vw - 260rpx);
   height: 30px;
   padding: 0px !important;
+}
+
+.bd-recommendation-enclosure {
+  padding: 7px 0;
+}
+
+.bd-recommendation-items {
+  padding: 7px 0;
+  padding-top: 14px;
+  white-space: nowrap;
+  height: 40vw;
+}
+
+.bd-recommendation-item {
+  margin-left: 15px;
+  width: 40vw;
+  display: inline-block;
+  overflow: hidden;
+  -webkit-transform: perspective(1px) translateZ(0);
+  transform: perspective(1px) translateZ(0);
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+  -webkit-transition-duration: 0.2s;
+  transition-duration: 0.2s;
+  -webkit-transition-property: transform;
+  transition-property: transform;
+}
+
+.bd-recommendation-item-hover {
+  -webkit-transform: scale(0.95);
+  transform: scale(0.95);
+}
+
+.bd-recommendation-item-last {
+  margin-right: 15px;
+}
+
+.bd-recommendation-image {
+  height: 28vw;
+  background: #b2b2b2;
+  border-radius: 5px;
+}
+
+.bd-recommendation-title {
+  max-height: 6vw;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.bd-recommendation-description {
+  max-height: 6vw;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }

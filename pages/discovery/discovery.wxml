@@ -1,11 +1,12 @@
 <wxs module="controller" src="controller.wxs" />
-
+<!--  Navbar  -->
 <view class="fvw nav-enclosure" style="height: {{ systemInfo.navigationBarHeight }}px; opacity: {{ controller.navOpacity(scrollTop, 0.4 * systemInfo.screenWidth) }}; background: {{ controller.navBackground(scrollTop, 0.4 * systemInfo.screenWidth) }}">
   <view class="fvw fh nav d-flex-row align-items-center hairline-row-bold" style="padding-top: {{ systemInfo.statusBarHeight }}px;">
     <!-- inner van-field property custom-style::padding modified: ```3px 0``` -->
     <van-search custom-class="nav-search" shape="round" background="none" placeholder="搜点什么" />
   </view>
 </view>
+<!--  Background  -->
 <view class="bg-enclosure">
   <view class="fvw bg">
     <image class="fw fh" src="" mode="" />
@@ -16,15 +17,46 @@
   </view>
 </view>
 <scroll-view class="fvw fvh bd-enclosure" scroll-y enable-back-to-top bind:scroll="onScroll">
+  <!--  Banner  -->
   <view class="fvw bd-banner d-flex-column" style="padding: {{ systemInfo.navigationBarHeight }}px 30px;">
-    <text class="bd-banner-header">Headline</text>
-    <text class="bd-banner-description">A very elaborated longer than you expect subheadline</text>
+    <text class="bd-banner-header">{{ banner.header[locale] }}</text>
+    <text class="bd-banner-description">{{ banner.description[locale] }}</text>
   </view>
-  <view class="fvw bd-banner-overlay bgcol-primary" style="opacity: {{ controller.bannerOverlayOpacity(scrollTop, systemInfo.screenWidth * 0.4) }};" />
-  <view class="fvw bd-tray-enclosure" style="top: {{ systemInfo.screenWidth * 0.7 }}px;">
-    <view class="fw bd-tray"></view>
+  <navigator class="fvw bd-banner-overlay bgcol-primary" style="opacity: {{ controller.bannerOverlayOpacity(scrollTop, systemInfo.screenWidth * 0.4) }};" src="{{ banner.target }}" hover-class="none" />
+  <!--  Tray  -->
+  <view class="fvw bd-tray-enclosure">
+    <view class="fw bd-tray d-flex-row align-items-center justify-content-between">
+      <navigator class="bd-tray-item fh animated d-flex-column align-items-center justify-content-between" wx:for="{{ tray }}" url="{{ item.target }}" hover-class="bd-tray-item-hover" bind:tap="feedback">
+        <image class="bd-tray-icon fw fh" src="{{ item.icon }}" />
+        <label>{{ item.label[locale] }}</label>
+      </navigator>
+    </view>
   </view>
-  <view class="fvw bd-content bgcol-light" style="height: 200vh;">
-    
+  <view class="fvw bd-content bgcol-light">
+    <!--  Services  -->
+    <view class="fw bd-services container d-flex-row justify-content-between">
+      <navigator class="bd-services-item fh animated d-flex-column align-items-center justify-content-between" wx:for="{{ services }}" url="{{ item.target }}" hover-class="none" bind:tap="feedback">
+        <image class="bd-tray-icon fw fh" src="{{ item.icon }}" />
+        <label>{{ item.label[locale] }}</label>
+      </navigator>
+    </view>
+    <!-- Recommendation -->
+    <view class="bd-recommendation-enclosure fw">
+      <view class="section-info fvw d-flex-row align-items-center justify-content-between">
+        <label class="section-info-title">{{ recommendation.title[locale] }}</label>
+        <navigator url="{{ pageData.recommendation.target }}" class="section-info-description animated d-flex-row align-items-center justify-content-center" hover-class="section-info-description-hover" bind:tap="feedback">
+          {{ recommendation.description[locale] }}
+        </navigator>
+      </view>
+      <scroll-view scroll-x="true" class="bd-recommendation-items fw d-flex-column justify-content-center">
+        <navigator class="bd-recommendation-item {{ (index == recommendation.items.length - 1) && 'bd-recommendation-item-last'}}" wx:for="{{ recommendation.items }}" hover-class="bd-recommendation-item-hover" bind:longpress="tapFeedback" url="{{ item.target }}">
+          <image class="bd-recommendation-image fw" src="{{ item.image.src }}" mode="{{ item.image.mode }}" lazy-load />
+          <view class="bd-recommendation-info fw d-flex-column align-items-start justify-content-start">
+            <label class="bd-recommendation-title fw">{{ item.title }}</label>
+            <label class="bd-recommendation-description descriptive fw">{{ item.description[locale] }}</label>
+          </view>
+        </navigator>
+      </scroll-view>
+    </view>
   </view>
 </scroll-view>
