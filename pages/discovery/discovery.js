@@ -12,6 +12,7 @@ Page({
     scrollTop: 0,
     tray: services.slice(0, 4),
     services: services.slice(4),
+    recommendations: [{ items: [ {}, {}, {} ] }],
     feed: {
       title: "ABC",
       description: "DEF",
@@ -27,8 +28,9 @@ Page({
   },
   onLoad: function (options) {
     // Synchronous storage hook
+    let { locale, systemInfo } = Store.getState().global
     this.setData({
-      ...Store.getState().global
+      locale, systemInfo
     });
   },
   onScroll: function ({ detail: { scrollTop } }) {
@@ -44,15 +46,11 @@ Page({
     });
     request(FIELD, METHOD.GET, { locale: Store.getState().global.locale })
       .then(res => {
-        console.log(res);
         this.setData({ ...this.data, ...res })
       })
   },
-  onHide: function () {
-    this.unsubscribe();
-  },
   onUnLoad: function () {
-
+    this.unsubscribe();
   },
   feedback
 })

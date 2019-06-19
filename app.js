@@ -29,8 +29,12 @@ App({
     // Acquire user token
     login()
       .then(code => request(API.DISPATCH, METHOD.GET, { code }))
-      .then(res => {
-        Store.dispatch(GlobalActions.setUser(res));
+      .then(({ openid, user, member }) => {
+        Store.dispatch(GlobalActions.setUser({ openid, ...user }));
+        if (!!member)
+          Store.dispatch(GlobalActions.setMember({ ...member }));
+        else
+          Store.dispatch(GlobalActions.purgeMember());
       })
       .catch(e => console.error(e));
   },

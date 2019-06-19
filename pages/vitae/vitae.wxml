@@ -1,2 +1,45 @@
-<!--pages/vitae/vitae.wxml-->
-<text>pages/vitae/vitae.wxml</text>
+<!-- CARD -->
+<view class="card fw">
+  <image class="card-background" src="/assets/images/banner.png" class="fvw fh" mode="" />
+  <view class="card-container fw fh container d-flex-column align-items-center justify-content-center" bind:tap="testUpdate">
+    <view class="card-body animated" hover-class="card-body-hover" bind:longpress="onUpdateCredit">
+      <image class="card-body-image fw fh" src="/assets/images/card-primary.png" mode="aspectFill" />
+    </view>
+  </view>
+</view>
+<view class="body fw">
+  <!-- MEMBERSHIP -->
+  <view class="membership fw d-flex-column align-items-center justify-content-center">
+    <view class="membership-info container fw fh d-flex-row align-items-center justify-content-center">
+      <image src="/assets/icons/membership-star.png" class="membership-info-icon" mode="aspectFit" />
+      <label class="membership-info-credit-current">{{ member.credit.tier }}/</label>
+      <label class="membership-info-credit-next">{{ goal }}</label>
+    </view>
+    <view class="membership-progressbar-container fw container">
+      <view class="membership-progressbar-base fh">
+        <view class="membership-progressbar fh" style="width: {{ (member.credit.tier / goal) * 100 }}%;" />
+      </view>
+    </view>
+    <view class="membership-rubric fw d-flex-row">
+      <label class="membership-rubric-label">0</label>
+      <label wx:if="{{ locale == 0 }}" class="membership-rubric-label">再消费{{ goal - member.credit.tier }}次即可获取好礼</label>
+      <label wx:if="{{ locale == 1 }}" class="membership-rubric-label">{{ goal - member.credit.tier }} More to Next Reward</label>
+      <label class="membership-rubric-label">{{ goal }}</label>
+    </view>
+  </view>
+  <!-- NAVIGATORS -->
+  <view class="navigators fw">
+    <van-collapse value="{{ activeNames }}" bind:change="onChange">
+      <van-collapse-item title="{{ LocalePackage.history[locale] }}" title-class="navigators-title" icon="cash-back-record" name="history">
+        <view wx:if="{{ !member.history }}" class="descriptive" style="text-align: center; text-transform: none;">{{ LocalePackage.emptyHistory[locale] }}</view>
+      </van-collapse-item>
+      <van-collapse-item title="{{ LocalePackage.coupon[locale] }}" icon="coupon" title-class="navigators-title" name="coupon">
+      <view wx:if="{{ !member.coupon }}" class="descriptive" style="text-align: center; text-transform: none;">{{ LocalePackage.emptyCoupon[locale] }}</view>
+      </van-collapse-item>
+      <van-collapse-item title="{{ LocalePackage.reward[locale] }}" icon="gift" title-class="navigators-title" name="reward">
+      </van-collapse-item>
+    </van-collapse>
+  </view>
+  <!-- INSET -->
+  <view class="body-bottom-inset" style="padding-bottom: {{ systemInfo.safeAreaInset ? 'calc(4rem + 34px)' : '4rem' }};" />
+</view>

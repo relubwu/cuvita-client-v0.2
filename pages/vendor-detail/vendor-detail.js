@@ -11,8 +11,9 @@ Page({
   },
   onLoad: function(options) {
     // Synchronous storage hook
+    let { locale } = Store.getState().global;
     this.setData({
-      ...Store.getState().global,
+      locale,
       options
     });
   },
@@ -37,6 +38,12 @@ Page({
   },
   onHide: function () {
     this.unsubscribe();
+  },
+  preview: function ({ target: { dataset: { index } } }) {
+    wx.previewImage({
+      current: index.toString(),
+      urls: this.data.gallery
+    })
   },
   call: function () {
     wx.makePhoneCall({

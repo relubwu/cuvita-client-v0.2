@@ -7,6 +7,9 @@ import {
   SET_SYSTEM_INFO,
   SET_USER,
   UPDATE_USER,
+  SET_MEMBER,
+  UPDATE_MEMBER,
+  PURGE_MEMBER,
   SET_NETWORK_STATUS,
   SET_GEO_LOCATION
 } from './actions';
@@ -20,6 +23,7 @@ const DEFAULT_LOCALE_MAPPING = ["zh_CN", "en_US"];
 const DEFAULT_ROUTER = { path: "/pages/index/index", delta: 0 };
 const DEFAULT_REGION = "sd";
 const DEFAULT_USER = null;
+const DEFAULT_MEMBER = null;
 
 /**
  * Global Reducers
@@ -43,6 +47,10 @@ function locale(state = DEFAULT_LOCALE, { type, locale }) {
   switch (type) {
     case SET_LOCALE:
       changeTabLocal(DEFAULT_LOCALE_MAPPING[locale]);
+      wx.setStorage({
+        key: 'locale',
+        data: locale
+      });
       return locale;
       break;
     default:
@@ -62,10 +70,39 @@ function user(state = DEFAULT_USER, { type, res }) {
   }
 }
 
+function member(state = DEFAULT_MEMBER, { type, res }) {
+  switch (type) {
+    case SET_MEMBER:
+      wx.setStorage({
+        key: 'member',
+        data: res
+      });
+      return { ...state, ...res };
+      break;
+    case UPDATE_MEMBER:
+      wx.setStorage({
+        key: 'member',
+        data: res
+      });
+      return { ...state, ...res };
+      break;
+    case PURGE_MEMBER:
+      wx.removeStorage({
+        key: 'member'
+      });
+      return DEFAULT_MEMBER;
+      break;
+    default:
+      return state;
+      break;
+  }
+}
+
 const GLOBAL_REDUCERS = combineReducers({
   systemInfo,
   locale,
-  user
+  user,
+  member
 });
 
 /**

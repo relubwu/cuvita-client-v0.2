@@ -1,1 +1,62 @@
-/* pages/me/me.wxss */
+/**
+ * User Info
+ */
+
+.user {
+  height: 60vw;
+  box-sizing: border-box;
+  background: linear-gradient(#d1233e, #850000);
+  background-size: 100vw 100vh;
+}
+
+.user-avatar {
+  height: 22vw;
+  width: 22vw;
+  border-radius: 30vw;
+  border: 2px solid white;
+  overflow: hidden;
+  box-shadow: 0 0 5px #0000002b;
+}
+
+.user-info {
+  height: 22vw;
+  color: white;
+  padding: 0 15px;
+  text-shadow: 0 0 5px #0000002b;
+}
+
+.user-info-nickname {
+  font-size: 20pt;
+  font-weight: bold;
+}
+
+.user-info-region {
+  font-size: 11pt;
+}
+
+.value-class {
+  flex: none !important;
+}
+
+/**
+ * Body
+ */
+
+.body {
+  padding-top: 30px;
+}
+
+.body-cell-group {
+  margin-bottom: 14px;
+}
+
+.body-cell-group-title {
+  font-size: 11pt;
+  color: #b2b2b2;
+  padding: 0 15px;
+  margin: 7px 0;
+}
+
+.body-bottom-inset {
+  height: 15px;
+}

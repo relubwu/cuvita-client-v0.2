@@ -8,6 +8,9 @@ export const SET_NETWORK_STATUS = "SET_NETWORK_STATUS";
 export const SET_GEO_LOCATION = "SET_GEO_LOCATION";
 export const SET_USER = "SET_USER";
 export const UPDATE_USER = "UPDATE_USER";
+export const SET_MEMBER = "SET_MEMBER";
+export const UPDATE_MEMBER = "UPDATE_MEMBER";
+export const PURGE_MEMBER = "PURGE_MEMBER";
 
 /**
  * Action Constructors
@@ -50,9 +53,21 @@ export function setNetworkStatus(status) {
 }
 
 export function setGeoLocation(res) {
-  return { type: SET_GEO_LOCATION, res }
+  return { type: SET_GEO_LOCATION, res };
 }
 
 export function setUser(res) {
-  return { type: SET_USER, res }
+  return { type: SET_USER, res };
+}
+
+export function setMember(res) {
+  return { type: SET_MEMBER, res };
+}
+
+export function updateMember(res) {
+  return { type: UPDATE_MEMBER, res };
+}
+
+export function purgeMember() {
+  return { type: PURGE_MEMBER };
 }

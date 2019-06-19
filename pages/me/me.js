@@ -1,66 +1,46 @@
-// pages/me/me.js
+import { request, METHOD } from '../../utils/promisfy';
+import * as API from '../../config/api.config';
+import * as LocalePackage from 'locale-package';
+import feedback from '../../utils/feedback';
+import sorry from '../../utils/sorry';
+
+const { Store, GlobalActions } = getApp();
+
 Page({
-
-  /**
-   * Page initial data
-   */
   data: {
-
+    LocalePackage
   },
-
-  /**
-   * Lifecycle function--Called when page load
-   */
-  onLoad: function (options) {
-
+  onLoad: function () {
+    let { locale, systemInfo, user } = Store.getState().global;
+    // Synchronous storage hook
+    this.setData({
+      locale, systemInfo, member, user
+    });
   },
-
-  /**
-   * Lifecycle function--Called when page is initially rendered
-   */
-  onReady: function () {
-
+  mapStateToPage: function () {
+    let newState = Store.getState();
+    if (this.data.locale !== newState.global.locale)
+      this.setData({
+        locale: newState.global.locale
+      });
   },
-
-  /**
-   * Lifecycle function--Called when page show
-   */
   onShow: function () {
-
+    this.unsubscribe = Store.subscribe(() => {
+      this.mapStateToPage();
+    });
   },
-
-  /**
-   * Lifecycle function--Called when page hide
-   */
-  onHide: function () {
-
-  },
-
-  /**
-   * Lifecycle function--Called when page unload
-   */
   onUnload: function () {
-
+    this.unsubscribe();
   },
-
-  /**
-   * Page event handler function--Called when user drop down
-   */
-  onPullDownRefresh: function () {
-
+  sorry: function () {
+    sorry(Store.getState().global.locale);
   },
-
-  /**
-   * Called when page reach bottom
-   */
-  onReachBottom: function () {
-
+  onChange: function (e) {
+    this.setData({
+      currentSetting: e.detail
+    });
   },
-
-  /**
-   * Called when user click on the top right corner to share
-   */
-  onShareAppMessage: function () {
-
+  setLocale: function ({ target: { dataset:  { locale } } }) {
+    Store.dispatch(GlobalActions.setLocale(locale));
   }
 })

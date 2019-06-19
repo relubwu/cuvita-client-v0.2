@@ -1,66 +1,66 @@
-// pages/vitae/vitae.js
+import { request, METHOD } from '../../utils/promisfy';
+import * as API from '../../config/api.config';
+import * as LocalePackage from 'locale-package';
+import * as CreditPolicy from '../../config/credit.config';
+import feedback from '../../utils/feedback';
+
+const { Store, GlobalActions } = getApp();
+
 Page({
-
-  /**
-   * Page initial data
-   */
   data: {
-
+    LocalePackage,
+    ...CreditPolicy,
+    activeNames: ['history']
   },
-
-  /**
-   * Lifecycle function--Called when page load
-   */
-  onLoad: function (options) {
-
+  onLoad: function () {
+    let { locale, systemInfo, member, user } = Store.getState().global;
+    // Synchronous storage hook
+    this.setData({
+      locale, systemInfo, member, user
+    });
   },
-
-  /**
-   * Lifecycle function--Called when page is initially rendered
-   */
-  onReady: function () {
-
+  mapStateToPage: function () {
+    let newState = Store.getState();
+    if (this.data.locale !== newState.global.locale)
+      this.setData({
+        locale: newState.global.locale
+      });
+    if (this.data.member !== newState.global.member)
+      this.setData({
+        member: newState.global.member
+      });
   },
-
-  /**
-   * Lifecycle function--Called when page show
-   */
   onShow: function () {
-
+    this.unsubscribe = Store.subscribe(() => {
+      this.mapStateToPage();
+    });
   },
-
-  /**
-   * Lifecycle function--Called when page hide
-   */
-  onHide: function () {
-
-  },
-
-  /**
-   * Lifecycle function--Called when page unload
-   */
   onUnload: function () {
-
+    this.unsubscribe();
   },
-
-  /**
-   * Page event handler function--Called when user drop down
-   */
+  onChange: function ({ detail }) {
+    this.setData({
+      activeNames: detail
+    });
+  },
   onPullDownRefresh: function () {
-
+    request(API.MEMBER.GETINFO, METHOD.GET, { openid: this.data.user.openid })
+      .then(res => Store.dispatch(GlobalActions.updateMember(res)))
+      .catch(e => {
+        Store.dispatch(GlobalActions.purgeMember());
+        // wx.reLaunch({
+        //   url: '/pages/discovery/discovery'
+        // });
+      });
   },
-
-  /**
-   * Called when page reach bottom
-   */
-  onReachBottom: function () {
-
-  },
-
-  /**
-   * Called when user click on the top right corner to share
-   */
-  onShareAppMessage: function () {
-
+  testUpdate() {
+    request(API.MEMBER.GETINFO, METHOD.GET, { openid: this.data.user.openid })
+      .then(res => Store.dispatch(GlobalActions.updateMember(res)))
+      .catch(e => {
+        Store.dispatch(GlobalActions.purgeMember());
+        // wx.reLaunch({
+        //   url: '/pages/discovery/discovery'
+        // });
+      });
   }
 })

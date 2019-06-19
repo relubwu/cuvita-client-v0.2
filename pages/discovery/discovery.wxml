@@ -45,7 +45,7 @@
       <view class="section-info fvw d-flex-row align-items-center justify-content-between">
         <label class="section-info-title">{{ recommendation.title }}</label>
         <navigator url="{{ recommendation.target }}" class="section-info-description animated d-flex-row align-items-center justify-content-center" hover-class="section-info-description-hover" bind:tap="feedback">
-          {{ recommendation.description }}
+          {{ recommendation.action }}
         </navigator>
       </view>
       <scroll-view scroll-x="true" class="bd-recommendation-items fw d-flex-column justify-content-center">
@@ -62,8 +62,8 @@
     <view class="bd-feed fw">
       <view class="section-info fvw d-flex-row align-items-center justify-content-between">
         <label class="section-info-title">{{ feed.title }}</label>
-        <navigator class="section-info-description d-flex-row align-items-center justify-content-center" hover-class="section-info-description-hover" bind:tap="tapFeedback" bind:longpress="tapFeedback" data-id="feedDescription" url="/pages/article/list/index">
-          {{ feed.description }}
+        <navigator class="section-info-description d-flex-row animated align-items-center justify-content-center" hover-class="section-info-description-hover" bind:tap="tapFeedback" bind:longpress="tapFeedback" data-id="feedDescription" url="/pages/article/list/index">
+          {{ feed.action }}
         </navigator>
       </view>
       <view class="bd-feed-items container fw d-flex-column align-items-center">
