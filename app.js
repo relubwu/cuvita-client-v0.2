@@ -1,8 +1,9 @@
-import { request, METHOD, getNetworkType } from 'utils/promisfy';
+import { request, METHOD, login, getNetworkType } from 'utils/promisfy';
 import { applyMiddleware, createStore } from 'lib/redux.min';
 import ReduxThunk from 'redux-thunk';
 import reducers from '/reducers';
 import * as GlobalActions from '/actions';
+import * as API from '/config/api.config';
 import logger from 'redux-logger';
 
 const Store = createStore(reducers, applyMiddleware(logger, ReduxThunk));
@@ -25,6 +26,13 @@ App({
       });
     // Event subscribers
     this.onNetworkStatusChange();
+    // Acquire user token
+    login()
+      .then(code => request(API.DISPATCH, METHOD.GET, { code }))
+      .then(res => {
+        Store.dispatch(GlobalActions.setUser(res));
+      })
+      .catch(e => console.error(e));
   },
   onNetworkStatusChange() {
     wx.onNetworkStatusChange(({ networkType }) => {

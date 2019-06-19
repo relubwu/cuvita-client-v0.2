@@ -203,3 +203,49 @@
   white-space: nowrap;
   text-overflow: ellipsis;
 }
+
+.bd-feed {
+  box-sizing: border-box;
+  padding: 7px 0;
+}
+
+.bd-feed-item {
+  background: white;
+  border-radius: 5px;
+  overflow: hidden;
+  margin: 7px 0;
+}
+
+.bd-feed-item-hover {
+  -webkit-transform: scale(1.02);
+  transform: scale(1.02);
+}
+
+.bd-feed-image {
+  background: #b2b2b2;
+  border-radius: 5px;
+  height: 48vw;
+}
+
+.bd-feed-item-info {
+  padding: 7px 15px;
+}
+
+.bd-feed-item-info-title {
+  max-height: 6vw;
+  font-size: 11pt;
+  color: #2b2b2b;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.bd-feed-item-info-description {
+  max-height: 6vw;
+  max-width: calc(100vw - 60px);
+  font-size: 11pt;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  color: #888;
+}

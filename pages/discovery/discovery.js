@@ -2,6 +2,8 @@ import * as Actions from 'actions';
 import * as LocalePackage from 'locale-package';
 import services from '../../config/services.config';
 import feedback from '../../utils/feedback';
+import { request, METHOD } from '../../utils/promisfy';
+import { FIELD } from '../../config/api.config';
 
 const { Store, GlobalActions } = getApp();
 
@@ -10,11 +12,10 @@ Page({
     scrollTop: 0,
     tray: services.slice(0, 4),
     services: services.slice(4),
-    recommendation: {
-      title: ['为你推荐'],
-      description: ['查看更多'],
-      items: [{ title: "Test", description: { 0: "a very long description" } }, { title: "Test", description: { 0: "a very long description" } }, { title: "Test", description: { 0: "a very long description" } }],
-      target: ''
+    feed: {
+      title: "ABC",
+      description: "DEF",
+      items: [{ title: "asdqwef", description: "asdqwrjkhvla" }, {}, {}]
     }
   },
   mapStateToPage: function () {
@@ -41,6 +42,11 @@ Page({
     this.unsubscribe = Store.subscribe(() => {
       this.mapStateToPage();
     });
+    request(FIELD, METHOD.GET, { locale: Store.getState().global.locale })
+      .then(res => {
+        console.log(res);
+        this.setData({ ...this.data, ...res })
+      })
   },
   onHide: function () {
     this.unsubscribe();

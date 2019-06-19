@@ -5,11 +5,8 @@ import {
   SET_LOCALE,
   SET_REGION,
   SET_SYSTEM_INFO,
-  SET_USER_INFO,
-  UPDATE_USER_INFO,
-  SET_MEMBER_INFO,
-  UPDATE_MEMBER_INFO,
-  PURGE_MEMBER_INFO,
+  SET_USER,
+  UPDATE_USER,
   SET_NETWORK_STATUS,
   SET_GEO_LOCATION
 } from './actions';
@@ -22,6 +19,7 @@ const DEFAULT_LOCALE = wx.getStorageSync("locale") || 0;
 const DEFAULT_LOCALE_MAPPING = ["zh_CN", "en_US"];
 const DEFAULT_ROUTER = { path: "/pages/index/index", delta: 0 };
 const DEFAULT_REGION = "sd";
+const DEFAULT_USER = null;
 
 /**
  * Global Reducers
@@ -53,9 +51,21 @@ function locale(state = DEFAULT_LOCALE, { type, locale }) {
   }
 }
 
+function user(state = DEFAULT_USER, { type, res }) {
+  switch (type) {
+    case SET_USER:
+      return { ...state, ...res };
+      break;
+    default: 
+      return state;
+      break;
+  }
+}
+
 const GLOBAL_REDUCERS = combineReducers({
   systemInfo,
-  locale
+  locale,
+  user
 });
 
 /**

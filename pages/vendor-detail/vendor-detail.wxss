@@ -1,0 +1,65 @@
+page {
+  background: white;
+}
+
+.map {
+  height: 30vh;
+}
+
+.vendor-info-title {
+  font-size: 20pt;
+  font-weight: bold;
+}
+
+.vendor-info-description {
+  font-size: 11pt;
+  color: #b2b2b2;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.vendor-gallery {
+  overflow: hidden;
+  border-radius: 10px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 7px;
+  grid-auto-rows: minmax(100px, auto);
+}
+
+.vendor-tags {
+  flex-wrap: wrap;
+}
+
+.vendor-tag {
+  margin-right: 7px;
+  margin-bottom: 7px;
+}
+
+.vendor-rating-label {
+  font-size: 11pt;
+  color: #b2b2b2;
+  font-style: italic;
+}
+
+.vendor-actions navigator {
+  text-align: center;
+  width: calc(50vw - 42px);
+  padding: 7px 15px;
+  margin: 7px 0;
+  box-sizing: border-box;
+  border-radius: 10px;
+  font-size: 14pt;
+}
+
+.vendor-actions-waitlist {
+  background: white;
+  color: #d1233e;
+  border: #d1233e solid 1px;
+}
+
+.vendor-actions-navigate {
+  background: #d1233e;
+  color: white;
+}

@@ -1,4 +1,4 @@
-import { API_URL } from '../config/api.config';
+import { ROOT } from '../config/api.config';
 /**
  * 请求参数常量
  */
@@ -11,10 +11,10 @@ export const METHOD = {
  * @param directory, Object data, String method
  * @return Promise ? resolve() : reject()
  */
-export function request(directory, method, data) {
+export function request(directory, method='GET', data) {
   return new Promise((resolve, reject) => {
     wx.request({
-      url: API_URL.concat(directory),
+      url: ROOT.concat(directory),
       method,
       data,
       success({ data, statusCode }) {

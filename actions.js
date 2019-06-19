@@ -4,13 +4,10 @@
 export const SET_LOCALE = "SET_LOCALE";
 export const SET_REGION = "SET_REGION";
 export const SET_SYSTEM_INFO = "SET_SYSTEM_INFO";
-export const SET_USER_INFO = "SET_USER_INFO";
-export const UPDATE_USER_INFO = "UPDATE_USER_INFO";
-export const SET_MEMBER_INFO = "SET_MEMBER_INFO";
-export const UPDATE_MEMBER_INFO = "UPDATE_MEMBER_INFO";
-export const PURGE_MEMBER_INFO = "PURGE_MEMBER_INFO";
 export const SET_NETWORK_STATUS = "SET_NETWORK_STATUS";
 export const SET_GEO_LOCATION = "SET_GEO_LOCATION";
+export const SET_USER = "SET_USER";
+export const UPDATE_USER = "UPDATE_USER";
 
 /**
  * Action Constructors
@@ -54,4 +51,8 @@ export function setNetworkStatus(status) {
 
 export function setGeoLocation(res) {
   return { type: SET_GEO_LOCATION, res }
+}
+
+export function setUser(res) {
+  return { type: SET_USER, res }
 }

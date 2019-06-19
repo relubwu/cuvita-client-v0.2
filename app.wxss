@@ -131,7 +131,7 @@ page {
  label {
    font-size: 11pt;
    color: black;
-   text-transform: uppercase;
+   text-transform: capitalize;
  }
 
  /**
