@@ -31,6 +31,6 @@
   </van-collapse>
   <label class="body-cell-group-title">{{ LocalePackage.dev[locale] }}</label>
   <van-cell-group custom-class="body-cell-group" border="{{ false }}">
-    <van-cell title="{{ LocalePackage.license[locale] }}" icon="info-o" is-link url="/pages/license/index" />
+    <van-cell title="{{ LocalePackage.license[locale] }}" icon="info-o" is-link url="/pages/license/license" />
   </van-cell-group>
 </view>

@@ -19,6 +19,13 @@ App({
           wx.getSystemInfoSync()
         )
       );
+    // Synchronous memberInfo
+    let member = wx.getStorageSync('member');
+    if (!!member)
+      Store
+        .dispatch(
+          GlobalActions.setMember(member)
+        );
     // Asynchronous dispatch sequence
     getNetworkType()
       .then(res => {
@@ -32,7 +39,7 @@ App({
       .then(({ openid, user, member }) => {
         Store.dispatch(GlobalActions.setUser({ openid, ...user }));
         if (!!member)
-          Store.dispatch(GlobalActions.setMember({ ...member }));
+          Store.dispatch(GlobalActions.updateMember(member));
         else
           Store.dispatch(GlobalActions.purgeMember());
       })

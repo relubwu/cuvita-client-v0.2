@@ -15,8 +15,7 @@ page {
   font-size: 11pt;
   color: #b2b2b2;
   overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
+  word-wrap: break-word;
 }
 
 .vendor-gallery {

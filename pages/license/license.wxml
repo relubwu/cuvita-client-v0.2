@@ -1,0 +1,36 @@
+<view class="fw fh viewport container d-flex-column align-items-center justify-content-center">
+  <view class="license d-flex-column align-items-center justify-content-center">
+    <image src="https://user-images.githubusercontent.com/2395166/29502325-ada080f6-8661-11e7-94c2-23d638210f45.jpg" mode="aspectFit" style="width: 25vw; height: 35vw;" />
+    <label class="license-title fw d-flex-column">weui-wxss</label>
+    <text class="license-body">Copyright (C) 2017 THL A29 Limited, a Tencent company.  All rights reserved.</text>
+  </view>
+  <view class="license d-flex-column align-items-center justify-content-center">
+    <image src="https://img.yzcdn.cn/public_files/2017/12/18/fd78cf6bb5d12e2a119d0576bedfd230.png" mode="aspectFit" style="width: 25vw; height: 35vw;" />
+    <label class="license-title fw d-flex-column">vant-weapp</label>
+    <text class="license-body">Copyright 2016-present Youzan</text>
+  </view>
+  <view class="license d-flex-column align-items-center justify-content-center">
+    <image src="https://redux.js.org/img/redux.svg" mode="aspectFit" style="width: 50vw; height: 25vw;" />
+    <label class="license-title fw d-flex-column">Redux</label>
+    <text class="license-body">Copyright (c) 2015-present Dan Abramov</text>
+  </view>
+  <view class="license d-flex-column align-items-center justify-content-center">
+    <image src="https://nodejs.org/static/images/logo.svg" mode="aspectFit" style="width: 50vw; height: 25vw;" />
+    <label class="license-title fw d-flex-column">Node.js</label>
+    <text class="license-body">Copyright Node.js contributors. All rights reserved.</text>
+  </view>
+  <view class="license d-flex-column align-items-center justify-content-center">
+    <image src="https://avatars1.githubusercontent.com/u/5658226?s=200&v=4" mode="aspectFit" style="width: 50vw; height: 25vw;" />
+    <label class="license-title fw d-flex-column">express</label>
+    <text class="license-body">Copyright (c) 2009-2014 TJ Holowaychuk 2013-2014 Roman Shtylman 2014-2015 Douglas Christopher Wilson</text>
+  </view>
+  <view class="license d-flex-column align-items-center justify-content-center">
+    <label class="license-title fw d-flex-column">wx-base64-qrcode</label>
+    <text class="license-body">Copyright (c) 2009 Kazuhiko Arase</text>
+  </view>
+  <view class="license" style="margin-bottom: {{ systemInfo.safeAreaInset ? '34px' : '10px' }};">
+    <image src="https://webassets.mongodb.com/_com_assets/global/mongodb-logo-white.png" mode="aspectFit" style="width: 50vw; height: 25vw; background: #2b2b2b; padding: 0px 10px;" />
+    <label class="license-title fw d-flex-column">mongodb-community</label>
+    <text class="license-body">Copyright © 2018 MongoDB, Inc.</text>
+  </view>
+</view>

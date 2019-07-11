@@ -1,3 +1,5 @@
+@import '/assets/stylesheets/weui.wxss';
+
 /**
  * Card
  */
@@ -29,12 +31,14 @@
   background: white;
   border-radius: 10px;
   overflow: hidden;
-  box-shadow: 0 0 20px #2b2b2bb2;
+  box-shadow: 0 0 20px #2b2b2b2b;
 }
 
-.card-body-image {
-
+.card-body-hover {
+  -webkit-transform: scale(1.05);
+  transform: scale(1.05);
 }
+
 /**
  * Body Generic
  */
@@ -116,4 +120,38 @@
 .navigators-tag {
   margin: 0 7px;
   text-transform: capitalize;
+}
+
+.button-wrapper {
+  box-sizing: border-box;
+  padding: 42px 30px;
+}
+
+.button {
+  width: calc(50% - 15px) !important;
+  margin: 0 7px !important;
+  overflow: hidden !important;
+  border-radius: 5px !important;
+}
+
+.button-link {
+  color: black !important;
+  background-color: white !important;
+}
+
+.button-register {
+  color: white !important;
+  background-color: #d1233e !important;
+}
+
+swiper {
+  height: 80vw;
+}
+
+.swiper-agenda {
+  font-size: 28pt;
+}
+
+image {
+  padding-bottom: 28px;
 }

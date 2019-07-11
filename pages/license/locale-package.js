@@ -1,0 +1,1 @@
+export const title = ['开源组件许可', 'Licenses']

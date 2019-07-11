@@ -1,0 +1,19 @@
+/**Page**/
+
+.viewport {
+  box-sizing: border-box;
+}
+
+.license {
+  text-align: center;
+  padding-bottom: 15px;
+}
+
+.license-title {
+  font-size: 12pt;
+  font-weight: bold;
+}
+
+.license-body {
+  font-size: 11pt;
+}

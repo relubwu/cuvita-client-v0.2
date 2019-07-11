@@ -4,7 +4,8 @@
     "van-cell-group": "/miniprogram_npm/vant-weapp/cell-group/index",
     "van-tag": "/miniprogram_npm/vant-weapp/tag/index",
     "van-collapse": "/miniprogram_npm/vant-weapp/collapse/index",
-    "van-collapse-item": "/miniprogram_npm/vant-weapp/collapse-item/index"
+    "van-collapse-item": "/miniprogram_npm/vant-weapp/collapse-item/index",
+    "van-button": "/miniprogram_npm/vant-weapp/button/index"
   },
   "navigationBarTitleText": "",
   "enablePullDownRefresh": true

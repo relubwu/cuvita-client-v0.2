@@ -20,7 +20,7 @@
 <!-- FEATURES -->
 <van-cell-group border="{{ false }}" custom-class="container">
   <van-cell title="{{ LocalePackage.address[locale] }}" value="{{ address.street }}, {{ address.city }}" icon="location-o" border="{{ false }}" />
-  <van-cell title="{{ LocalePackage.contact[locale] }}" value="{{ phoneNumber }}" icon="phone-circle-o" border="{{ false }}" />
+  <van-cell title="{{ LocalePackage.contact[locale] }}" value="{{ tel }}" icon="phone-circle-o" border="{{ false }}" />
 </van-cell-group>
 <!-- RATING -->
 <view class="container fw d-flex-column vendor-rating align-items-center justify-content-center">

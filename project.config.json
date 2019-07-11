@@ -40,7 +40,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 3,
+			"current": 5,
 			"list": [
 				{
 					"id": 0,
@@ -67,6 +67,20 @@
 					"id": -1,
 					"name": "vitae",
 					"pathName": "pages/vitae/vitae",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "link",
+					"pathName": "pages/link/link",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "register",
+					"pathName": "pages/register/register",
 					"query": "",
 					"scene": null
 				}

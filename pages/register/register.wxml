@@ -1,0 +1,23 @@
+<view class="form-header">
+  <view class="form-title">{{ LocalePackage.header[locale] }}</view>
+  <view class="form-description">{{ LocalePackage.description[locale] }}</view>
+</view>
+<form bind:submit="onSubmit">
+  <van-cell-group custom-class="form-group" border="{{ false }}">
+    <van-field name="name" type="text" label="{{ LocalePackage.name.label[locale] }}" placeholder="{{ LocalePackage.name.placeHolder[locale] }}" required error-message="{{ err.name }}" />
+    <van-cell title="{{ LocalePackage.gender.label[locale] }}" is-link value="{{ gender.label }}" bind:click="toggle" data-name="gender" />
+    <van-popup show="{{ popup.gender }}" position="bottom" overlay="{{ true }}" bind:close="toggle" data-name="gender">
+      <van-picker columns="{{ options.gender[locale] }}" bind:change="setGender" data-name="gender" />
+    </van-popup>
+    <input hidden name="gender" value="{{ gender.value }}" />
+    <van-field name="tel" type="number" label="{{ LocalePackage.tel.label[locale] }}" placeholder="{{ LocalePackage.tel.placeHolder[locale] }}" required error-message="{{ err.tel }}" />
+    <van-cell title="{{ LocalePackage.birthday.label[locale] }}" is-link value="{{ birthday.label }}" bind:click="toggle" data-name="birthday" border="{{ false }}"/>
+    <van-popup show="{{ popup.birthday }}" position="bottom" overlay="{{ true }}" bind:close="toggle" data-name="birthday">
+      <van-datetime-picker type="date" value="{{ birthday }}" min-date="{{ options.minDate }}" max-date="{{ options.maxDate }}" bind:cancel="toggle" data-name="birthday" bind:confirm="setBirthday"/>
+    </van-popup>
+    <input hidden name="birthday" value="{{ birthday.value }}" />
+  </van-cell-group>
+  <view class="form-button-wrapper">
+    <button size="large" class="form-button" form-type="submit">{{ LocalePackage.submit[locale] }}</button>
+  </view>
+</form>

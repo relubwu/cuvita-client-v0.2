@@ -9,15 +9,11 @@ const { Store, GlobalActions } = getApp();
 
 Page({
   data: {
+    LocalePackage,
     scrollTop: 0,
     tray: services.slice(0, 4),
     services: services.slice(4),
-    recommendations: [{ items: [ {}, {}, {} ] }],
-    feed: {
-      title: "ABC",
-      description: "DEF",
-      items: [{ title: "asdqwef", description: "asdqwrjkhvla" }, {}, {}]
-    }
+    recommendations: [{ items: [ {}, {}, {} ] }]
   },
   mapStateToPage: function () {
     let newState = Store.getState();

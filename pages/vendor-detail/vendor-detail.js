@@ -11,9 +11,10 @@ Page({
   },
   onLoad: function(options) {
     // Synchronous storage hook
-    let { locale } = Store.getState().global;
+    let { locale, systemInfo } = Store.getState().global;
     this.setData({
       locale,
+      systemInfo,
       options
     });
   },

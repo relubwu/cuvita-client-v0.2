@@ -1,10 +1,6 @@
-import { request, METHOD } from '../../utils/promisfy';
-import * as API from '../../config/api.config';
 import * as LocalePackage from 'locale-package';
-import feedback from '../../utils/feedback';
-import sorry from '../../utils/sorry';
 
-const { Store, GlobalActions } = getApp();
+const { Store } = getApp();
 
 Page({
   data: {
@@ -15,6 +11,9 @@ Page({
     // Synchronous storage hook
     this.setData({
       locale, systemInfo
+    });
+    wx.setNavigationBarTitle({
+      title: LocalePackage.title[this.data.locale]
     });
   },
   mapStateToPage: function () {
@@ -32,15 +31,4 @@ Page({
   onUnload: function () {
     this.unsubscribe();
   },
-  sorry: function () {
-    sorry(Store.getState().global.locale);
-  },
-  onChange: function (e) {
-    this.setData({
-      currentSetting: e.detail
-    });
-  },
-  setLocale: function ({ target: { dataset:  { locale } } }) {
-    Store.dispatch(GlobalActions.setLocale(locale));
-  }
-})
+});

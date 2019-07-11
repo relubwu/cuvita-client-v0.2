@@ -49,7 +49,7 @@
         </navigator>
       </view>
       <scroll-view scroll-x="true" class="bd-recommendation-items fw d-flex-column justify-content-center">
-        <navigator class="bd-recommendation-item {{ (index == recommendation.items.length - 1) && 'bd-recommendation-item-last'}}" wx:for="{{ recommendation.items }}" hover-class="bd-recommendation-item-hover" bind:longpress="tapFeedback" url="{{ item.target }}">
+        <navigator class="bd-recommendation-item {{ (index == recommendation.items.length - 1) && 'bd-recommendation-item-last'}}" wx:for="{{ recommendation.items }}" hover-class="bd-recommendation-item-hover" bind:longpress="tapFeedback" url="{{ item.target || '/pages/vendor-detail/vendor-detail?reference=' + item.reference }}">
           <image class="bd-recommendation-image fw" src="{{ item.thumbnail }}" mode="aspectFill" lazy-load />
           <view class="bd-recommendation-info fw d-flex-column align-items-start justify-content-start">
             <label class="bd-recommendation-title fw">{{ item.name }}</label>
@@ -61,13 +61,13 @@
     <!-- Feed -->
     <view class="bd-feed fw">
       <view class="section-info fvw d-flex-row align-items-center justify-content-between">
-        <label class="section-info-title">{{ feed.title }}</label>
+        <label class="section-info-title">{{ LocalePackage.feed.title[locale] }}</label>
         <navigator class="section-info-description d-flex-row animated align-items-center justify-content-center" hover-class="section-info-description-hover" bind:tap="tapFeedback" bind:longpress="tapFeedback" data-id="feedDescription" url="/pages/article/list/index">
-          {{ feed.action }}
+          {{ LocalePackage.feed.action[locale] }}
         </navigator>
       </view>
       <view class="bd-feed-items container fw d-flex-column align-items-center">
-        <navigator class="bd-feed-item fw animated d-flex-column" wx:for="{{ feed.items }}" hover-class="bd-feed-item-hover" bind:longpress="feedback" url="/pages/article/detail/index?id={{ item._id }}">
+        <navigator class="bd-feed-item fw animated d-flex-column" wx:for="{{ article }}" hover-class="bd-feed-item-hover" bind:longpress="feedback" url="/pages/article/detail/index?id={{ item._id }}">
           <image class="bd-feed-image fw" src="{{ item.thumbnail }}" mode="aspectFill" lazy-load />
           <view class="bd-feed-item-info d-flex-column">
             <label class="bd-feed-item-info-title fw">{{ item.title }}</label>
