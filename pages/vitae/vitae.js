@@ -12,14 +12,18 @@ Page({
     LocalePackage,
     ...CreditPolicy,
     activeNames: ['history'],
-    layout
+    layout,
+    countdown: 0,
+    countdownInterval: null,
   },
   onLoad: function () {
     let { locale, systemInfo, member } = Store.getState().global;
     // Synchronous storage hook
     this.setData({
-      locale, systemInfo, member
+      locale, systemInfo, member,
+      countdown: 60,
     });
+    this.countdown();
   },
   mapStateToPage: function () {
     let newState = Store.getState();
@@ -46,6 +50,7 @@ Page({
   },
   onUnload: function () {
     this.unsubscribe();
+    clearInterval(this.data.countdownInterval);
   },
   onChange: function ({ detail }) {
     this.setData({
@@ -62,6 +67,15 @@ Page({
         Store.dispatch(GlobalActions.purgeMember());
         wx.stopPullDownRefresh();
       });
+  },
+  countdown: function () {
+    this.data.countdownInterval = setInterval(() => {
+      let time = this.data.countdown - 1;
+      this.setData({countdown: time});
+      if (time <= 0) {
+        clearInterval(this.data.countdownInterval);
+      }
+    }, 1000);
   },
   register: function () {
     wx.navigateTo({

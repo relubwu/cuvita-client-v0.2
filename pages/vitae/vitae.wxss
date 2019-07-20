@@ -39,6 +39,38 @@
   transform: scale(1.05);
 }
 
+.card-countdown {
+  color: #fff;
+  right: 10px;
+  position:absolute;
+  z-index:1; 
+}
+
+.shine {
+  mask-image: linear-gradient(-75deg, rgba(0,0,0,.6) 30%, #000 50%, rgba(0,0,0,.6) 99%);
+  -webkit-mask-image: linear-gradient(-75deg, rgba(0,0,0,.6) 30%, #000 50%, rgba(0,0,0,.6) 99%);
+  mask-size: 200%;
+  -webkit-mask-size: 200%;
+  animation: shine 4s infinite, hover 2s alternate infinite ease-in-out;
+}
+@-webkit-keyframes shine {
+  from {
+    -webkit-mask-position: 150%;
+  }
+  
+  to {
+    -webkit-mask-position: -50%;
+  }
+}
+@keyframes shine {
+  from {
+    -webkit-mask-position: 150%;
+  }
+  
+  to {
+    -webkit-mask-position: -50%;
+  }
+}
 /**
  * Body Generic
  */

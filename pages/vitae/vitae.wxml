@@ -24,8 +24,9 @@
   <!-- CARD -->
   <view class="card fw">
     <image class="card-background" src="/assets/images/banner.png" class="fvw fh" mode="" />
-    <view class="card-container fw fh container d-flex-column align-items-center justify-content-center">
+    <view class="card-container fw fh container d-flex-column align-items-center justify-content-center shine">
       <view class="card-body animated" hover-class="card-body-hover" bind:longpress="feedback">
+        <view class="card-countdown">{{ countdown <= 0 ? 'Expired': countdown }}</view>
         <image class="card-body-image fw fh" src="/assets/images/card-primary.png" mode="aspectFill" />
       </view>
     </view>
