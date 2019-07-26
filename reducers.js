@@ -19,7 +19,7 @@ import {
  */
 const DEFAULT_SYSTEM_INFO = null;
 const DEFAULT_LOCALE = wx.getStorageSync("locale") || 0;
-const DEFAULT_LOCALE_MAPPING = ["zh_CN", "en_US"];
+const DEFAULT_LOCALE_MAPPING = ["zh", "en"];
 const DEFAULT_ROUTER = { path: "/pages/index/index", delta: 0 };
 const DEFAULT_REGION = "sd";
 const DEFAULT_USER = null;

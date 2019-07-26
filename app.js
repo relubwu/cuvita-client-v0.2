@@ -12,6 +12,9 @@ App({
   Store,
   GlobalActions,
   onLaunch: function () {
+    wx.showLoading({
+      mask: true
+    });
     // Synchronous core systemInfo
     Store
       .dispatch(
@@ -38,6 +41,7 @@ App({
       .then(code => request(API.DISPATCH, METHOD.GET, { code }))
       .then(({ openid, user, member }) => {
         Store.dispatch(GlobalActions.setUser({ openid, ...user }));
+        wx.hideLoading();
         if (!!member)
           Store.dispatch(GlobalActions.updateMember(member));
         else
@@ -45,7 +49,7 @@ App({
       })
       .catch(e => console.error(e));
   },
-  onNetworkStatusChange() {
+  onNetworkStatusChange: function () {
     wx.onNetworkStatusChange(({ networkType }) => {
       Store.dispatch(GlobalActions.setNetworkStatus(networkType));
     });

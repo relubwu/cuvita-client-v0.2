@@ -52,7 +52,7 @@ Page({
         ['err.name']: ''
       });
     }
-    if (!gender)
+    if (gender.length == 0)
       sanity = false;
     else
       sanity = true;

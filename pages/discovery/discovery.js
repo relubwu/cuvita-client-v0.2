@@ -2,6 +2,7 @@ import * as Actions from 'actions';
 import * as LocalePackage from 'locale-package';
 import services from '../../config/services.config';
 import feedback from '../../utils/feedback';
+import sorry from '../../utils/sorry';
 import { request, METHOD } from '../../utils/promisfy';
 import { FIELD } from '../../config/api.config';
 
@@ -48,5 +49,8 @@ Page({
   onUnLoad: function () {
     this.unsubscribe();
   },
-  feedback
+  feedback,
+  sorry: function () {
+    sorry(Store.getState().global.locale);
+  }
 })
