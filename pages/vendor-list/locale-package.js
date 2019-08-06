@@ -3,3 +3,4 @@ export const realms = {
   gourmet: ['美食', 'Gourmet'],
   lifestyle: ['生活', 'Lifestyle']
 };
+export const eol = ['到底啦！', 'No more entries!']

@@ -15,7 +15,8 @@ Page({
   data: {
     LocalePackage,
     cursor: {},
-    current: 0
+    current: 0,
+    bottomFlag: []
   },
   onLoad: function (options) {
     let { locale } = Store.getState().global;
@@ -111,20 +112,25 @@ Page({
         });
   },
   onReachBottom: function (e) {
-    wx.showLoading({});
-    if (!!this.data.cursor[this.data.categories[this.data.current].name]) {
-      this.data.cursor[this.data.categories[this.data.current].name].start += 10;
-      this.data.cursor[this.data.categories[this.data.current].name].end += 10;
+    let currentCategory = this.data.categories[this.data.current].name;
+    wx.showLoading();
+    if (!!this.data.cursor[currentCategory]) {
+      this.data.cursor[currentCategory].start += 10;
+      this.data.cursor[currentCategory].end += 10;
+    }
+    if (!!this.data.bottomFlag[currentCategory]) {
+      wx.hideLoading();
+      return;
     }
     request(API.VENDOR.LISTS, METHOD.GET, {
       locale: this.data.locale,
       realm: this.data.options.realm,
-      category: this.data.categories[this.data.current].name,
-      start: this.data.cursor[this.data.categories[this.data.current].name].start,
-      end: this.data.cursor[this.data.categories[this.data.current].name].end
+      category: currentCategory,
+      start: this.data.cursor[currentCategory].start,
+      end: this.data.cursor[currentCategory].end
     })
       .then(res => {
-        res[this.data.categories[this.data.current].name] = [...this.data.vendors[this.data.categories[this.data.current].name], ...res[this.data.categories[this.data.current].name]];
+        res[currentCategory] = [...this.data.vendors[currentCategory], ...res[currentCategory]];
         let vendors = {
           ...this.data.vendors,
           ...res
@@ -132,6 +138,14 @@ Page({
         this.setData({
           vendors
         });
+        wx.hideLoading();
+      })
+      .catch(e => {
+        if (e === 400) {
+          this.setData({
+            [`bottomFlag.${currentCategory}`]: true
+          });
+        }
         wx.hideLoading();
       });
   },
