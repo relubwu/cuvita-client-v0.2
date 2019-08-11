@@ -1,8 +1,8 @@
 const MAP = {
-  zh_CN: ["发现", "Vitae", "我"],
-  en_US: ["Discovery", "Vitae", "Me"]
+  "zh": ["发现", "Vitae", "我"],
+  "en": ["Discovery", "Vitae", "Me"]
 }
-const DEFAULT_LOCALE = "zh_CN";
+const DEFAULT_LOCALE = "zh";
 
 export default function(locale) {
   if (!locale)
