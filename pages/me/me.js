@@ -2,7 +2,6 @@ import { request, METHOD } from '../../utils/promisfy';
 import * as API from '../../config/api.config';
 import * as LocalePackage from 'locale-package';
 import feedback from '../../utils/feedback';
-import sorry from '../../utils/sorry';
 
 const { Store, GlobalActions } = getApp();
 
