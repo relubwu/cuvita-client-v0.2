@@ -41,7 +41,7 @@ Page({
         Store.dispatch(GlobalActions.updateMember(res));
       })
       .catch(e => {
-        Store.dispatch(GlobalActions.purgeMember());
+        if (e === 404 && !!Store.getState().global.member) Store.dispatch(GlobalActions.purgeMember());
       });
   },
   onUnload: function () {
