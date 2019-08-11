@@ -3,7 +3,9 @@ import { applyMiddleware, createStore } from 'lib/redux.min';
 import ReduxThunk from 'redux-thunk';
 import reducers from '/reducers';
 import * as GlobalActions from '/actions';
+import * as GlobalLocalePackages from '/locale-package';
 import * as API from '/config/api.config';
+import * as Toasts from '/utils/toasts';
 import logger from 'redux-logger';
 
 const Store = createStore(reducers, applyMiddleware(logger, ReduxThunk));
@@ -11,8 +13,10 @@ const Store = createStore(reducers, applyMiddleware(logger, ReduxThunk));
 App({
   Store,
   GlobalActions,
+  GlobalLocalePackages,
   onLaunch: function () {
     wx.showLoading({
+      title: this.GlobalLocalePackages.loading[Store.getState().global.locale],
       mask: true
     });
     // Synchronous core systemInfo
@@ -44,10 +48,10 @@ App({
         wx.hideLoading();
         if (!!member)
           Store.dispatch(GlobalActions.updateMember(member));
-        else
+        else if (!!Store.getState().global.member)
           Store.dispatch(GlobalActions.purgeMember());
       })
-      .catch(e => console.error(e));
+      .catch(e => Toasts.requestFailed(Store.getState().global.locale));
   },
   onNetworkStatusChange: function () {
     wx.onNetworkStatusChange(({ networkType }) => {
