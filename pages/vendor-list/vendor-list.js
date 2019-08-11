@@ -1,14 +1,13 @@
-import {
-  request,
-  METHOD
-} from '../../utils/promisfy';
+import { request, METHOD } from '../../utils/promisfy';
 import * as API from '../../config/api.config';
 import * as LocalePackage from 'locale-package';
+import * as Toasts from '../../utils/toasts';
 import feedback from '../../utils/feedback';
 
 const {
   Store,
-  GlobalActions
+  GlobalActions,
+  GlobalLocalePackages
 } = getApp();
 
 Page({
@@ -43,7 +42,9 @@ Page({
     this.unsubscribe = Store.subscribe(() => {
       this.mapStateToPage();
     });
-    wx.showLoading({});
+    wx.showLoading({
+      title: GlobalLocalePackages.loading[this.data.locale]
+    });
     request(API.VENDOR.CATEGORIES, METHOD.GET, {
         locale: Store.getState().global.locale,
         realm: this.data.options.realm
@@ -73,7 +74,8 @@ Page({
           vendors
         });
         wx.hideLoading();
-      });
+      })
+      .catch(e => Toasts.requestFailed(Store.getState().global.locale));
   },
   onHide: function () {
     this.unsubscribe();
@@ -113,13 +115,13 @@ Page({
   },
   onReachBottom: function (e) {
     let currentCategory = this.data.categories[this.data.current].name;
-    wx.showLoading();
+    wx.showNavigationBarLoading();
     if (!!this.data.cursor[currentCategory]) {
       this.data.cursor[currentCategory].start += 10;
       this.data.cursor[currentCategory].end += 10;
     }
     if (!!this.data.bottomFlag[currentCategory]) {
-      wx.hideLoading();
+      wx.hideNavigationBarLoading();
       return;
     }
     request(API.VENDOR.LISTS, METHOD.GET, {
@@ -138,7 +140,7 @@ Page({
         this.setData({
           vendors
         });
-        wx.hideLoading();
+        wx.hideNavigationBarLoading();
       })
       .catch(e => {
         if (e === 400) {
@@ -146,7 +148,7 @@ Page({
             [`bottomFlag.${currentCategory}`]: true
           });
         }
-        wx.hideLoading();
+        wx.hideNavigationBarLoading();
       });
   },
   feedback
