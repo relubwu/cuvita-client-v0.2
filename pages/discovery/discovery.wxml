@@ -19,62 +19,18 @@
 <scroll-view class="fvw fvh bd-enclosure" scroll-y enable-back-to-top bind:scroll="onScroll">
   <!--  Banner  -->
   <view class="fvw bd-banner d-flex-column justify-content-center" style="padding: {{ systemInfo.navigationBarHeight }}px 30px; opacity: {{ controller.bannerOpacity(scrollTop, 0.2 * systemInfo.screenWidth) }};">
-    <text class="bd-banner-header" style="color: {{ banner.text.color }}">{{ banner.text.header }}</text>
-    <text class="bd-banner-description" style="color: {{ banner.text.color }}">{{ banner.text.description }}</text>
+    <text class="bd-banner-header" style="color: {{ banner.text.color }}">{{ banner.text.header[locale] }}</text>
+    <text class="bd-banner-description" style="color: {{ banner.text.color }}">{{ banner.text.description[locale] }}</text>
   </view>
   <navigator class="fvw bd-banner-overlay bgcol-primary" style="opacity: {{ controller.bannerOverlayOpacity(scrollTop, systemInfo.screenWidth * 0.4) }};" src="{{ banner.target }}" hover-class="none" />
   <!--  Tray  -->
-  <view class="fvw bd-tray-enclosure">
-    <view class="fw bd-tray d-flex-row align-items-center justify-content-between">
-      <navigator class="bd-tray-item fh animated d-flex-column align-items-center justify-content-between" wx:for="{{ tray }}" url="{{ item.target }}" hover-class="bd-tray-item-hover" bind:tap="{{ !!item.target ? 'feedback' : 'sorry' }}">
-        <image class="bd-tray-icon fw fh" src="{{ item.icon }}" />
-        <label>{{ item.label[locale] }}</label>
-      </navigator>
-    </view>
-  </view>
+  <tray />
   <view class="fvw bd-content bgcol-light">
     <!--  Services  -->
-    <view class="fw bd-services container d-flex-row justify-content-between">
-      <navigator class="bd-services-item fh animated d-flex-column align-items-center justify-content-between" wx:for="{{ services }}" url="{{ item.target }}" hover-class="none" bind:tap="{{ !!item.target ? 'feedback' : 'sorry' }}">
-        <image class="bd-tray-icon fw fh" src="{{ item.icon }}" />
-        <label>{{ item.label[locale] }}</label>
-      </navigator>
-    </view>
+    <services />
     <!-- Recommendation -->
-    <view class="bd-recommendation-enclosure fw" wx:for="{{ recommendations }}" wx:for-item="recommendation" >
-      <view class="section-info fvw d-flex-row align-items-center justify-content-between">
-        <label class="section-info-title">{{ recommendation.title }}</label>
-        <navigator url="{{ recommendation.target }}" class="section-info-description animated d-flex-row align-items-center justify-content-center" hover-class="section-info-description-hover" bind:tap="feedback">
-          {{ recommendation.action }}
-        </navigator>
-      </view>
-      <scroll-view scroll-x="true" class="bd-recommendation-items fw d-flex-column justify-content-center">
-        <navigator class="bd-recommendation-item {{ (index == recommendation.items.length - 1) && 'bd-recommendation-item-last'}}" wx:for="{{ recommendation.items }}" hover-class="bd-recommendation-item-hover" bind:longpress="tapFeedback" url="{{ item.target || '/pages/vendor-detail/vendor-detail?reference=' + item.reference }}">
-          <image class="bd-recommendation-image fw" src="{{ item.thumbnail }}" mode="aspectFill" lazy-load />
-          <view class="bd-recommendation-info fw d-flex-column align-items-start justify-content-start">
-            <label class="bd-recommendation-title fw">{{ item.name }}</label>
-            <label class="bd-recommendation-description descriptive fw">{{ item.description }}</label>
-          </view>
-        </navigator>
-      </scroll-view>
-    </view>
+    <recommendation />
     <!-- Feed -->
-    <view class="bd-feed fw">
-      <view class="section-info fvw d-flex-row align-items-center justify-content-between">
-        <label class="section-info-title">{{ LocalePackage.feed.title[locale] }}</label>
-        <navigator class="section-info-description d-flex-row animated align-items-center justify-content-center" hover-class="section-info-description-hover" bind:tap="feedback" data-id="feedDescription" url="/pages/article/list/index">
-          {{ LocalePackage.feed.action[locale] }}
-        </navigator>
-      </view>
-      <view class="bd-feed-items container fw d-flex-column align-items-center">
-        <navigator class="bd-feed-item fw animated d-flex-column" wx:for="{{ article }}" hover-class="bd-feed-item-hover" bind:longpress="feedback" url="/pages/article/detail/index?id={{ item._id }}">
-          <image class="bd-feed-image fw" src="{{ item.thumbnail }}" mode="aspectFill" lazy-load />
-          <view class="bd-feed-item-info d-flex-column">
-            <label class="bd-feed-item-info-title fw">{{ item.title }}</label>
-            <label class="bd-feed-item-info-description fw">{{ item.description }}</label>
-          </view>
-        </navigator>
-      </view>
-    </view>
+    <feed />
   </view>
 </scroll-view>

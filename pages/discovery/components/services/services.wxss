@@ -1,0 +1,14 @@
+.services {
+  box-sizing: border-box;
+  flex-wrap: wrap;
+}
+
+.item {
+  width: 25%;
+  padding: 7px 0;
+}
+
+.icon {
+  width: 80rpx;
+  height: 80rpx;
+}

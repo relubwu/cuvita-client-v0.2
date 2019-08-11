@@ -1,8 +1,6 @@
 import * as Actions from 'actions';
-import * as LocalePackage from 'locale-package';
 import services from '../../config/services.config';
-import feedback from '../../utils/feedback';
-import sorry from '../../utils/sorry';
+// import sorry from '../../utils/sorry';
 import { request, METHOD } from '../../utils/promisfy';
 import { FIELD } from '../../config/api.config';
 
@@ -10,11 +8,7 @@ const { Store, GlobalActions } = getApp();
 
 Page({
   data: {
-    LocalePackage,
-    scrollTop: 0,
-    tray: services.slice(0, 4),
-    services: services.slice(4),
-    recommendations: [{ items: [ {}, {}, {} ] }]
+    scrollTop: 0
   },
   mapStateToPage: function () {
     let newState = Store.getState();
@@ -41,16 +35,12 @@ Page({
     this.unsubscribe = Store.subscribe(() => {
       this.mapStateToPage();
     });
-    request(FIELD, METHOD.GET, { locale: Store.getState().global.locale })
-      .then(res => {
-        this.setData({ ...this.data, ...res })
+    request(FIELD.BANNER, METHOD.GET)
+      .then(banner => {
+        this.setData({ banner })
       })
   },
   onUnLoad: function () {
     this.unsubscribe();
-  },
-  feedback,
-  sorry: function () {
-    sorry(Store.getState().global.locale);
   }
 })

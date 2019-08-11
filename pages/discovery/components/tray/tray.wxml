@@ -1,0 +1,9 @@
+<!--  Tray  -->
+<view class="fvw enclosure">
+  <view class="fw tray d-flex-row align-items-center justify-content-between">
+    <navigator class="item fh animated d-flex-column align-items-center justify-content-between" wx:for="{{ tray }}" url="{{ item.target }}" hover-class="item-hover" bind:tap="{{ !!item.target ? 'feedback' : 'sorry' }}">
+      <image class="icon fw fh" src="{{ item.icon }}" />
+      <label>{{ item.label[locale] }}</label>
+    </navigator>
+  </view>
+</view>

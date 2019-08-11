@@ -1,4 +1,9 @@
 {
-  "usingComponents": {},
+  "usingComponents": {
+    "tray": "components/tray/tray",
+    "services": "components/services/services",
+    "recommendation": "components/recommendation/recommendation",
+    "feed": "components/feed/feed"
+  },
   "navigationStyle": "custom"
 }

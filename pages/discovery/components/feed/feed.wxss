@@ -1,0 +1,57 @@
+.section-info {
+  box-sizing: border-box;
+  padding: 0 15px;
+}
+
+.section-info-title {
+  font-weight: bold;
+  font-size: 14pt;
+  text-transform: uppercase;
+  color: #2b2b2b;
+}
+
+.feed {
+  box-sizing: border-box;
+  padding: 7px 0;
+}
+
+.item {
+  background: white;
+  border-radius: 5px;
+  overflow: hidden;
+  margin: 7px 0;
+}
+
+.item-hover {
+  -webkit-transform: scale(1.02);
+  transform: scale(1.02);
+}
+
+.image {
+  background: #b2b2b2;
+  border-radius: 5px;
+  height: 48vw;
+}
+
+.info {
+  padding: 7px 15px;
+}
+
+.info-title {
+  max-height: 6vw;
+  font-size: 11pt;
+  color: #2b2b2b;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.info-description {
+  max-height: 6vw;
+  max-width: calc(100vw - 60px);
+  font-size: 11pt;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  color: #888;
+}

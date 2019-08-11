@@ -1,0 +1,17 @@
+<view class="enclosure fw" wx:for="{{ recommendations }}" wx:for-item="recommendation">
+  <view class="section-info fvw d-flex-row align-items-center justify-content-between">
+    <label class="section-info-title">{{ recommendation.title[locale] }}</label>
+    <navigator url="{{ recommendation.target }}" class="section-info-description animated d-flex-row align-items-center justify-content-center" hover-class="section-info-description-hover" bind:tap="feedback">
+      {{ recommendation.action[locale] }}
+    </navigator>
+  </view>
+  <scroll-view scroll-x="true" class="items fw d-flex-column justify-content-center">
+    <navigator class="item {{ (index == recommendation.items.length - 1) && 'item-last'}}" wx:for="{{ recommendation.items }}" hover-class="item-hover" bind:longpress="tapFeedback" url="{{ item.target || '/pages/vendor-detail/vendor-detail?reference=' + item.reference }}">
+      <image class="image fw" src="{{ item.thumbnail }}" mode="aspectFill" lazy-load />
+      <view class="bd-recommendation-info fw d-flex-column align-items-start justify-content-start">
+        <label class="title fw">{{ item.name[locale] }}</label>
+        <label class="description descriptive fw">{{ item.description[locale] }}</label>
+      </view>
+    </navigator>
+  </scroll-view>
+</view>

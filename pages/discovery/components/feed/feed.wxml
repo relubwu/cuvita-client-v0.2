@@ -1,0 +1,17 @@
+<view class="feed fw">
+  <view class="section-info fvw d-flex-row align-items-center justify-content-between">
+    <label class="section-info-title">{{ title[locale] }}</label>
+    <navigator class="section-info-description d-flex-row animated align-items-center justify-content-center" hover-class="section-info-description-hover" bind:tap="feedback" data-id="feedDescription" url="/pages/article/list/index">
+      {{ action[locale] }}
+    </navigator>
+  </view>
+  <view class="items container fw d-flex-column align-items-center">
+    <navigator class="item fw animated d-flex-column" wx:for="{{ articles }}" hover-class="item-hover" bind:longpress="feedback" url="/pages/article-detail/article-detail?reference={{ item.reference }}">
+      <image class="image fw" src="{{ item.thumbnail }}" mode="aspectFill" lazy-load />
+      <view class="info d-flex-column">
+        <label class="info-title fw">{{ item.title }}</label>
+        <label class="info-description fw">{{ item.description }}</label>
+      </view>
+    </navigator>
+  </view>
+</view>

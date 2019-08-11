@@ -1,0 +1,32 @@
+.enclosure {
+  position: absolute;
+  top: 70vw;
+  box-sizing: border-box;
+  padding: 0 15px;
+  z-index: 2;
+}
+
+.tray {
+  height: 25vw;
+  background: white;
+  border-radius: 10px;
+  box-sizing: border-box;
+  box-shadow: 0 0 5px #b2b2b2b2;
+  padding: 14px 15px;
+}
+
+.item {
+  width: 20%;
+  -webkit-transform: perspective(1px) translateZ(0);
+  transform: perspective(1px) translateZ(0);
+}
+
+.item-hover {
+  -webkit-transform: translateY(-4px);
+  transform: translateY(-4px);
+}
+
+.icon {
+  width: 80rpx;
+  height: 80rpx;
+}
