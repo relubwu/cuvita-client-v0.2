@@ -8,8 +8,8 @@
     "pages/link/link",
     "pages/license/license",
     "pages/register/register",
-    "pages/article-detail/article-detail"
-    
+    "pages/article-detail/article-detail",
+    "pages/article-list/article-list"
   ],
   "window": {
     "backgroundTextStyle": "light",
