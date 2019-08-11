@@ -1,0 +1,74 @@
+@import '/assets/stylesheets/weui.wxss';
+
+/**
+ * CUVita Client Side Implementations - index.wxss
+ * @scope /pages/disocvery
+ * @author relubwu
+ * @version 0.1.5
+ * @copyright  © CHINESE UNION 2019
+ */
+
+page {
+  font-size: 14pt;
+}
+
+.meta {
+  padding-top: 1em;
+}
+
+.title {
+  font-size: 20pt;
+  font-weight: bold;
+  overflow: hidden;
+  white-space: wrap;
+}
+
+.author {
+  font-size: 16pt;
+  color: #b2b2b2;
+}
+
+/**
+ * Rich Text
+ */
+
+rich-text {
+  line-height: 1.7;
+}
+
+.article-header {
+  font-size: 14pt;
+  padding: 1em 0;
+}
+
+/* .article-paragraph {
+  font-size: 12pt;
+}
+
+.article-list {
+  font-size: 12pt;
+}
+
+.article-image {
+  width: 100%;
+  padding: 7px 0;
+} */
+
+.ql-align-right {
+  text-align: right;
+}
+
+.ql-align-center {
+  text-align: center;
+}
+
+.ql-align-left {
+  text-align: left;
+}
+
+.ql-syntax {
+  color: white;
+  background: #2b2b2b;
+  padding: 0 15px;
+  border-radius: 5px;
+}
