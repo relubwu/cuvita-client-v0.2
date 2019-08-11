@@ -24,8 +24,8 @@ export const modal = {
     content: ['请填写并检查完整表单', 'Please fill in all field(s)']
   },
   success: {
-    title: ['绑定成功', 'Awesome!'],
-    content: ['欢迎回来，尊贵的VITA会员', "Welcome back, it's time to enjoy your membership benefits. "]
+    title: ['注册成功', 'Awesome!'],
+    content: ['欢迎您，尊贵的VITA会员', "Welcome, it's time to enjoy your membership benefits. "]
   }
 }
 export const customerService = {

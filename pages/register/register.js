@@ -1,9 +1,10 @@
 import { request, METHOD, requestPayment } from '../../utils/promisfy';
 import * as API from '../../config/api.config';
 import * as LocalePackage from 'locale-package';
+import * as Toasts from '../../utils/toasts';
 import palette from '../../config/palette.config';
 
-const { Store, GlobalActions } = getApp();
+const { Store, GlobalActions, GlobalLocalePackages } = getApp();
 
 Page({
   data: {
@@ -85,12 +86,24 @@ Page({
     let { name, gender, tel, birthday } = value;
     gender = parseInt(gender);
     birthday = parseInt(birthday);
+    wx.showLoading({
+      title: GlobalLocalePackages.loading[this.data.locale]
+    });
     request(API.MEMBER.REGISTER, METHOD.GET, { name, gender, tel, birthday, openid: Store.getState().global.user.openid })
       .then(bundle => requestPayment(bundle))
       .then(() => {
+        wx.hideLoading();
+        wx.showModal({
+          title: LocalePackage.modal.success.title[this.data.locale],
+          content: LocalePackage.modal.success.content[this.data.locale],
+        })
         wx.reLaunch({
           url: '/pages/vitae/vitae'
         });
+      })
+      .catch(e => {
+        wx.hideLoading();
+        Toasts.requestFailed(this.data.locale)
       });
   },
   toggle: function ({ target: { dataset: { name } } }) {
@@ -98,10 +111,11 @@ Page({
       [`popup.${name}`]: !this.data.popup[name]
     })
   },
-  setGender: function ({ detail: { index, value }, target: { dataset: { name } } }) {
+  setGender: function ({ detail: { index, value } }) {
     this.setData({
-      [name]: { label: value, value: index }
+      gender: { label: value, value: index }
     });
+    this.toggle({ target: { dataset: { name: 'gender' } } });
   },
   setBirthday: function ({ detail }) {
     this.setData({
