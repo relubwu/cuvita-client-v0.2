@@ -1,1 +1,8 @@
-/* pages/article-list/article-list.wxss */
+@import '/assets/stylesheets/weui.wxss';
+
+image {
+  min-width: 100%;
+  min-height: 100%;
+  background: #b2b2b2;
+  border-radius: 5px 0 0 5px;
+}

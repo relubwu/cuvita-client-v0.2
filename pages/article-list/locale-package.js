@@ -1,0 +1,1 @@
+export const title = ['文章列表', 'Articles'];

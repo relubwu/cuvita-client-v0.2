@@ -1,2 +1,15 @@
-<!--pages/article-list/article-list.wxml-->
-<text>pages/article-list/article-list.wxml</text>
+<view style="{{ systemInfo.safeAreaInset && 'padding-bottom: 34px !important' }}">
+  <view class="weui-panel weui-panel_access">
+    <view class="weui-panel__bd">
+      <navigator url="/pages/article-detail/article-detail?reference={{ item.reference }}" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active" wx:for="{{ articles }}">
+        <view class="weui-media-box__hd weui-media-box__hd_in-appmsg">
+          <image class="weui-media-box__thumb" src="{{ item.thumbnail }}" lazy-load mode="aspectFill"/>
+        </view>
+        <view class="weui-media-box__bd weui-media-box__bd_in-appmsg">
+          <view class="weui-media-box__title">{{ item.title }}</view>
+          <view class="weui-media-box__desc">{{ item.description }}</view>
+        </view>
+      </navigator>
+    </view>
+  </view>
+</view>

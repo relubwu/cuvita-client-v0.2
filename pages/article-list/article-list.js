@@ -1,66 +1,53 @@
-// pages/article-list/article-list.js
+import { request, METHOD } from '../../utils/promisfy';
+import { ARTICLE } from '../../config/api.config';
+import * as LocalePackage from 'locale-package';
+import * as Toasts from '../../utils/toasts';
+
+const { Store, GlobalLocalePackages } = getApp();
+
+// const app = getApp();
+// const { request, API } = app;
+// const Store = app.store;
+// const localepkg = require('./localepkg');
+
+/**
+ * CUVita Client Side Implementations - index.js
+ * @scope /pages/article/list
+ * @author relubwu
+ * @version 0.1.6
+ * @copyright  © CHINESE UNION 2019
+ */
+
 Page({
-
-  /**
-   * Page initial data
-   */
   data: {
-
+    articles: [{}, {}, {}]
   },
-
-  /**
-   * Lifecycle function--Called when page load
-   */
-  onLoad: function (options) {
-
-  },
-
-  /**
-   * Lifecycle function--Called when page is initially rendered
-   */
-  onReady: function () {
-
-  },
-
-  /**
-   * Lifecycle function--Called when page show
-   */
-  onShow: function () {
-
-  },
-
-  /**
-   * Lifecycle function--Called when page hide
-   */
-  onHide: function () {
-
-  },
-
-  /**
-   * Lifecycle function--Called when page unload
-   */
-  onUnload: function () {
-
-  },
-
-  /**
-   * Page event handler function--Called when user drop down
-   */
-  onPullDownRefresh: function () {
-
-  },
-
-  /**
-   * Called when page reach bottom
-   */
-  onReachBottom: function () {
-
-  },
-
-  /**
-   * Called when user click on the top right corner to share
-   */
-  onShareAppMessage: function () {
-
+  onLoad() {
+    let { locale, systemInfo } = Store.getState().global;
+    this.setData({
+      locale, systemInfo
+    });
+    wx.setNavigationBarTitle({
+      title: LocalePackage.title[this.data.locale]
+    });
+    wx.showLoading({
+      title: GlobalLocalePackages.loading[this.data.locale]
+    });
+    request(ARTICLE.LIST, METHOD.GET)
+      .then(articles => {
+        this.setData({ articles });
+        wx.hideLoading();
+      })
+      .catch(e => {
+        Toasts.requestFailed(this.data.locale);
+        wx.hideLoading();
+      });
+    // wx.showNavigationBarLoading();
+    // request(API.URL_ARTICLE_LIST, 'GET').then(res => {
+    //   that.setData({
+    //     data: res
+    //   });
+    //   wx.hideNavigationBarLoading();
+    // }).catch(e => console.error(e));
   }
 })
