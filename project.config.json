@@ -13,7 +13,7 @@
 		"checkInvalidKey": true
 	},
 	"compileType": "miniprogram",
-	"libVersion": "2.8.0",
+	"libVersion": "2.7.7",
 	"appid": "wxb578ff9d59271c56",
 	"projectname": "CUVita",
 	"debugOptions": {
@@ -86,9 +86,16 @@
 				},
 				{
 					"id": 6,
-					"name": "article",
+					"name": "article-detail",
 					"pathName": "pages/article-detail/article-detail",
-					"query": "reference=a13c88d0-bc08-11e9-a178-153c8073de6a",
+					"query": "reference=53eceeb0-bda9-11e9-8fb7-2db3ea9cffc2",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "article-list",
+					"pathName": "pages/article-list/article-list",
+					"query": "",
 					"scene": null
 				}
 			]
