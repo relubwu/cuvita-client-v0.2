@@ -4,9 +4,9 @@
 </view>
 <form bind:submit="onSubmit">
   <van-cell-group custom-class="form-group" border="{{ false }}">
-    <van-field name="cardID" type="number" required clearable label="{{ LocalePackage.cardID.label[locale] }}" icon="question-o" placeholder="{{ LocalePackage.cardID.placeHolder[locale] }}" bind:click-icon="explainCardID" error-message="{{ err.cardID }}" input-align="right" 
+    <van-field name="cardID" type="number" required clearable label="{{ LocalePackage.cardID.label[locale] }}" placeholder="{{ LocalePackage.cardID.placeHolder[locale] }}" error-message="{{ err.cardID }}" error-message-align="right" input-align="right" 
     />
-    <van-field name="name" type="text" label="{{ LocalePackage.name.label[locale] }}" placeholder="{{ LocalePackage.name.placeHolder[locale] }}" required border="{{ false }}" error-message="{{ err.name }}" input-align="right" />
+    <van-field name="name" type="text" label="{{ LocalePackage.name.label[locale] }}" placeholder="{{ LocalePackage.name.placeHolder[locale] }}" required border="{{ false }}" error-message="{{ err.name }}" error-message-align="right" input-align="right" />
   </van-cell-group>
   <view class="form-button-wrapper">
     <button size="large" class="form-button" form-type="submit">{{ LocalePackage.submit[locale] }}</button>
