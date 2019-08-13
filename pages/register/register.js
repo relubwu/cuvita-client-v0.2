@@ -2,17 +2,19 @@ import { request, METHOD, requestPayment } from '../../utils/promisfy';
 import * as API from '../../config/api.config';
 import * as LocalePackage from 'locale-package';
 import * as Toasts from '../../utils/toasts';
-import palette from '../../config/palette.config';
+import Sanitizer from '../../utils/sanitizer';
+import Palette from '../../config/palette.config';
 
 const { Store, GlobalActions, GlobalLocalePackages } = getApp();
 
 Page({
   data: {
     LocalePackage,
+    pending: false,
     popup: {},
     options: {
       gender: [['男', '女', '其他'], ['Male', 'Female', 'Non-Binary']],
-      minDate: new Date(1980, 0, 1).getTime(),
+      minDate: new Date(1990, 0, 1).getTime(),
       maxDate: new Date().getTime()
     }
   },
@@ -41,68 +43,58 @@ Page({
   onUnload: function () {
     this.unsubscribe();
   },
-  sanitizer: function ({ name, gender, tel, birthday }) {
-    let sanity = true;
-    if (!name) {
-      sanity = false;
-      this.setData({
-        ['err.name']: LocalePackage.name.err[this.data.locale]
-      });
-    } else {
-      this.setData({
-        ['err.name']: ''
-      });
-    }
-    if (gender.length == 0)
-      sanity = false;
-    else
-      sanity = true;
-    if (!tel) {
-      sanity = false;
-      this.setData({
-        ['err.tel']: LocalePackage.tel.err[this.data.locale]
-      });
-    } else {
-      this.setData({
-        ['err.tel']: ''
-      });
-    }
-    if (!birthday)
-      sanity = false;
-    else
-      sanity = true;
-    return sanity;
-  },
   onSubmit: function ({ detail: { value } }) {
-    if (!this.sanitizer(value)) {
-      wx.showModal({
-        title: LocalePackage.modal.incomplete.title[this.data.locale],
-        content: LocalePackage.modal.incomplete.content[this.data.locale],
-        showCancel: false,
-        confirmColor: palette.primary
-      })
+    let { clearance, failedItems } = Sanitizer(value, {
+      name: 'avail',
+      tel: 'avail',
+      gender: 'avail',
+      birthday: 'avail'
+    });
+    for (let key in value) {
+      if (!!failedItems[key]) {
+        if (LocalePackage[key].err)
+          this.setData({
+            [`err.${key}`]: LocalePackage[key].err[failedItems[key]][this.data.locale]
+          });
+      } else {
+        if (LocalePackage[key].err)
+          this.setData({
+            [`err.${key}`]: ''
+          });
+      }
+    }
+    if (!clearance) { 
+      Toasts.incompleteForm(this.data.locale);
       return;
     }
     let { name, gender, tel, birthday } = value;
     gender = parseInt(gender);
     birthday = parseInt(birthday);
-    wx.showLoading({
-      title: GlobalLocalePackages.loading[this.data.locale]
+    this.setData({
+      pending: true
     });
     request(API.MEMBER.REGISTER, METHOD.GET, { name, gender, tel, birthday, openid: Store.getState().global.user.openid })
       .then(bundle => requestPayment(bundle))
       .then(() => {
-        wx.hideLoading();
+        this.setData({
+          pending: false
+        });
         wx.showModal({
           title: LocalePackage.modal.success.title[this.data.locale],
           content: LocalePackage.modal.success.content[this.data.locale],
-        })
-        wx.reLaunch({
-          url: '/pages/vitae/vitae'
+          confirmColor: Palette.primary,
+          showCancel: false,
+          success: function () {
+            wx.reLaunch({
+              url: '/pages/vitae/vitae'
+            });
+          }
         });
       })
       .catch(e => {
-        wx.hideLoading();
+        this.setData({
+          pending: false
+        })
         Toasts.requestFailed(this.data.locale)
       });
   },
