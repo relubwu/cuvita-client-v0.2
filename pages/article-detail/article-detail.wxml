@@ -9,7 +9,11 @@
 </view>
 <!-- RICH-TEXT -->
 <view class="container">
-  <rich-text nodes="{{ nodes }}" />
+  <rich-text nodes="{{ nodes }}" space="nbsp" decode />
+</view>
+<!-- ACTION -->
+<view wx:if="{{ !!action }}" class="container d-flex-column align-items-center" style="{{ systemInfo.safeAreaInset && 'padding-bottom: 34px !important' }}">
+  <navigator bind:tap="feedback" hover-class="navigator-hover">{{ action.label }}</navigator>
 </view>
 <!-- FOOTER -->
 <view class="weui-footer" style="{{ systemInfo.safeAreaInset && 'padding-bottom: 34px !important' }}">

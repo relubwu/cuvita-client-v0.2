@@ -1,6 +1,7 @@
 import { request, METHOD } from '../../utils/promisfy';
 import { ARTICLE } from '../../config/api.config';
 import * as Toasts from '../../utils/toasts';
+import feedback from '../../utils/feedback';
 
 const { Store, GlobalLocalePackages } = getApp();
 
@@ -15,25 +16,52 @@ const { Store, GlobalLocalePackages } = getApp();
 Page({
   onLoad: function ({ reference }) {
     // Synchronous storage hook
-    let { locale, systemInfo } = Store.getState().global;
+    let { systemInfo } = Store.getState().global;
     this.setData({
-      locale, systemInfo
+      systemInfo
     });
     wx.showLoading({
       title: GlobalLocalePackages.loading[Store.getState().global.locale]
     });
     request(ARTICLE.DETAIL, METHOD.GET, { reference })
       .then(detail => {
-        detail.nodes = JSON.parse(detail.nodes); 
+        detail.nodes = JSON.parse(detail.nodes).map(item => {
+          return this.replace(item).node;
+        });
+        console.log(detail.nodes);
         this.setData({ ...detail });
         wx.hideLoading();
       })
-      .catch(e => Toasts.requestFailed(Store.getState().global.locale));
-    // let that = this;
-    // wx.showNavigationBarLoading();
-    // request(API.URL_ARTICLE_DETAIL, 'GET', { id: options.id }).then(res => {
-    //   this.setData(res);
-    //   wx.hideNavigationBarLoading();
-    // }).catch(e => console.error(e));
-  }
+      // .catch(e => Toasts.requestFailed(Store.getState().global.locale));
+  },
+  replace: function (node) {
+    let childContainsImage = false;
+    if (!!node.children)
+      node.children = node.children.map(item => {
+        let { node, containsImage } = this.replace(item);
+        if (!!containsImage) childContainsImage = true;
+        return node;
+      })
+    let containsImage = false;
+    if (node.name === "img") {
+      containsImage = true;
+      node.attrs = this.addClass(node.attrs, 'ql-image');
+    }
+    if (childContainsImage)
+      node.attrs = this.addClass(node.attrs, 'ql-image-container');
+    return { node, containsImage };
+  },
+  addClass: function (attrs, classToAppend) {
+    if (!attrs)
+      return { ['class']: classToAppend };
+    else
+      if (!attrs['class'])
+        return {
+          ...attrs,
+          ['class']: classToAppend
+        }
+      else
+        return attrs['class'].append(` ${ classToAppend }`);
+  },
+  feedback
 })
