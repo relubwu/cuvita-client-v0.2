@@ -7,25 +7,25 @@ export const gender = {
 export const name = {
   label: ['姓名', 'Name'],
   placeHolder: ['请输入姓名', 'John Appleseed'],
-  err: ['姓名不能为空', 'This field is required']
+  err: {
+    empty: ['姓名不能为空', 'This field is required']
+  }
 };
 export const tel = {
   label: ['电话', 'Mobile.'],
   placeHolder: ['请输入手机号码', '(000) 000 0000'],
-  err: ['联系方式不能为空', 'This field is required']
+  err: {
+    empty: ['联系方式不能为空', 'This field is required']
+  }
 };
 export const birthday = {
   label: ['生日', 'Birthday']
 };
 export const submit = ['提交并前往支付', 'Submit & Payment'];
 export const modal = {
-  incomplete: {
-    title: ['信息不完整', 'Incomplete'],
-    content: ['请填写并检查完整表单', 'Please fill in all field(s)']
-  },
   success: {
     title: ['注册成功', 'Awesome!'],
-    content: ['欢迎您，尊贵的VITA会员', "Welcome, it's time to enjoy your membership benefits. "]
+    content: ['欢迎您的加入，尊贵的VITA会员', "Welcome, it's time to enjoy your membership benefits. "]
   }
 }
 export const customerService = {
