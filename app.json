@@ -9,7 +9,8 @@
     "pages/license/license",
     "pages/register/register",
     "pages/article-detail/article-detail",
-    "pages/article-list/article-list"
+    "pages/article-list/article-list",
+    "pages/implement/implement"
   ],
   "window": {
     "backgroundTextStyle": "light",
