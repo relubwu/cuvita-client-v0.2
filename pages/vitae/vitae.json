@@ -1,11 +1,8 @@
 {
   "usingComponents": {
-    "van-cell": "/miniprogram_npm/vant-weapp/cell/index",
-    "van-cell-group": "/miniprogram_npm/vant-weapp/cell-group/index",
-    "van-tag": "/miniprogram_npm/vant-weapp/tag/index",
-    "van-collapse": "/miniprogram_npm/vant-weapp/collapse/index",
-    "van-collapse-item": "/miniprogram_npm/vant-weapp/collapse-item/index",
-    "van-button": "/miniprogram_npm/vant-weapp/button/index"
+    "landing": "components/landing/landing",
+    "credit": "components/credit/credit",
+    "dashboard": "components/dashboard/dashboard"
   },
   "navigationBarTitleText": "",
   "enablePullDownRefresh": true

@@ -1,0 +1,18 @@
+<view class="membership fw d-flex-column align-items-center justify-content-center">
+  <view class="membership-info container fw fh d-flex-row align-items-center justify-content-center">
+    <image src="/assets/icons/membership-star.png" class="membership-info-icon" mode="aspectFit" />
+    <label class="membership-info-credit-current">{{ member.credit.tier }}/</label>
+    <label class="membership-info-credit-next">{{ goal }}</label>
+  </view>
+  <view class="membership-progressbar-container fw container">
+    <view class="membership-progressbar-base fh">
+      <view class="membership-progressbar fh" style="width: {{ (member.credit.tier / goal) * 100 }}%;" />
+    </view>
+  </view>
+  <view class="membership-rubric fw d-flex-row">
+    <label class="membership-rubric-label">0</label>
+    <label wx:if="{{ locale == 0 }}" class="membership-rubric-label">再消费{{ goal - member.credit.tier }}次即可获取好礼</label>
+    <label wx:if="{{ locale == 1 }}" class="membership-rubric-label">{{ goal - member.credit.tier }} More to Next Reward</label>
+    <label class="membership-rubric-label">{{ goal }}</label>
+  </view>
+</view>

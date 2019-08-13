@@ -1,0 +1,20 @@
+<view class="fvw fvh d-flex-column align-items-center justify-content-center">
+  <view class="swiper-wrapper fw">
+    <swiper class="fw" indicator-dots="{{ true }}" autoplay="{{ true }}" circular="{{ true }}">
+      <swiper-item wx:for="{{ layout }}" class="fw fh d-flex-column align-items-center justify-content-center">
+        <view class="swiper-agenda">{{ item.agenda[locale] }}</view>
+        <label class="swiper-description descriptive">{{ item.description[locale] }}</label>
+        <image src="{{ item.src }}" mode="aspectFit" />
+      </swiper-item>
+    </swiper>
+  </view>
+  <view class="button-wrapper fw">
+    <van-button size="large" custom-class="button button-link" catch:click="link">{{ LocalePackage.link[locale] }}</van-button>
+    <van-button size="large" custom-class="button button-register" catch:click="register">{{ LocalePackage.register[locale] }}</van-button>
+  </view>
+  <view class="footer-wrapper">
+    <view class="weui-footer">
+      <view class="weui-footer__text">{{ LocalePackage.disclaimer[locale] }}</view>
+    </view>
+  </view>
+</view>

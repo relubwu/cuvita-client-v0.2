@@ -1,0 +1,29 @@
+.button-wrapper {
+  box-sizing: border-box;
+  padding: 42px 30px;
+}
+
+.button {
+  width: calc(50% - 15px) !important;
+  margin: 0 7px !important;
+  overflow: hidden !important;
+  border-radius: 5px !important;
+}
+
+.button-link {
+  color: black !important;
+  background-color: white !important;
+}
+
+.button-register {
+  color: white !important;
+  background-color: #d1233e !important;
+}
+
+swiper {
+  height: 80vw;
+}
+
+.swiper-agenda {
+  font-size: 28pt;
+}

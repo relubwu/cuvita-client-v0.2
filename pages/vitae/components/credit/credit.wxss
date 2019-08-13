@@ -1,0 +1,54 @@
+/**
+ * Mmembership
+ */
+
+.membership {
+  position: relative;
+  height: 20vw;
+  padding-top: 35px;
+  padding-bottom: 14px;
+}
+
+.membership-info-icon {
+  width: 16pt;
+  height: 16pt;
+  padding: 0 2px;
+}
+
+.membership-info-credit-current {
+  font-size: 20pt;
+  font-weight: bold;
+  padding: 0 2px;
+}
+
+.membership-progressbar-container {
+  height: 20px;
+  padding: 7px 30px;
+  padding-top: 0;
+}
+
+.membership-progressbar-base {
+  overflow: hidden;
+  border-radius: 20px;
+  background: #b2b2b2b2;
+}
+
+.membership-progressbar {
+  border-radius: 20px;
+  background-position: center;
+  background: linear-gradient(to right, #d1233e, #ffd116);
+  transition: width 0.5s ease;
+  -webkit-transition: width 0.5s ease;
+}
+
+.membership-rubric {
+  padding: 0 30px;
+  box-sizing: border-box;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.membership-rubric-label {
+  font-size: 11pt;
+  color: #b2b2b2;
+}
