@@ -2,7 +2,8 @@ export const title = ['注册', 'Register'];
 export const header = ['成为VITA会员', 'VITA Membership'];
 export const description = ['尊享VITA会员福利', 'Enjoy Membership Benefits'];
 export const gender = {
-  label: ['性别', 'Gender']
+  label: ['性别', 'Gender'],
+  placeHolder: ['请点击选择性别', '']
 };
 export const name = {
   label: ['姓名', 'Name'],
@@ -18,8 +19,20 @@ export const tel = {
     empty: ['联系方式不能为空', 'This field is required']
   }
 };
+export const email = {
+  label: ['邮箱', 'E-mail'],
+  placeHolder: ['请输入电子邮箱地址', 'example@email.com'],
+  err: {
+    empty: ['电子邮箱不能为空', 'This field is required']
+  }
+}
 export const birthday = {
-  label: ['生日', 'Birthday']
+  label: ['生日', 'Birthday'],
+  placeHolder: ['请点击选择生日', '']
+};
+export const region = {
+  label: ['就读学校', 'Region'],
+  placeHolder: ['请点击选择就读学校', '']
 };
 export const submit = ['提交并前往支付', 'Submit & Payment'];
 export const modal = {
@@ -27,8 +40,4 @@ export const modal = {
     title: ['注册成功', 'Awesome!'],
     content: ['欢迎您的加入，尊贵的VITA会员', "Welcome, it's time to enjoy your membership benefits. "]
   }
-}
-export const customerService = {
-  contact: ['联系客服', 'Having trouble?'],
-  description: ['非八位数卡号请联系客服手动添加', 'Non 8-digit must be linked manually']
 }
