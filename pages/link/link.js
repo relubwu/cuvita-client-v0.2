@@ -64,16 +64,18 @@ Page({
     let { cardID, name } = value;
     request(API.MEMBER.LINK, METHOD.GET, { cardID, name, openid: Store.getState().global.user.openid })
       .then(res => {
+        Store.dispatch(GlobalActions.updateMember(res));
         wx.showModal({
           title: LocalePackage.modal.success.title[this.data.locale],
           content: LocalePackage.modal.success.content[this.data.locale],
           showCancel: false,
-          confirmColor: palette.primary
+          confirmColor: palette.primary,
+          success: function () {
+            wx.reLaunch({
+              url: '/pages/vitae/vitae'
+            });
+          }
         });
-        Store.dispatch(GlobalActions.updateMember(res));
-        wx.reLaunch({
-          url: '/pages/vitae/vitae'
-        })
       })
       .catch(e => {
         wx.showModal({
