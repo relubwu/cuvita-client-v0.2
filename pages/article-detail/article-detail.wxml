@@ -12,10 +12,10 @@
   <rich-text nodes="{{ nodes }}" space="nbsp" decode />
 </view>
 <!-- ACTION -->
-<view wx:if="{{ !!action }}" class="container d-flex-column align-items-center" style="{{ systemInfo.safeAreaInset && 'padding-bottom: 34px !important' }}">
-  <navigator bind:tap="feedback" hover-class="navigator-hover">{{ action.label }}</navigator>
+<view wx:if="{{ !!action }}" class="container d-flex-column align-items-center" style="{{ systemInfo.safeAreaInset && 'padding-bottom: 17px !important' }}">
+  <navigator bind:tap="feedback" hover-class="navigator-hover" url="{{ action.target }}">{{ action.label }}</navigator>
 </view>
 <!-- FOOTER -->
-<view class="weui-footer" style="{{ systemInfo.safeAreaInset && 'padding-bottom: 34px !important' }}">
+<view class="weui-footer" style="{{ systemInfo.safeAreaInset && 'padding: 34px 0 !important' }}">
   <view class="weui-footer__text">Copyright © 2019 CUVita</view>
 </view>

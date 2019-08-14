@@ -28,7 +28,8 @@ Page({
         detail.nodes = JSON.parse(detail.nodes).map(item => {
           return this.replace(item).node;
         });
-        console.log(detail.nodes);
+        if (detail.action.target.length == 0)
+          delete detail.action;
         this.setData({ ...detail });
         wx.hideLoading();
       })
