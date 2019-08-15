@@ -29,6 +29,6 @@
     <input hidden name="birthday" value="{{ birthday.value }}" />
   </van-cell-group>
   <view class="form-button-wrapper">
-    <button size="large" class="form-button" form-type="submit" loading="{{ pending }}">{{ LocalePackage.submit[locale] }}</button>
+    <button disabled="{{ pending }}" size="large" class="form-button" form-type="submit" loading="{{ pending }}">{{ LocalePackage.submit[locale] }}</button>
   </view>
 </form>
