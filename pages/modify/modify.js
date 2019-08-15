@@ -5,6 +5,7 @@ import * as Toasts from '../../utils/toasts';
 import Sanitizer from '../../utils/sanitizer';
 import Palette from '../../config/palette.config';
 import Autofiller from '../../utils/autofiller';
+import Region from '../../config/region.config';
 
 const { Store, GlobalActions, GlobalLocalePackages } = getApp();
 
@@ -14,10 +15,7 @@ Page({
     popup: {},
     options: {
       gender: [['男', '女', '其他'], ['Male', 'Female', 'Non-Binary']],
-      region: [
-        ['加州大学圣迭戈分校', '加州大学洛杉矶分校', '加州大学圣塔芭芭拉分校', '加州大学河滨分校', '加州大学尔湾分校', '加州大学戴维斯分校', '加州大学克鲁斯分校', '圣迭戈州立大学', '其它南加州地区院校', '其它北加州地区院校', '哥伦比亚大学', '纽约大学', '帕森斯设计学院', '其它纽约地区院校'],
-        ['UC San Diego', 'UC Los Angeles', 'UC Santa Babara', 'UC Riverside', 'UC Irvine', 'UC Davids', 'UC Santa Cruz', 'San Diego State University', 'Other SoCal Institutions', 'Other NorCal Institutions', 'Columbia University', 'NYU', 'Parsons Institue of Design', 'Other NY Institutions']
-      ],
+      region: Region,
       minDate: new Date(1990, 0, 1).getTime(),
       maxDate: new Date().getTime()
     }
