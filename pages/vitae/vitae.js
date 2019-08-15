@@ -7,7 +7,11 @@ const { Store, GlobalActions } = getApp();
 
 Page({
   data: {
-    LocalePackage
+    LocalePackage,
+    palette: {
+      card: ['linear-gradient(60deg, #a6403e, #b24846)' ,'linear-gradient(-45deg, #2b2b2b, #454545)'],
+      font: ['beige', '#a6403e']
+    }
   },
   onLoad: function () {
     let { systemInfo, member } = Store.getState().global;

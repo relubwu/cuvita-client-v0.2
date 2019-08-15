@@ -1,5 +1,12 @@
 @import '/assets/stylesheets/weui.wxss';
 
+@font-face {
+  font-style: normal;
+  font-weight: 400;
+  font-family: sigvar-serial;
+  src: url(https://cuvita-1254391499.cos.na-siliconvalley.myqcloud.com/fonts/sigvar-serial-bold.ttf) format('truetype');
+}
+
 /**
  * Card
  */
@@ -22,6 +29,28 @@
   top: 0;
   z-index: 0;
   padding-bottom: 18vw;
+}
+
+.card-icon {
+  position: absolute;
+  left: -10vw;
+  width: 60vw;
+  height: 100%;
+  opacity: 0.1;
+  z-index: 0;
+}
+
+.card-label {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  text-align: center;
+  z-index: 1;
+}
+
+.card-label label {
+  font: 30pt sigvar-serial;
+  letter-spacing: 5px;
 }
 
 .card-body {
