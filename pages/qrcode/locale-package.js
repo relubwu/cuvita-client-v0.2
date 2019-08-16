@@ -1,0 +1,1 @@
+export const instruction = ['请出示您的VITA会员码', 'Show vendor QR code'];

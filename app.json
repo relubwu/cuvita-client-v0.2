@@ -10,7 +10,8 @@
     "pages/register/register",
     "pages/article-detail/article-detail",
     "pages/article-list/article-list",
-    "pages/modify/modify"
+    "pages/modify/modify",
+    "pages/qrcode/qrcode"
   ],
   "window": {
     "backgroundTextStyle": "light",

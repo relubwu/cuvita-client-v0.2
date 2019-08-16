@@ -1,0 +1,14 @@
+<view class="fvw fvh hue" />
+<view class="fvw nav d-flex-column justify-content-center" style="height: {{ systemInfo.navigationBarHeight - systemInfo.statusBarHeight }}px; padding-top: {{ systemInfo.statusBarHeight }}px">
+  <view class="nav-button" hover-class="none"><image class="nav-icon" src="/assets/icons/nav-back.png" mode="aspectFit" bind:tap="back"/></view>
+</view>
+<view class="fvw fvh container d-flex-column align-items-center justify-content-center">
+  <view class="qrcode-container d-flex-column align-items-center justify-content-center" style="{{ Layout.calc(orientation.x, orientation.y) }}" hover-class="qrcode-container-hover" bind:longpress="tapFeedback">
+    <image src="{{ context }}" class="qrcode-canvas" />
+    <!-- <view class="qrcode-detail {{ showdetail && 'qrcode-detail-show' }} fw d-flex-column align-items-center">
+      <label class="qrcode-brand">{{ brand }}</label>
+      <label class="qrcode-name">{{ name }}</label>
+    </view> -->
+    <label class="qrcode-label">{{ LocalePackage.instruction[locale] }}</label>
+  </view>
+</view>
