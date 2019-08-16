@@ -1,12 +1,13 @@
 <view class="navigators fw">
   <van-collapse value="{{ activeNames }}" bind:change="onChange">
     <van-collapse-item title="{{ LocalePackage.history[locale] }}" title-class="navigators-title" icon="cash-back-record" name="history">
-      <view wx:if="{{ !member || member.history.length == 0 }}" class="descriptive" style="text-align: center; text-transform: none;">{{ LocalePackage.emptyHistory[locale] }}</view>
+      <view wx:if="{{ member.history.length == 0 }}" class="descriptive" style="text-align: center; text-transform: none;">{{ LocalePackage.emptyHistory[locale] }}</view>
     </van-collapse-item>
     <van-collapse-item title="{{ LocalePackage.coupon[locale] }}" icon="coupon" title-class="navigators-title" name="coupon">
-      <view wx:if="{{ !member || member.coupon.length == 0 }}" class="descriptive" style="text-align: center; text-transform: none;">{{ LocalePackage.emptyCoupon[locale] }}</view>
+      <view wx:if="{{ member.coupon.length == 0 }}" class="descriptive" style="text-align: center; text-transform: none;">{{ LocalePackage.emptyCoupon[locale] }}</view>
     </van-collapse-item>
     <van-collapse-item title="{{ LocalePackage.reward[locale] }}" icon="gift" title-class="navigators-title" name="reward">
+    <view wx:if="{{ !member.gift }}" class="descriptive" style="text-align: center; text-transform: none;">{{ LocalePackage.emptyReward[locale] }}</view>
     </van-collapse-item>
   </van-collapse>
 </view>
