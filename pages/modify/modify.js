@@ -7,7 +7,7 @@ import Palette from '../../config/palette.config';
 import Autofiller from '../../utils/autofiller';
 import Region from '../../config/region.config';
 
-const { Store, GlobalActions, GlobalLocalePackages } = getApp();
+const { Store, GlobalLocalePackages } = getApp();
 
 Page({
   data: {
@@ -31,11 +31,7 @@ Page({
     });
   },
   mapStateToPage: function () {
-    let newState = Store.getState();
-    if (this.data.locale !== newState.global.locale)
-      this.setData({
-        locale: newState.global.locale
-      });
+
   },
   onShow: function () {
     this.unsubscribe = Store.subscribe(() => {

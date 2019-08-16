@@ -18,29 +18,25 @@ Page({
       systemInfo,
       options
     });
-  },
-  mapStateToPage: function () {
-    let newState = Store.getState();
-    if (this.data.locale !== newState.global.locale)
-      this.setData({
-        locale: newState.global.locale
-      });
-  },
-  onShow: function(options) {
-    this.unsubscribe = Store.subscribe(() => {
-      this.mapStateToPage();
-    });
     wx.showLoading({
       title: GlobalLocalePackages.loading[Store.getState().global.locale]
     });
     request(API.VENDOR.DETAIL, METHOD.GET, { locale: Store.getState().global.locale, reference: this.data.options.reference })
-      .then(res => { 
+      .then(res => {
         let markers = [];
         markers.push({ iconPath: '/assets/icons/vendor-pin.png', id: 0, longitude: res.location.coordinates[0], latitude: res.location.coordinates[1], width: 65, height: 65 });
         this.setData({ ...this.data, ...res, markers });
         wx.hideLoading();
       })
       .catch(e => Toasts.requestFailed(Store.getState().global.locale));
+  },
+  mapStateToPage: function () {
+
+  },
+  onShow: function(options) {
+    this.unsubscribe = Store.subscribe(() => {
+      this.mapStateToPage();
+    });
   },
   onHide: function () {
     this.unsubscribe();

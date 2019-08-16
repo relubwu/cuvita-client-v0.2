@@ -5,11 +5,6 @@ import * as Toasts from '../../utils/toasts';
 
 const { Store, GlobalLocalePackages } = getApp();
 
-// const app = getApp();
-// const { request, API } = app;
-// const Store = app.store;
-// const localepkg = require('./localepkg');
-
 /**
  * CUVita Client Side Implementations - index.js
  * @scope /pages/article/list
@@ -42,12 +37,5 @@ Page({
         Toasts.requestFailed(this.data.locale);
         wx.hideLoading();
       });
-    // wx.showNavigationBarLoading();
-    // request(API.URL_ARTICLE_LIST, 'GET').then(res => {
-    //   that.setData({
-    //     data: res
-    //   });
-    //   wx.hideNavigationBarLoading();
-    // }).catch(e => console.error(e));
   }
 })

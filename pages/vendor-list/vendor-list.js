@@ -36,25 +36,13 @@ Page({
     wx.setNavigationBarTitle({
       title: LocalePackage.realms[realm][this.data.locale]
     });
-  },
-  mapStateToPage: function () {
-    let newState = Store.getState();
-    if (this.data.locale !== newState.global.locale)
-      this.setData({
-        locale: newState.global.locale
-      });
-  },
-  onShow: function () {
-    this.unsubscribe = Store.subscribe(() => {
-      this.mapStateToPage();
-    });
     wx.showLoading({
       title: GlobalLocalePackages.loading[this.data.locale]
     });
     request(API.VENDOR.CATEGORIES, METHOD.GET, {
-        locale: Store.getState().global.locale,
-        realm: this.data.options.realm
-      })
+      locale: Store.getState().global.locale,
+      realm: this.data.options.realm
+    })
       .then(categories => {
         this.setData({
           categories
@@ -64,6 +52,14 @@ Page({
         };
         this.fetchList(categories[0].name, 0, wx.hideLoading);
       })
+  },
+  mapStateToPage: function () {
+
+  },
+  onShow: function () {
+    this.unsubscribe = Store.subscribe(() => {
+      this.mapStateToPage();
+    });
   },
   onHide: function () {
     this.unsubscribe();

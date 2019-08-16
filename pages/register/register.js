@@ -31,11 +31,7 @@ Page({
     });
   },
   mapStateToPage: function () {
-    let newState = Store.getState();
-    if (this.data.locale !== newState.global.locale)
-      this.setData({
-        locale: newState.global.locale
-      });
+    
   },
   onShow: function () {
     this.unsubscribe = Store.subscribe(() => {
