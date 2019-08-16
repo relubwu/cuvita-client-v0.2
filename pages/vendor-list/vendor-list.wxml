@@ -1,11 +1,15 @@
 <!-- SEARCH -->
-<van-search custom-class="search" field-class="search-field" background="#d1233e" placeholder="{{ LocalePackage.search[locale] }}" />
+<van-search custom-class="search" field-class="search-field" background="#d1233e" placeholder="{{ LocalePackage.search[locale] }}" use-action-slot bind:search="search">
+  <view slot="action" class="search-slot d-flex-row align-items-center" bind:tap="filter">
+    筛选<van-icon name="filter-o" custom-class="d-flex-column align-items-center"/>
+  </view>
+</van-search>
 <!-- TABS -->
 <van-tabs active="{{ current }}" bind:change="onChange" color="#d1233e" swipeable>
   <van-tab title="{{ category.label }}" wx:for="{{ categories }}" wx:for-item="category" wx:for-index="categoryIndex">
     <!-- CARDS -->
     <navigator class="card-container" wx:for="{{ vendors[category.name] }}" url="/pages/vendor-detail/vendor-detail?reference={{ item.reference }}">
-      <van-card desc="{{ item.description }}" title="{{ item.name }}" thumb="{{ item.thumbnail }}" thumb-mode="aspectFill" custom-class="card {{ (systemInfo.safeAreaInset && vendors[category.name].length - 1 == index) && 'card-inset' }}" title-class="card-title" desc-class="card-description" lazy-load>
+      <van-card desc="{{ item.description[locale] }}" title="{{ item.name[locale] }}" thumb="{{ item.thumbnail }}" thumb-mode="aspectFill" custom-class="card {{ (systemInfo.safeAreaInset && vendors[category.name].length - 1 == index) && 'card-inset' }}" title-class="card-title" desc-class="card-description" lazy-load>
         <view slot="tags">
           <van-tag custom-class="card-tag" color="#d1233e" wx:for="{{ item.tag[locale] }}">{{ item }}</van-tag>
         </view>

@@ -5,6 +5,7 @@
     "van-tag": "/miniprogram_npm/vant-weapp/tag/index",
     "van-rate": "/miniprogram_npm/vant-weapp/rate/index",
     "van-tab": "/miniprogram_npm/vant-weapp/tab/index",
-    "van-tabs": "/miniprogram_npm/vant-weapp/tabs/index"
+    "van-tabs": "/miniprogram_npm/vant-weapp/tabs/index",
+    "van-icon": "/miniprogram_npm/vant-weapp/icon/index"
   }
 }

@@ -2,6 +2,10 @@
   padding: 0;
 }
 
+.search-slot {
+  color: white;
+}
+
 .tabs {
   background: #fafafa !important;
 }
