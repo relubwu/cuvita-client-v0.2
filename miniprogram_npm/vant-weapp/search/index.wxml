@@ -37,7 +37,7 @@
   <view
     wx:if="{{ showAction || useActionSlot }}"
     class="van-search__action"
-    hover-class="van-search__action--hover"
+    hover-class="none"
     hover-stay-time="70"
   >
     <slot wx:if="{{ useActionSlot }}" name="action" />
