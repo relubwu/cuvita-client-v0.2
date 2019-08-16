@@ -10,10 +10,10 @@ Page({
     LocalePackage
   },
   onLoad: function () {
-    let { locale, systemInfo } = Store.getState().global;
+    let { locale, systemInfo, member } = Store.getState().global;
     // Synchronous storage hook
     this.setData({
-      locale, systemInfo
+      locale, systemInfo, member
     });
   },
   mapStateToPage: function () {
@@ -21,6 +21,10 @@ Page({
     if (this.data.locale !== newState.global.locale)
       this.setData({
         locale: newState.global.locale
+      });
+    if (this.data.member !== newState.global.member)
+      this.setData({
+        member: newState.global.member
       });
   },
   onShow: function () {

@@ -10,8 +10,13 @@
   <!-- BASE -->
   <label class="body-cell-group-title">{{ LocalePackage.mine[locale] }}</label>
   <van-cell-group custom-class="body-cell-group" border="{{ false }}">
-    <van-cell title="{{ LocalePackage.services[locale] }}" icon="bars" is-link bind:tap="sorry" />
-    <van-cell title="{{ LocalePackage.tickets[locale] }}" icon="label" is-link bind:tap="sorry" />
+    <van-cell title="{{ LocalePackage.services[locale] }}" icon="bars" is-link />
+    <van-cell title="{{ LocalePackage.tickets[locale] }}" icon="label" is-link />
+  </van-cell-group>
+  <!-- MEMBERSHIP -->
+  <label wx:if="{{ !!member }}" class="body-cell-group-title">{{ LocalePackage.membership[locale] }}</label>
+  <van-cell-group wx:if="{{ !!member }}" custom-class="body-cell-group" border="{{ false }}">
+    <van-cell title="{{ LocalePackage.modify[locale] }}" icon="column" is-link url="/pages/modify/modify" />
   </van-cell-group>
   <!-- SETTINGS -->
   <label class="body-cell-group-title">{{ LocalePackage.settings[locale] }}</label>
@@ -20,17 +25,22 @@
       <van-radio-group value="{{ LocalePackage.map[locale] }}">
         <van-cell-group border="{{ false }}">
           <van-cell title="简体中文" clickable value-class="value-class" bind:click="setLocale" data-locale="0" >
-            <van-radio name="zh-CN" checked-color="#d1233e" />
+            <van-radio name="zh" checked-color="#d1233e" />
           </van-cell>
           <van-cell title="English" clickable value-class="value-class" bind:click="setLocale" data-locale="1" border="{{ false }}">
-            <van-radio name="en-US" checked-color="#d1233e" />
+            <van-radio name="en" checked-color="#d1233e" />
           </van-cell>
         </van-cell-group>
       </van-radio-group>
     </van-collapse-item>
   </van-collapse>
-  <label class="body-cell-group-title">{{ LocalePackage.dev[locale] }}</label>
+  <label class="body-cell-group-title">{{ LocalePackage.others[locale] }}</label>
   <van-cell-group custom-class="body-cell-group" border="{{ false }}">
     <van-cell title="{{ LocalePackage.license[locale] }}" icon="info-o" is-link url="/pages/license/license" />
   </van-cell-group>
+  <view class="weui-footer" style="padding-bottom: 34px">
+    <view class="weui-footer__links">
+      <button class="weui-footer__link contact" open-type="contact">{{ LocalePackage.customerService[locale] }}</button>
+    </view>
+  </view>
 </view>
