@@ -1,5 +1,5 @@
 <!-- SEARCH -->
-<van-search custom-class="search" field-class="search-field" background="#d1233e" placeholder="{{ LocalePackage.search[locale] }}" use-action-slot bind:search="search">
+<van-search custom-class="search" field-class="search-field" background="#d1233e" placeholder="{{ LocalePackage.search[locale] }}" use-action-slot bind:search="search" value="{{ search.keyword }}">
   <view slot="action" class="search-slot d-flex-row align-items-center" bind:tap="filter">
     筛选<van-icon name="filter-o" custom-class="d-flex-column align-items-center"/>
   </view>

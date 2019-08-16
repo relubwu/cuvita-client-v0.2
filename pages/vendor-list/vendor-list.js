@@ -63,26 +63,6 @@ Page({
           skip: 0
         };
         this.fetchList(categories[0].name, 0, wx.hideLoading);
-      //   if (!this.data.category)
-      //     return request(API.VENDOR.LISTS, METHOD.GET, {
-      //       locale: Store.getState().global.locale,
-      //       realm: this.data.options.realm,
-      //       category: categories[0].name,
-      //       start: this.data.cursor[categories[0].name].start,
-      //       end: this.data.cursor[categories[0].name].end
-      //     });
-      // })
-      // .then(res => {
-      //   let vendors = { 
-      //     ...this.data.vendors,
-      //     ...res
-      //   };
-      //   this.setData({
-      //     vendors
-      //   });
-      //   wx.hideLoading();
-      // })
-      // .catch(e => Toasts.requestFailed(Store.getState().global.locale));
       })
   },
   onHide: function () {
@@ -95,7 +75,8 @@ Page({
   }) {
     feedback();
     this.setData({
-      current: index
+      current: index,
+      ['search.keyword']: ''
     });
     let currentCategory = this.data.categories[index].name;
     wx.showLoading({
@@ -106,23 +87,6 @@ Page({
         skip: 0,
       };
     this.fetchList(currentCategory, 0, wx.hideLoading);
-      // request(API.VENDOR.LISTS, METHOD.GET, {
-      //     locale: this.data.locale,
-      //     realm: this.data.options.realm,
-      //     category: this.data.categories[index].name,
-      //     start: this.data.cursor[this.data.categories[index].name].start,
-      //     end: this.data.cursor[this.data.categories[index].name].end
-      //   })
-      //   .then(res => {
-      //     let vendors = { 
-      //       ...this.data.vendors,
-      //       ...res
-      //     };
-      //     this.setData({
-      //       vendors
-      //     });
-      //     wx.hideLoading();
-      //   });
   },
   onReachBottom: function (e) {
     let currentCategory = this.data.categories[this.data.current].name;
@@ -136,45 +100,27 @@ Page({
     }
     let { skip } = this.data.cursor[currentCategory];
     this.fetchList(currentCategory, skip, wx.hideNavigationBarLoading);
-    // request(API.VENDOR.LISTS, METHOD.GET, {
-    //   locale: this.data.locale,
-    //   realm: this.data.options.realm,
-    //   category: currentCategory,
-    //   start: this.data.cursor[currentCategory].start,
-    //   end: this.data.cursor[currentCategory].end
-    // })
-    //   .then(res => {
-    //     res[currentCategory] = [...this.data.vendors[currentCategory], ...res[currentCategory]];
-    //     let vendors = {
-    //       ...this.data.vendors,
-    //       ...res
-    //     };
-    //     this.setData({
-    //       vendors
-    //     });
-    //     wx.hideNavigationBarLoading();
-    //   })
-    //   .catch(e => {
-    //     if (e === 400) {
-    //       this.setData({
-    //         [`bottomFlag.${currentCategory}`]: true
-    //       });
-    //     }
-    //     wx.hideNavigationBarLoading();
-    //   });
   },
-  fetchList: function (category, skip, callback) {
+  fetchList: function (category, skip, callback, keyword='') {
     request(API.VENDOR.LISTS, METHOD.GET, {
       realm: this.data.options.realm,
       category,
       skip,
-      limit: 10
+      limit: 10,
+      keyword
     })
       .then(res => {
-        if (res[category].length < 10)
+        if (res[category].length == 0)
+          return Toasts.requestNotFound(this.data.locale);
+        if (res[category].length < 10) {
           this.setData({
             [`bottomFlag.${category}`]: true
           });
+        } else {
+          this.setData({
+            [`bottomFlag.${category}`]: false
+          });
+        }
         let vendors;
         if (!this.data.vendors) {
           vendors = res;
@@ -191,18 +137,21 @@ Page({
         callback();
       })
       .catch(e => {
-        // if (e === 404) {
-        //   this.setData({
-        //     [`bottomFlag.${currentCategory}`]: true
-        //   });
-        // } else {
         Toasts.requestFailed(Store.getState().global.locale);
-        // }
         callback();
       });
   },
-  search: function ({ event: { detail } }) {
-
+  search: function ({ detail }) {
+    wx.showLoading({
+      title: GlobalLocalePackages.loading[this.data.locale]
+    });
+    let currentCategory = this.data.categories[this.data.current].name;
+    this.setData({
+      ['search.keyword']: detail,
+      [`vendors.${ currentCategory }`]: null,
+      [`cursor.${currentCategory}.skip`]: 0
+    });
+    this.fetchList(currentCategory, 0, wx.hideLoading, detail);
   },
   filter: function () {
 

@@ -20,3 +20,10 @@ export const incompleteForm = locale => {
     icon: 'none'
   })
 }
+
+export const requestNotFound = locale => {
+  wx.showToast({
+    title: GlobalLocalePackages.requestNotFound[locale],
+    icon: 'none'
+  })
+}
