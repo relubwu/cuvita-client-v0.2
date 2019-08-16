@@ -1,6 +1,7 @@
 import { request, METHOD } from '../../utils/promisfy';
 import * as API from '../../config/api.config';
 import * as LocalePackage from 'locale-package';
+import * as Toasts from '../../utils/toasts';
 import feedback from '../../utils/feedback';
 
 const { Store, GlobalActions } = getApp();
@@ -11,7 +12,8 @@ Page({
     palette: {
       card: ['linear-gradient(60deg, #a6403e, #b24846)' ,'linear-gradient(-45deg, #2b2b2b, #454545)'],
       font: ['beige', '#a6403e']
-    }
+    },
+    schema: 0
   },
   onLoad: function () {
     let { systemInfo, member } = Store.getState().global;
@@ -53,5 +55,16 @@ Page({
           callback();
       });
   },
-  feedback
+  feedback,
+  switchSchema: function () {
+    this.setData({
+      schema: this.data.schema == 0 ? 1 : 0
+    })
+  },
+  showQR: function () {
+    feedback();
+    wx.navigateTo({
+      url: `/pages/qrcode/qrcode?context=${Store.getState().global.member.cardID}`
+    })
+  }
 })
