@@ -4,3 +4,6 @@ export const realms = {
   lifestyle: ['生活', 'Lifestyle']
 };
 export const eol = ['到底啦！', 'No more entries!']
+export const sortByRating = ['按评分排序',  'Rating'];
+export const sortByPrice = ['按价格排序', 'Price'];
+export const sortByDistance = ['按距离排序', 'Closest']

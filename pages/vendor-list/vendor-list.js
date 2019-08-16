@@ -2,6 +2,7 @@ import { request, METHOD } from '../../utils/promisfy';
 import * as API from '../../config/api.config';
 import * as LocalePackage from 'locale-package';
 import * as Toasts from '../../utils/toasts';
+import Palette from '../../config/palette.config';
 import feedback from '../../utils/feedback';
 
 const {
@@ -13,6 +14,7 @@ const {
 Page({
   data: {
     LocalePackage,
+    Palette,
     cursor: {},
     current: 0,
     bottomFlag: [],
@@ -21,7 +23,9 @@ Page({
       sort: {
         criteria: NaN
       }
-    }
+    },
+    filter: '',
+    showFilter: false
   },
   onLoad: function (options) {
     let { locale } = Store.getState().global;
@@ -95,9 +99,9 @@ Page({
       return;
     }
     let { skip } = this.data.cursor[currentCategory];
-    this.fetchList(currentCategory, skip, wx.hideNavigationBarLoading);
+    this.fetchList(currentCategory, skip, wx.hideNavigationBarLoading, this.data.search.keyword);
   },
-  fetchList: function (category, skip, callback, keyword='') {
+  fetchList: function (category, skip, callback, keyword='', destructive=false) {
     request(API.VENDOR.LISTS, METHOD.GET, {
       realm: this.data.options.realm,
       category,
@@ -120,6 +124,15 @@ Page({
         let vendors;
         if (!this.data.vendors) {
           vendors = res;
+        } else if (destructive) {
+          this.setData({
+            [`vendors.${category}`]: null,
+            [`cursor.${category}.skip`]: 0
+          });
+          vendors = {
+            ...this.data.vendors,
+            ...res
+          }
         } else {
           res[category] = !!this.data.vendors[category] ? [...this.data.vendors[category], ...res[category]] : res[category];
           vendors = {
@@ -143,14 +156,23 @@ Page({
     });
     let currentCategory = this.data.categories[this.data.current].name;
     this.setData({
-      ['search.keyword']: detail,
-      [`vendors.${ currentCategory }`]: null,
-      [`cursor.${currentCategory}.skip`]: 0
+      ['search.keyword']: detail
     });
-    this.fetchList(currentCategory, 0, wx.hideLoading, detail);
+    this.fetchList(currentCategory, 0, wx.hideLoading, detail, true);
+  },
+  clear: function () {
+    if (this.data.search.keyword.length == 0)
+      return;
+    let currentCategory = this.data.categories[this.data.current].name;
+    this.setData({
+      ['search.keyword']: ''
+    });
+    this.fetchList(currentCategory, 0, () => {}, '', true);
   },
   filter: function () {
-
+    this.setData({
+      showFilter: !this.data.showFilter
+    });
   },
   feedback
 })

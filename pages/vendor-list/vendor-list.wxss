@@ -6,6 +6,17 @@
   color: white;
 }
 
+.filter {
+  background: white !important;
+  height: 0px !important;
+  overflow: hidden;
+  transition: height 0.3s;
+}
+
+.filter-show {
+  height: 100rpx !important;
+}
+
 .tabs {
   background: #fafafa !important;
 }
