@@ -12,7 +12,8 @@
     "pages/article-list/article-list",
     "pages/modify/modify",
     "pages/qrcode/qrcode",
-    "pages/auto-list/auto-list"
+    "pages/auto-list/auto-list",
+    "pages/auto-detail/auto-detail"
   ],
   "window": {
     "backgroundTextStyle": "light",
