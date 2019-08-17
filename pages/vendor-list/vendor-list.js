@@ -53,9 +53,6 @@ Page({
             skip: 0
           }
         });
-        // this.data.cursor[categories[0].name] = {
-        //   skip: 0
-        // };
         this.fetchList(categories[0].name, 0, wx.hideLoading);
       })
   },
