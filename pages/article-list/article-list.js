@@ -1,7 +1,6 @@
 import { request, METHOD } from '../../utils/promisfy';
 import { ARTICLE } from '../../config/api.config';
 import * as LocalePackage from 'locale-package';
-import * as Toasts from '../../utils/toasts';
 
 const { Store, GlobalLocalePackages } = getApp();
 
