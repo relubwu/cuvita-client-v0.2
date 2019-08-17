@@ -1,0 +1,11 @@
+{
+  "usingComponents": {
+    "van-card": "/miniprogram_npm/vant-weapp/card/index",
+    "van-tag": "/miniprogram_npm/vant-weapp/tag/index",
+    "van-tab": "/miniprogram_npm/vant-weapp/tab/index",
+    "van-tabs": "/miniprogram_npm/vant-weapp/tabs/index",
+    "van-icon": "/miniprogram_npm/vant-weapp/icon/index"
+  },
+  "navigationBarBackgroundColor": "#1773cf",
+  "backgroundColorTop": "#1773cf"
+}

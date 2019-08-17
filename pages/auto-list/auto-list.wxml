@@ -1,0 +1,23 @@
+<van-tabs active="{{ current }}" bind:change="onChange" color="{{ Palette.carmax }}" swipeable>
+  <van-tab title="{{ make.label[locale] }}" wx:for="{{ makes }}" wx:for-item="make" wx:for-index="makeIndex" wx:key="{{ make.name }}">
+  <!-- CARDS -->
+    <navigator class="card-container" wx:for="{{ cars[make.name] }}" wx:key="{{ item.stockNumber }}" url="/pages/auto-detail/auto-detail?stockNumber={{ item.stockNumber }}">
+      <van-card desc="" title="{{ item.year }} {{ item.make }} {{ item.model }}" thumb="{{ item.thumbnail }}" thumb-mode="aspectFill" custom-class="card {{ (systemInfo.safeAreaInset && vendors[category.name].length - 1 == index) && 'card-inset' }}" title-class="card-title" desc-class="card-description" lazy-load price="{{ item.basePrice }}" currency="$" origin-price="{{ item.msrp }}" price-class="card-price">
+        <view slot="tags">
+          <van-tag wx:if="{{ item.trim.length > 1 }}" custom-class="card-tag" color="{{ Palette.carmax }}">{{ item.trim }}</van-tag>
+        </view>
+        <view slot="footer" class="card-footer fw d-flex-row align-items-center justify-content-between">
+          <view class="d-flex-row align-items-center justify-content-center">
+            <image src="/assets/icons/vendor-location.png" class="card-location-icon" />
+            <label class="descriptive">{{ item.storeName }}</label>
+          </view>
+          <view class="d-flex-row align-items-center justify-content-center">
+            <van-icon name="clock-o" color="{{ Palette.descriptive }}" class="d-flex-column align-items-center" style="padding: 0 5px;"/>
+            <label class="descriptive">{{ item.mileage }} mi</label>
+          </view>
+          
+        </view>
+      </van-card>
+    </navigator>
+  </van-tab>
+</van-tabs>

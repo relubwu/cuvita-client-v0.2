@@ -1,0 +1,32 @@
+.card {
+  background: white !important;
+  padding: 14px 15px !important;
+  margin-bottom: 1px;
+}
+
+.card-title {
+  font-size: 11pt;
+  padding-bottom: 7px;
+}
+
+.card-price {
+  font-size: 11pt;
+}
+
+.card-tag {
+  margin-right: 5px;
+}
+
+.card-footer {
+  padding-top: 7px;
+}
+
+.card-location-icon {
+  width: 9pt;
+  height: 9pt;
+  padding-right: 2px;
+}
+
+.card-inset {
+  padding-bottom: 34px !important;
+}
