@@ -1,0 +1,32 @@
+<!-- GALLERY -->
+<swiper class="fvw" skip-hidden-item-layout>
+  <swiper-item wx:for="{{ vehicle.images }}">
+    <image class="fw fh" src="{{ item }}" mode="aspectFill" lazy-load />
+  </swiper-item>
+</swiper>
+<!-- INFO -->
+<view class="vendor-info container fw d-flex-column justify-content-center">
+  <label class="vendor-info-title">{{ vehicle.year }} {{ vehicle.make }} {{ vehicle.model }}</label>
+  <label class="vendor-info-description">{{ LocalePackage.stockNumber[locale] }} · #{{ vehicle.stockNumber }}</label>
+</view>
+<!-- TAGS -->
+<view class="container fw d-flex-row vendor-tags">
+  <van-tag size="large" wx:for="{{ vehicle.keyFeatures }}" color="{{ Palette.carmax }}" custom-class="vendor-tag">{{ item }}</van-tag>
+</view>
+<!-- FEATURES -->
+<van-cell-group border="{{ false }}" custom-class="container">
+  <van-cell title="{{ LocalePackage.vin[locale] }}" value="{{ vehicle.vin }}" icon="location-o" border="{{ false }}" />
+  <van-cell title="{{ LocalePackage.drivetrain[locale] }}" value="{{ vehicle.engineCylinders }} {{ LocalePackage.cylinders[locale] }} {{ vehicle.engineSize }}" icon="phone-circle-o" border="{{ false }}" />
+  <van-cell title="{{ LocalePackage.transmission[locale] }}" value="{{ vehicle.transmission }}" icon="phone-circle-o" border="{{ false }}" />
+  <van-cell title="{{ LocalePackage.fuelEconomy[locale] }}" value="{{ vehicle.mpgCity }} {{ LocalePackage.city[locale] }} | {{ vehicle.mpgHighway }} {{ LocalePackage.highway[locale] }}" icon="phone-circle-o" border="{{ false }}" />
+  <van-cell title="{{ LocalePackage.color[locale] }}" value="{{ vehicle.exteriorColor }} | {{ vehicle.interiorColor }}" icon="phone-circle-o" border="{{ false }}" />
+  <van-cell wx:if="{{ !!vehicle.trim }}" title="{{ LocalePackage.trim[locale] }}" value="{{ vehicle.trim }}" icon="phone-circle-o" border="{{ false }}" />
+  <van-cell title="{{ LocalePackage.store[locale] }}" value="CarMax {{ vehicle.storeName }}" icon="location-o" border="{{ false }}" />
+</van-cell-group>
+<!-- ACTIONS -->
+<view class="container vendor-actions d-flex-row align-items-center justify-content-evenly">
+  <view class="vendor-actions-navigate" bind:tap="call">{{ LocalePackage.more[locale] }}</view>
+</view>
+<view class="container fw d-flex-column vendor-rating align-items-center justify-content-center" style="{{ systemInfo.safeAreaInset && 'padding-bottom: 34px !important' }}">
+  <label class="vendor-rating-label">{{ LocalePackage.disclaimer[locale] }}</label>
+</view>

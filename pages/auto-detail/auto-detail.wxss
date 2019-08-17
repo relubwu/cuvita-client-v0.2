@@ -1,0 +1,55 @@
+page {
+  background: white;
+}
+
+swiper {
+  height: 70vw;
+}
+
+.vendor-info {
+  position: relative;
+  background: white;
+  top: -3vw;
+  padding-top: 3vw;
+  border-top-left-radius: 3vw;
+  border-top-right-radius: 3vw;
+}
+
+.vendor-info-title {
+  font-size: 20pt;
+  font-weight: bold;
+}
+
+.vendor-info-description {
+  font-size: 11pt;
+  color: #b2b2b2;
+  overflow: hidden;
+  word-wrap: break-word;
+}
+
+.vendor-tags {
+  flex-wrap: wrap;
+}
+
+.vendor-tag {
+  margin-right: 7px;
+  margin-bottom: 7px;
+}
+
+.vendor-rating-label {
+  font-size: 11pt;
+  color: #b2b2b2;
+  font-style: italic;
+}
+
+.vendor-actions-navigate {
+  text-align: center;
+  width: calc(100vw - 42px);
+  padding: 10px 15px;
+  margin: 7px 0;
+  box-sizing: border-box;
+  border-radius: 5px;
+  font-size: 14pt;
+  background: #1773cf;
+  color: white;
+}

@@ -1,0 +1,9 @@
+{
+  "usingComponents": {
+    "van-tag": "/miniprogram_npm/vant-weapp/tag/index",
+    "van-cell": "/miniprogram_npm/vant-weapp/cell/index",
+    "van-cell-group": "/miniprogram_npm/vant-weapp/cell-group/index"
+  },
+  "navigationBarBackgroundColor": "#1773cf",
+  "backgroundColorTop": "#1773cf"
+}
