@@ -3,8 +3,8 @@
 @font-face {
   font-style: normal;
   font-weight: 400;
-  font-family: sigvar-serial;
-  src: url(https://cuvita-1254391499.cos.na-siliconvalley.myqcloud.com/fonts/sigvar-serial-bold.ttf) format('truetype');
+  font-family: GurmukhiMN-Bold;
+  src: url(https://cuvita-1254391499.cos.na-siliconvalley.myqcloud.com/fonts/GurmukhiMN-Bold.ttf) format('truetype');
 }
 
 /**
@@ -49,7 +49,7 @@
 }
 
 .card-label label {
-  font: 30pt sigvar-serial;
+  font: 30pt GurmukhiMN-Bold;
   letter-spacing: 5px;
 }
 
