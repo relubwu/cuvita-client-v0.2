@@ -14,12 +14,12 @@
 </view>
 <!-- TABS -->
 <van-tabs active="{{ current }}" bind:change="onChange" color="{{ Palette.primary }}" swipeable>
-  <van-tab title="{{ category.label }}" wx:for="{{ categories }}" wx:for-item="category" wx:for-index="categoryIndex" wx:key="{{ category.name }}">
+  <van-tab title="{{ category.label[locale] }}" wx:for="{{ categories }}" wx:for-item="category" wx:for-index="categoryIndex" wx:key="{{ category.name }}">
     <!-- CARDS -->
     <navigator class="card-container" wx:for="{{ vendors[category.name] }}" wx:key="{{ item.reference }}" url="/pages/vendor-detail/vendor-detail?reference={{ item.reference }}">
       <van-card desc="{{ item.description[locale] }}" title="{{ item.name[locale] }}" thumb="{{ item.thumbnail }}" thumb-mode="aspectFill" custom-class="card {{ (systemInfo.safeAreaInset && vendors[category.name].length - 1 == index) && 'card-inset' }}" title-class="card-title" desc-class="card-description" lazy-load>
         <view slot="tags">
-          <van-tag custom-class="card-tag" color="#d1233e" wx:for="{{ item.tag[locale] }}" wx:for-index="tagIndex" wx:key="{{ tagIndex }}">{{ item }}</van-tag>
+          <van-tag custom-class="card-tag" color="{{ Palette.primary }}" wx:for="{{ item.tag[locale] }}" wx:for-index="tagIndex" wx:key="{{ tagIndex }}">{{ item }}</van-tag>
         </view>
         <view slot="footer" class="card-footer fw d-flex-row align-items-center justify-content-between">
           <view class="d-flex-row align-items-center justify-content-center">

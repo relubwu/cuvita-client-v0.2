@@ -5,7 +5,6 @@ import reducers from '/reducers';
 import * as GlobalActions from '/actions';
 import * as GlobalLocalePackages from '/locale-package';
 import * as API from '/config/api.config';
-import * as Toasts from '/utils/toasts';
 import logger from 'redux-logger';
 import Implement from '/utils/implement';
 
@@ -54,7 +53,12 @@ App({
         else if (!!Store.getState().global.member)
           Store.dispatch(GlobalActions.purgeMember());
       })
-      .catch(e => Toasts.requestFailed(Store.getState().global.locale));
+      .catch(e => {
+        wx.showToast({
+          title: GlobalLocalePackages.requestFailed[Store.getState().global.locale],
+          image: '/assets/icons/request-fail.png'
+        });
+      });
   },
   onNetworkStatusChange: function () {
     wx.onNetworkStatusChange(({ networkType }) => {

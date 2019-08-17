@@ -1,13 +1,15 @@
 import { request, METHOD } from '../../utils/promisfy';
 import * as API from '../../config/api.config';
 import * as LocalePackage from 'locale-package';
-import palette from '../../config/palette.config';
+import Sanitizer from '../../utils/sanitizer';
+import Palette from '../../config/palette.config';
 
 const { Store, GlobalActions } = getApp();
 
 Page({
   data: {
-    LocalePackage
+    LocalePackage,
+    pending: false
   },
   onLoad: function () {
     let { locale } = Store.getState().global;
@@ -30,42 +32,46 @@ Page({
   onUnload: function () {
     this.unsubscribe();
   },
-  sanitizer: function ({ cardID, name }) {
-    let sanity = true;
-    if (!cardID) {
-      sanity = false;
-      this.setData({
-        ['err.cardID']: LocalePackage.cardID.err[this.data.locale]
-      });
-    } else {
-      this.setData({
-        ['err.cardID']: ''
-      });
-    }
-    if (!name) {
-      sanity = false;
-      this.setData({
-        ['err.name']: LocalePackage.name.err[this.data.locale]
-      });
-    } else {
-      this.setData({
-        ['err.name']: ''
-      });
-    }
-    return sanity;
-  },
   onSubmit: function ({ detail: { value } }) {
-    if (!this.sanitizer(value))
+    let { clearance, failedItems } = Sanitizer(value, {
+      name: 'avail',
+      cardID: 'avail'
+    });
+    for (let key in value) {
+      if (!!failedItems[key]) {
+        if (LocalePackage[key].err)
+          this.setData({
+            [`err.${key}`]: LocalePackage[key].err[failedItems[key]][this.data.locale]
+          });
+      } else {
+        if (LocalePackage[key].err)
+          this.setData({
+            [`err.${key}`]: ''
+          });
+      }
+    }
+    if (!clearance) {
+      wx.showToast({
+        title: GlobalLocalePackages.incompleteForm[this.data.locale],
+        icon: 'none'
+      });
       return;
+    }
+    this.setData({
+      pending: true
+    });
     let { cardID, name } = value;
     request(API.MEMBER.LINK, METHOD.GET, { cardID, name, openid: Store.getState().global.user.openid })
       .then(res => {
         Store.dispatch(GlobalActions.updateMember(res));
+        this.setData({
+          pending: false
+        });
         wx.showModal({
           title: LocalePackage.modal.success.title[this.data.locale],
           content: LocalePackage.modal.success.content[this.data.locale],
           showCancel: false,
-          confirmColor: palette.primary,
+          confirmColor: Palette.primary,
           success: function () {
             wx.reLaunch({
               url: '/pages/vitae/vitae'
@@ -74,11 +80,14 @@ Page({
         });
       })
       .catch(e => {
+        this.setData({
+          pending: false
+        });
         wx.showModal({
           title: LocalePackage.modal.fail.title[this.data.locale],
           content: LocalePackage.modal.fail.content[this.data.locale],
           showCancel: false,
-          confirmColor: palette.primary
+          confirmColor: Palette.primary
         });
       })
   }

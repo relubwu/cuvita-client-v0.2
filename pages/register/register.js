@@ -1,7 +1,6 @@
 import { request, METHOD, requestPayment } from '../../utils/promisfy';
 import * as API from '../../config/api.config';
 import * as LocalePackage from 'locale-package';
-import * as Toasts from '../../utils/toasts';
 import Sanitizer from '../../utils/sanitizer';
 import Palette from '../../config/palette.config';
 import Region from '../../config/region.config';
@@ -64,7 +63,10 @@ Page({
       }
     }
     if (!clearance) { 
-      Toasts.incompleteForm(this.data.locale);
+      wx.showToast({
+        title: GlobalLocalePackages.incompleteForm[this.data.locale],
+        icon: 'none'
+      });
       return;
     }
     let { name, gender, tel, birthday, email, region } = value;
@@ -100,7 +102,10 @@ Page({
         this.setData({
           pending: false
         })
-        Toasts.paymentFailed(this.data.locale)
+        wx.showToast({
+          title: GlobalLocalePackages.paymentFailed[this.data.locale],
+          icon: 'none'
+        }); 
       });
   },
   toggle: function ({ target: { dataset: { name } } }) {

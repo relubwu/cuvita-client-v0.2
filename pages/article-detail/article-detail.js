@@ -1,6 +1,5 @@
 import { request, METHOD } from '../../utils/promisfy';
 import { ARTICLE } from '../../config/api.config';
-import * as Toasts from '../../utils/toasts';
 import feedback from '../../utils/feedback';
 
 const { Store, GlobalLocalePackages } = getApp();
@@ -16,12 +15,12 @@ const { Store, GlobalLocalePackages } = getApp();
 Page({
   onLoad: function ({ reference }) {
     // Synchronous storage hook
-    let { systemInfo } = Store.getState().global;
+    let { systemInfo, locale } = Store.getState().global;
     this.setData({
-      systemInfo
+      systemInfo, locale
     });
     wx.showLoading({
-      title: GlobalLocalePackages.loading[Store.getState().global.locale]
+      title: GlobalLocalePackages.loading[this.data.locale]
     });
     request(ARTICLE.DETAIL, METHOD.GET, { reference })
       .then(detail => {
@@ -33,7 +32,12 @@ Page({
         this.setData({ ...detail });
         wx.hideLoading();
       })
-      // .catch(e => Toasts.requestFailed(Store.getState().global.locale));
+      .catch(e => {
+        wx.showToast({
+          title: GlobalLocalePackages.requestFailed[this.data.locale],
+          image: '/assets/icons/request-fail.png'
+        });
+      });
   },
   replace: function (node) {
     let childContainsImage = false;

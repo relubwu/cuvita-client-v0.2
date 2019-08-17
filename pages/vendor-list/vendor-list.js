@@ -1,7 +1,7 @@
 import { request, METHOD } from '../../utils/promisfy';
 import * as API from '../../config/api.config';
 import * as LocalePackage from 'locale-package';
-import * as Toasts from '../../utils/toasts';
+// import * as Toasts from '../../utils/toasts';
 import Palette from '../../config/palette.config';
 import feedback from '../../utils/feedback';
 
@@ -44,16 +44,18 @@ Page({
       title: GlobalLocalePackages.loading[this.data.locale]
     });
     request(API.VENDOR.CATEGORIES, METHOD.GET, {
-      locale: Store.getState().global.locale,
       realm: this.data.options.realm
     })
       .then(categories => {
         this.setData({
-          categories
+          categories,
+          [`cursor.${ categories[0].name }`]: {
+            skip: 0
+          }
         });
-        this.data.cursor[categories[0].name] = {
-          skip: 0
-        };
+        // this.data.cursor[categories[0].name] = {
+        //   skip: 0
+        // };
         this.fetchList(categories[0].name, 0, wx.hideLoading);
       })
   },
@@ -83,9 +85,11 @@ Page({
       title: GlobalLocalePackages.loading[this.data.locale]
     });
     if (!this.data.cursor[this.data.categories[index].name])
-      this.data.cursor[this.data.categories[index].name] = {
-        skip: 0,
-      };
+      this.setData({
+        [`cursor.${ this.data.categories[index].name }`]: {
+          skip: 0
+        }
+      });
     this.fetchList(currentCategory, 0, wx.hideLoading);
   },
   onReachBottom: function (e) {
@@ -111,7 +115,10 @@ Page({
     })
       .then(res => {
         if (res[category].length == 0)
-          return Toasts.requestNotFound(this.data.locale);
+          return wx.showToast({
+            title: LocalePackages.eol[this.data.locale],
+            image: 'none'
+          });;
         if (res[category].length < 10) {
           this.setData({
             [`bottomFlag.${category}`]: true
@@ -146,7 +153,10 @@ Page({
         callback();
       })
       .catch(e => {
-        Toasts.requestFailed(Store.getState().global.locale);
+        wx.showToast({
+          title: GlobalLocalePackages.requestFailed[this.data.locale],
+          image: '/assets/icons/request-fail.png'
+        });
         callback();
       });
   },

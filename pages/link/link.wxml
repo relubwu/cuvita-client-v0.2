@@ -9,7 +9,7 @@
     <van-field name="name" type="text" label="{{ LocalePackage.name.label[locale] }}" placeholder="{{ LocalePackage.name.placeHolder[locale] }}" required border="{{ false }}" error-message="{{ err.name }}" error-message-align="right" input-align="right" />
   </van-cell-group>
   <view class="form-button-wrapper">
-    <button size="large" class="form-button" form-type="submit">{{ LocalePackage.submit[locale] }}</button>
+    <button loading="{{ pending }}" size="large" class="form-button" form-type="submit">{{ LocalePackage.submit[locale] }}</button>
   </view>
   <view class="weui-footer">
     <view class="weui-footer__links">

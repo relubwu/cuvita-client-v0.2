@@ -1,7 +1,6 @@
 import { request, METHOD } from '../../utils/promisfy';
 import * as API from '../../config/api.config';
 import * as LocalePackage from 'locale-package';
-import * as Toasts from '../../utils/toasts';
 import feedback from '../../utils/feedback';
 
 const { Store, GlobalActions, GlobalLocalePackages } = getApp();
@@ -28,7 +27,12 @@ Page({
         this.setData({ ...this.data, ...res, markers });
         wx.hideLoading();
       })
-      .catch(e => Toasts.requestFailed(Store.getState().global.locale));
+      .catch(e => {
+        wx.showToast({
+          title: GlobalLocalePackages.requestFailed[this.data.locale],
+          image: '/assets/icons/request-fail.png'
+        });
+      });
   },
   mapStateToPage: function () {
 

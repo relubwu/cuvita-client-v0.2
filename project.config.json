@@ -40,7 +40,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 9,
+			"current": 10,
 			"list": [
 				{
 					"id": 0,
@@ -110,6 +110,13 @@
 					"name": "qrcode",
 					"pathName": "pages/qrcode/qrcode",
 					"query": "context=12345678",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "auto-list",
+					"pathName": "pages/auto-list/auto-list",
+					"query": "",
 					"scene": null
 				}
 			]

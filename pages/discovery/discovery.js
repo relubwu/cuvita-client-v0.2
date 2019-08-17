@@ -1,6 +1,5 @@
 import * as Actions from 'actions';
 import services from '../../config/services.config';
-// import sorry from '../../utils/sorry';
 import { request, METHOD } from '../../utils/promisfy';
 import { FIELD } from '../../config/api.config';
 

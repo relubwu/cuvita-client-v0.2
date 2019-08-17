@@ -34,7 +34,10 @@ Page({
         wx.hideLoading();
       })
       .catch(e => {
-        Toasts.requestFailed(this.data.locale);
+        wx.showToast({
+          title: GlobalLocalePackages.requestFailed[this.data.locale],
+          image: '/assets/icons/request-fail.png'
+        });
         wx.hideLoading();
       });
   }

@@ -11,7 +11,7 @@ export const paymentFailed = locale => {
   wx.showToast({
     title: GlobalLocalePackages.paymentFailed[locale],
     icon: 'none'
-  });
+  }); 
 }
 
 export const incompleteForm = locale => {
@@ -22,8 +22,5 @@ export const incompleteForm = locale => {
 }
 
 export const requestNotFound = locale => {
-  wx.showToast({
-    title: GlobalLocalePackages.requestNotFound[locale],
-    icon: 'none'
-  })
+  
 }

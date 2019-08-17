@@ -4,12 +4,16 @@ export const description = ['尊享VITA会员福利', 'Enjoy Membership Benefits
 export const cardID = { 
   label: ['卡号', 'Card ID'],
   placeHolder: ['请输入卡号', '00000000'],
-  err: ['卡号不能为空', 'This field is required']
+  err: {
+    empty: ['卡号不能为空', 'This field is required']
+  }
 };
 export const name = {
   label: ['姓名', 'Name'],
   placeHolder: ['请输入姓名', 'John Appleseed'],
-  err: ['姓名不能为空', 'This field is required']
+  err: {
+    empty: ['姓名不能为空', 'This field is required']
+  }
 };
 export const submit = ['绑定', 'Link'];
 export const modal = {
