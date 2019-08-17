@@ -8,6 +8,7 @@
 <view class="vendor-info container fw d-flex-column justify-content-center">
   <label class="vendor-info-title">{{ vehicle.year }} {{ vehicle.make }} {{ vehicle.model }}</label>
   <label class="vendor-info-description">{{ LocalePackage.stockNumber[locale] }} · #{{ vehicle.stockNumber }}</label>
+  <label class="vendor-info-price">${{ vehicle.displayPrice }}</label>
 </view>
 <!-- TAGS -->
 <view class="container fw d-flex-row vendor-tags">
@@ -15,12 +16,12 @@
 </view>
 <!-- FEATURES -->
 <van-cell-group border="{{ false }}" custom-class="container">
-  <van-cell title="{{ LocalePackage.vin[locale] }}" value="{{ vehicle.vin }}" icon="location-o" border="{{ false }}" />
-  <van-cell title="{{ LocalePackage.drivetrain[locale] }}" value="{{ vehicle.engineCylinders }} {{ LocalePackage.cylinders[locale] }} {{ vehicle.engineSize }}" icon="phone-circle-o" border="{{ false }}" />
-  <van-cell title="{{ LocalePackage.transmission[locale] }}" value="{{ vehicle.transmission }}" icon="phone-circle-o" border="{{ false }}" />
-  <van-cell title="{{ LocalePackage.fuelEconomy[locale] }}" value="{{ vehicle.mpgCity }} {{ LocalePackage.city[locale] }} | {{ vehicle.mpgHighway }} {{ LocalePackage.highway[locale] }}" icon="phone-circle-o" border="{{ false }}" />
+  <van-cell title="{{ LocalePackage.vin[locale] }}" value="{{ vehicle.vin }}" icon="more-o" border="{{ false }}" />
+  <van-cell title="{{ LocalePackage.drivetrain[locale] }}" value="{{ vehicle.engineCylinders }} {{ LocalePackage.cylinders[locale] }} {{ vehicle.engineSize }}" icon="logistics" border="{{ false }}" />
+  <van-cell title="{{ LocalePackage.transmission[locale] }}" value="{{ vehicle.transmission }}" icon="exchange" border="{{ false }}" />
+  <van-cell title="{{ LocalePackage.fuelEconomy[locale] }}" value="{{ vehicle.mpgCity }} {{ LocalePackage.city[locale] }} | {{ vehicle.mpgHighway }} {{ LocalePackage.highway[locale] }}" icon="filter-o" border="{{ false }}" />
   <van-cell title="{{ LocalePackage.color[locale] }}" value="{{ vehicle.exteriorColor }} | {{ vehicle.interiorColor }}" icon="phone-circle-o" border="{{ false }}" />
-  <van-cell wx:if="{{ !!vehicle.trim }}" title="{{ LocalePackage.trim[locale] }}" value="{{ vehicle.trim }}" icon="phone-circle-o" border="{{ false }}" />
+  <van-cell wx:if="{{ !!vehicle.trim }}" title="{{ LocalePackage.trim[locale] }}" value="{{ vehicle.trim }}" icon="brush-o" border="{{ false }}" />
   <van-cell title="{{ LocalePackage.store[locale] }}" value="CarMax {{ vehicle.storeName }}" icon="location-o" border="{{ false }}" />
 </van-cell-group>
 <!-- ACTIONS -->

@@ -27,6 +27,11 @@ swiper {
   word-wrap: break-word;
 }
 
+.vendor-info-price {
+  font-size: 16pt;
+  color: orange;
+}
+
 .vendor-tags {
   flex-wrap: wrap;
 }
