@@ -10,7 +10,6 @@
   <!-- BASE -->
   <label class="body-cell-group-title">{{ LocalePackage.mine[locale] }}</label>
   <van-cell-group custom-class="body-cell-group" border="{{ false }}">
-    <van-cell title="{{ LocalePackage.services[locale] }}" icon="bars" is-link />
     <van-cell title="{{ LocalePackage.tickets[locale] }}" icon="label" is-link />
   </van-cell-group>
   <!-- MEMBERSHIP -->

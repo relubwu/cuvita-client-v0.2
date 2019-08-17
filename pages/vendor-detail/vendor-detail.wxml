@@ -4,8 +4,8 @@
 </view>
 <!-- INFO -->
 <view class="vendor-info container fw d-flex-column justify-content-center">
-  <label class="vendor-info-title">{{ name }}</label>
-  <label class="vendor-info-description">{{ description }}</label>
+  <label class="vendor-info-title">{{ name[locale] }}</label>
+  <label class="vendor-info-description">{{ description[locale] }}</label>
 </view>
 <!-- GALLERY -->
 <view class="container fw">
@@ -15,7 +15,7 @@
 </view>
 <!-- TAGS -->
 <view class="container fw d-flex-row vendor-tags">
-  <van-tag size="large" wx:for="{{ tag }}" color="#d1233e" custom-class="vendor-tag">{{ item }}</van-tag>
+  <van-tag size="large" wx:for="{{ tag[locale] }}" color="{{ Palette.primary }}" custom-class="vendor-tag">{{ item }}</van-tag>
 </view>
 <!-- FEATURES -->
 <van-cell-group border="{{ false }}" custom-class="container">
