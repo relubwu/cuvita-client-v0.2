@@ -1,4 +1,3 @@
-import services from '../../../../config/services.config';
 import feedback from '../../../../utils/feedback';
 
 const { Store, GlobalActions } = getApp();
@@ -8,12 +7,19 @@ Component({
     addGlobalClass: true
   },
 
+  properties: {
+    targets: {
+      type: Object
+    }
+  },
+
   lifetimes: {
     attached: function () {
       // Synchronous storage hook
-      let { locale } = Store.getState().global
+      let { global: { locale }, page: { discovery: { services } } } = Store.getState();
       this.setData({
-        locale
+        locale,
+        services: services.slice(4)
       });
       this.unsubscribe = Store.subscribe(() => {
         this.mapStateToComponent();
@@ -25,14 +31,6 @@ Component({
   },
 
   /**
-   * Component initial data
-   */
-  data: {
-    services: services.slice(4)
-  },
-
-
-  /**
    * Component methods
    */
   methods: {
@@ -41,6 +39,10 @@ Component({
       if (this.data.locale !== newState.global.locale)
         this.setData({
           locale: newState.global.locale
+        });
+      if (JSON.stringify(this.data.services) !== JSON.stringify(newState.page.discovery.services.slice(4)))
+        this.setData({
+          services: newState.page.discovery.services.slice(4)
         });
     },
     feedback

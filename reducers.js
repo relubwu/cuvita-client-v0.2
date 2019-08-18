@@ -13,6 +13,7 @@ import {
   SET_NETWORK_STATUS,
   SET_GEO_LOCATION
 } from './actions';
+import PAGE_REDUCERS_DISCOVERY from 'pages/discovery/reducers';
 
 /**
  * Constants
@@ -20,8 +21,8 @@ import {
 const DEFAULT_SYSTEM_INFO = null;
 const DEFAULT_LOCALE = wx.getStorageSync("locale") || 0;
 const DEFAULT_LOCALE_MAPPING = ["zh", "en"];
-const DEFAULT_ROUTER = { path: "/pages/index/index", delta: 0 };
-const DEFAULT_REGION = "sd";
+const DEFAULT_ROUTER = { path: "/pages/discovery/discovery", delta: 0 };
+const DEFAULT_REGION = "ucsd";
 const DEFAULT_USER = null;
 const DEFAULT_MEMBER = null;
 
@@ -105,11 +106,16 @@ const GLOBAL_REDUCERS = combineReducers({
   member
 });
 
+const PAGE_REDUCERS = combineReducers({
+  discovery: PAGE_REDUCERS_DISCOVERY
+});
+
 /**
  * Export
  */
 const reducers = combineReducers({
-  global: GLOBAL_REDUCERS
+  global: GLOBAL_REDUCERS,
+  page: PAGE_REDUCERS
 });
 
 export default reducers;

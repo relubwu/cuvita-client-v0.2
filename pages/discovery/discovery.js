@@ -22,6 +22,17 @@ Page({
     this.setData({
       locale, systemInfo
     });
+    this.unsubscribe = Store.subscribe(() => {
+      this.mapStateToPage();
+    });
+    request(FIELD.BANNER, METHOD.GET)
+      .then(banner => {
+        this.setData({ banner })
+      });
+    request(FIELD.SERVICES, METHOD.GET)
+      .then(targets => {
+        Store.dispatch(Actions.updateServices(targets));
+      });
   },
   onScroll: function ({ detail: { scrollTop } }) {
     if (this.data.scrollTop > -this.data.systemInfo.screenWidth * 1.2 && scrollTop <= -this.data.systemInfo.screenWidth * 1.2)
@@ -29,15 +40,6 @@ Page({
     this.setData({
       scrollTop
     });
-  },
-  onShow: function () {
-    this.unsubscribe = Store.subscribe(() => {
-      this.mapStateToPage();
-    });
-    request(FIELD.BANNER, METHOD.GET)
-      .then(banner => {
-        this.setData({ banner })
-      })
   },
   onUnLoad: function () {
     this.unsubscribe();
