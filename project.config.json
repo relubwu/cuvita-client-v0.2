@@ -13,7 +13,7 @@
 		"checkInvalidKey": true
 	},
 	"compileType": "miniprogram",
-	"libVersion": "2.7.7",
+	"libVersion": "2.8.0",
 	"appid": "wxb578ff9d59271c56",
 	"projectname": "CUVita",
 	"debugOptions": {
@@ -40,7 +40,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 11,
+			"current": 12,
 			"list": [
 				{
 					"id": 0,
@@ -124,6 +124,13 @@
 					"name": "auto-detail",
 					"pathName": "pages/auto-detail/auto-detail",
 					"query": "stockNumber=17745923",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "finance",
+					"pathName": "pages/finance/finance",
+					"query": "",
 					"scene": null
 				}
 			]
