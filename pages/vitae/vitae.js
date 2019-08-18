@@ -23,7 +23,7 @@ Page({
   },
   mapStateToPage: function () {
     let newState = Store.getState();
-    if (this.data.member !== newState.global.member)
+    if (JSON.stringify(this.data.member) !== JSON.stringify(newState.global.member))
       this.setData({
         member: newState.global.member
       });
