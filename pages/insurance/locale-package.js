@@ -1,0 +1,1 @@
+export const title = ["保险", "Insurance"];
