@@ -6,7 +6,7 @@
     </navigator>
   </view>
   <view class="items container fw d-flex-column align-items-center">
-    <navigator class="item fw animated d-flex-column" wx:for="{{ articles }}" hover-class="item-hover" bind:tap="feedback" url="/pages/article-detail/article-detail?reference={{ item.reference }}">
+    <navigator class="item fw animated d-flex-column" wx:for="{{ articles }}" wx:key="{{ item.reference }}" hover-class="item-hover" bind:tap="feedback" url="/pages/article-detail/article-detail?reference={{ item.reference }}">
       <image class="image fw" src="{{ item.thumbnail }}" mode="aspectFill" lazy-load />
       <view class="info d-flex-column">
         <label class="info-title fw">{{ item.title }}</label>

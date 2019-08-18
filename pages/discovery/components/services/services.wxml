@@ -1,5 +1,5 @@
 <view class="fw services container d-flex-row justify-content-between">
-  <navigator class="item fh animated d-flex-column align-items-center justify-content-between" wx:for="{{ services }}" url="{{ item.target }}" hover-class="none" bind:tap="{{ !!item.target ? 'feedback' : 'sorry' }}">
+  <navigator class="item fh animated d-flex-column align-items-center justify-content-between" wx:for="{{ services }}" wx:key="{{ index }}" url="{{ item.target }}" hover-class="none" bind:tap="feedback">
     <image class="icon fw fh" src="{{ item.icon }}" />
     <label>{{ item.label[locale] }}</label>
   </navigator>
