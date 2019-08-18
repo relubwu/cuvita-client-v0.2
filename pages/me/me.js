@@ -15,6 +15,9 @@ Page({
     this.setData({
       locale, systemInfo, member
     });
+    this.unsubscribe = Store.subscribe(() => {
+      this.mapStateToPage();
+    });
   },
   mapStateToPage: function () {
     let newState = Store.getState();
@@ -26,11 +29,6 @@ Page({
       this.setData({
         member: newState.global.member
       });
-  },
-  onShow: function () {
-    this.unsubscribe = Store.subscribe(() => {
-      this.mapStateToPage();
-    });
   },
   onUnload: function () {
     this.unsubscribe();
