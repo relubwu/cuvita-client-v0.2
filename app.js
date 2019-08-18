@@ -5,10 +5,11 @@ import reducers from '/reducers';
 import * as GlobalActions from '/actions';
 import * as GlobalLocalePackages from '/locale-package';
 import * as API from '/config/api.config';
-import logger from 'redux-logger';
+// import logger from 'redux-logger';
 import Implement from '/utils/implement';
 
-const Store = createStore(reducers, applyMiddleware(logger, ReduxThunk));
+// const Store = createStore(reducers, applyMiddleware(logger, ReduxThunk));
+const Store = createStore(reducers, applyMiddleware(ReduxThunk));
 
 App({
   Store,
