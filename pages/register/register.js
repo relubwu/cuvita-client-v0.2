@@ -73,19 +73,29 @@ Page({
     gender = parseInt(gender);
     birthday = parseInt(birthday);
     region = parseInt(region);
+    wx.showLoading({
+      title: GlobalLocalePackages.loading[this.data.locale]
+    });
     this.setData({
       pending: true
     });
     request(API.MEMBER.REGISTER, METHOD.POST, { name, gender, tel, birthday, email, region, openid: Store.getState().global.user.openid })
-      .then(bundle => requestPayment(bundle))
-      .then(() => {
+      .then(bundle => { 
+        wx.hideLoading();
         this.setData({
           pending: false
+        });
+        return requestPayment(bundle)
+      })
+      .then(() => {
+        wx.showLoading({
+          title: GlobalLocalePackages.loading[this.data.locale]
         });
         return request(API.MEMBER.GETINFO, METHOD.GET, { openid: Store.getState().global.user.openid })
       })
       .then(res => {
         Store.dispatch(GlobalActions.updateMember(res));
+        wx.hideLoading();
         wx.showModal({
           title: LocalePackage.modal.success.title[this.data.locale],
           content: LocalePackage.modal.success.content[this.data.locale],
@@ -101,7 +111,8 @@ Page({
       .catch(e => {
         this.setData({
           pending: false
-        })
+        });
+        wx.hideLoading();
         wx.showToast({
           title: GlobalLocalePackages.paymentFailed[this.data.locale],
           icon: 'none'

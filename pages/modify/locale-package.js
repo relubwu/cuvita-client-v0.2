@@ -9,6 +9,6 @@ export const submit = ["确认", "Update"];
 export const modal = {
   success: {
     title: ['提交成功', 'Success!'],
-    content: ['您的会员信息已记录在案', 'Your membership detail is updated']
+    content: ['您的会员信息已成功更新', 'Your membership detail is updated']
   }
 }

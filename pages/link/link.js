@@ -57,16 +57,14 @@ Page({
       });
       return;
     }
-    this.setData({
-      pending: true
+    wx.showLoading({
+      title: GlobalLocalePackages.loading[this.data.locale]
     });
     let { cardID, name } = value;
     request(API.MEMBER.LINK, METHOD.GET, { cardID, name, openid: Store.getState().global.user.openid })
       .then(res => {
         Store.dispatch(GlobalActions.updateMember(res));
-        this.setData({
-          pending: false
-        });
+        wx.hideLoading();
         wx.showModal({
           title: LocalePackage.modal.success.title[this.data.locale],
           content: LocalePackage.modal.success.content[this.data.locale],
@@ -80,9 +78,7 @@ Page({
         });
       })
       .catch(e => {
-        this.setData({
-          pending: false
-        });
+        wx.hideLoading();
         wx.showModal({
           title: LocalePackage.modal.fail.title[this.data.locale],
           content: LocalePackage.modal.fail.content[this.data.locale],

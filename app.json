@@ -13,7 +13,9 @@
     "pages/modify/modify",
     "pages/qrcode/qrcode",
     "pages/auto-list/auto-list",
-    "pages/auto-detail/auto-detail"
+    "pages/auto-detail/auto-detail",
+    "pages/finance/finance",
+    "pages/insurance/insurance"
   ],
   "window": {
     "backgroundTextStyle": "light",
