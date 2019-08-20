@@ -2,6 +2,7 @@ import * as Actions from 'actions';
 import services from '../../config/services.config';
 import { request, METHOD } from '../../utils/promisfy';
 import { FIELD } from '../../config/api.config';
+import feedback from '../../utils/feedback';
 
 const { Store, GlobalActions } = getApp();
 
@@ -15,17 +16,21 @@ Page({
       this.setData({
         locale: newState.global.locale
       });
+    if (this.data.region !== newState.global.region)
+      this.setData({
+        region: newState.global.region
+      });
   },
   onLoad: function (options) {
     // Synchronous storage hook
-    let { locale, systemInfo } = Store.getState().global
+    let { locale, systemInfo, region } = Store.getState().global
     this.setData({
-      locale, systemInfo
+      locale, systemInfo, region
     });
     this.unsubscribe = Store.subscribe(() => {
       this.mapStateToPage();
     });
-    request(FIELD.BANNER, METHOD.GET)
+    request(FIELD.BANNER, METHOD.GET, { region })
       .then(banner => {
         this.setData({ banner })
       });
@@ -43,5 +48,6 @@ Page({
   },
   onUnLoad: function () {
     this.unsubscribe();
-  }
+  },
+  feedback
 })
