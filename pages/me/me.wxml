@@ -21,13 +21,13 @@
   <label class="body-cell-group-title">{{ LocalePackage.settings[locale] }}</label>
   <van-collapse custom-class="body-cell-group" value="{{ currentSetting }}" bind:change="onChange" accordion border="{{ false }}">
     <van-collapse-item title="{{ LocalePackage.locale[locale] }}" icon="chat" name="locale">
-      <van-radio-group value="{{ LocalePackage.map[locale] }}">
+      <van-radio-group value="{{ options.locale[locale] }}">
         <van-cell-group border="{{ false }}">
           <van-cell title="简体中文" clickable value-class="value-class" bind:click="setLocale" data-locale="0" >
-            <van-radio name="zh" checked-color="#d1233e" />
+            <van-radio name="zh" checked-color="{{ Palette.primary }}" />
           </van-cell>
           <van-cell title="English" clickable value-class="value-class" bind:click="setLocale" data-locale="1" border="{{ false }}">
-            <van-radio name="en" checked-color="#d1233e" />
+            <van-radio name="en" checked-color="{{ Palette.primary }}" />
           </van-cell>
         </van-cell-group>
       </van-radio-group>

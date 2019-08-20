@@ -1,19 +1,24 @@
 import { request, METHOD } from '../../utils/promisfy';
 import * as API from '../../config/api.config';
 import * as LocalePackage from 'locale-package';
+import Palette from '../../config/palette.config';
 import feedback from '../../utils/feedback';
 
 const { Store, GlobalActions } = getApp();
 
 Page({
   data: {
-    LocalePackage
+    LocalePackage,
+    Palette,
+    options: {
+      locale: ['zh', 'en']
+    }
   },
   onLoad: function () {
-    let { locale, systemInfo, member } = Store.getState().global;
+    let { locale, systemInfo, member, region } = Store.getState().global;
     // Synchronous storage hook
     this.setData({
-      locale, systemInfo, member
+      locale, systemInfo, member, region
     });
     this.unsubscribe = Store.subscribe(() => {
       this.mapStateToPage();
