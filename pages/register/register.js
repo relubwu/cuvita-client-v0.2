@@ -3,7 +3,7 @@ import * as API from '../../config/api.config';
 import * as LocalePackage from 'locale-package';
 import Sanitizer from '../../utils/sanitizer';
 import Palette from '../../config/palette.config';
-import Region from '../../config/region.config';
+import { mapRegionToMatrix, mapIndexToRegion } from '../../utils/region-converter';
 
 const { Store, GlobalActions, GlobalLocalePackages } = getApp();
 
@@ -14,7 +14,6 @@ Page({
     popup: {},
     options: {
       gender: [['男', '女', '其他'], ['Male', 'Female', 'Non-Binary']],
-      region: Region,
       minDate: new Date(1990, 0, 1).getTime(),
       maxDate: new Date().getTime()
     }
@@ -23,7 +22,8 @@ Page({
     let { locale } = Store.getState().global;
     // Synchronous storage hook
     this.setData({
-      locale
+      locale,
+      ['options.region']: mapRegionToMatrix()
     });
     wx.setNavigationBarTitle({
       title: LocalePackage.title[Store.getState().global.locale]
@@ -31,6 +31,14 @@ Page({
   },
   mapStateToPage: function () {
     
+  },
+  mapRegionToValue: function () {
+    let region = [[], []];
+    Region.map(v => {
+      region[0].push(v.name[0]);
+      region[1].push(v.name[1]);
+    });
+    return { region };
   },
   onShow: function () {
     this.unsubscribe = Store.subscribe(() => {
@@ -79,7 +87,7 @@ Page({
     this.setData({
       pending: true
     });
-    request(API.MEMBER.REGISTER, METHOD.POST, { name, gender, tel, birthday, email, region, openid: Store.getState().global.user.openid })
+    request(API.MEMBER.REGISTER, METHOD.POST, { name, gender, tel: tel.trim(), birthday, email: email.trim(), region: mapIndexToRegion(region).id, openid: Store.getState().global.user.openid })
       .then(bundle => { 
         wx.hideLoading();
         this.setData({
