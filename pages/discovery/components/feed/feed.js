@@ -13,9 +13,9 @@ Component({
   lifetimes: {
     attached: function () {
       // Synchronous storage hook
-      let { locale } = Store.getState().global
+      let { locale, region } = Store.getState().global
       this.setData({
-        locale
+        locale, region
       });
       this.unsubscribe = Store.subscribe(() => {
         this.mapStateToComponent();
@@ -50,7 +50,7 @@ Component({
         });
     },
     fetchData: function () {
-      request(FIELD.FEED, METHOD.GET)
+      request(FIELD.FEED, METHOD.GET, { region: this.data.region })
         .then(res => this.setData({ ...res }));
     },
     feedback
