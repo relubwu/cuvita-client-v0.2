@@ -15,7 +15,8 @@
     "pages/auto-list/auto-list",
     "pages/auto-detail/auto-detail",
     "pages/finance/finance",
-    "pages/insurance/insurance"
+    "pages/insurance/insurance",
+    "pages/region/region"
   ],
   "window": {
     "backgroundTextStyle": "light",
