@@ -22,9 +22,9 @@ const DEFAULT_SYSTEM_INFO = null;
 const DEFAULT_LOCALE = wx.getStorageSync("locale") || 0;
 const DEFAULT_LOCALE_MAPPING = ["zh", "en"];
 const DEFAULT_ROUTER = { path: "/pages/discovery/discovery", delta: 0 };
-const DEFAULT_REGION = "ucsd";
+const DEFAULT_REGION = wx.getStorageSync("region") || "ucsd";
 const DEFAULT_USER = null;
-const DEFAULT_MEMBER = null;
+const DEFAULT_MEMBER = wx.getStorageSync("member") || null;
 
 /**
  * Global Reducers
@@ -55,6 +55,21 @@ function locale(state = DEFAULT_LOCALE, { type, locale }) {
       return locale;
       break;
     default:
+      return state;
+      break;
+  }
+}
+
+function region(state = DEFAULT_REGION, { type, region }) {
+  switch (type) {
+    case SET_REGION:
+      wx.setStorage({
+        key: 'region',
+        data: region,
+      });
+      return region;
+      break;
+    default: 
       return state;
       break;
   }
@@ -102,6 +117,7 @@ function member(state = DEFAULT_MEMBER, { type, res }) {
 const GLOBAL_REDUCERS = combineReducers({
   systemInfo,
   locale,
+  region,
   user,
   member
 });
