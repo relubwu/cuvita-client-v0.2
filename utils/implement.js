@@ -6,7 +6,7 @@ const confirm = ['前往填写', 'Go']
 
 export default function implement (member, locale) {
   let { name, gender, tel, region, birthday, email } = member;
-  if (!name || gender === null || !tel || region === null || !birthday || !email)
+  if (!name || gender === null || !tel || !region || !birthday || !email)
     wx.showModal({
       title: title[locale],
       content: content[locale],
