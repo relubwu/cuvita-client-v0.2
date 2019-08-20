@@ -1,0 +1,8 @@
+page {
+  background: white;
+}
+
+map {
+  width: 100vw;
+  height: 60vh;
+}

@@ -3,7 +3,8 @@
     "tray": "components/tray/tray",
     "services": "components/services/services",
     "recommendation": "components/recommendation/recommendation",
-    "feed": "components/feed/feed"
+    "feed": "components/feed/feed",
+    "van-icon": "/miniprogram_npm/vant-weapp/icon/index"
   },
   "navigationStyle": "custom"
 }

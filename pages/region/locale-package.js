@@ -1,0 +1,1 @@
+export const title = ['设置地区', 'Region'];
