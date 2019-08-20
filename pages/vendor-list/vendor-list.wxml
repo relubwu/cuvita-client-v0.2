@@ -1,7 +1,7 @@
 <!-- SEARCH -->
 <van-search custom-class="search" field-class="search-field" background="#d1233e" placeholder="{{ LocalePackage.search[locale] }}" use-action-slot bind:search="search" bind:clear="clear" value="{{ search.keyword }}">
   <view slot="action" class="search-slot d-flex-row align-items-center" bind:tap="filter">
-    筛选<van-icon name="filter-o" custom-class="d-flex-column align-items-center"/>
+    {{ LocalePackage.filter[locale] }}<van-icon name="filter-o" custom-class="d-flex-column align-items-center"/>
   </view>
 </van-search>
 <!-- FILTER -->
@@ -23,8 +23,8 @@
         </view>
         <view slot="footer" class="card-footer fw d-flex-row align-items-center justify-content-between">
           <view class="d-flex-row align-items-center justify-content-center">
-            <image src="/assets/icons/vendor-location.png" class="card-location-icon" />
-            <label class="descriptive">{{ item.region }}</label>
+            <van-icon custom-class="d-flex-row align-items-center" name="location-o" color="{{ Palette.descriptive }}" />
+            <label style="color: {{ Palette.descriptive }}">{{ item.region }}</label>
           </view>
           <van-rate value="{{ item.rating }}" readonly="true" />
         </view>
