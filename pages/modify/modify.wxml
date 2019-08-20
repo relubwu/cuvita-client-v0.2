@@ -5,12 +5,9 @@
 <form bind:submit="onSubmit">
   <van-cell-group custom-class="form-group" border="{{ false }}">
     <van-field name="name" type="text" label="{{ LocalePackage.name.label[locale] }}" placeholder="{{ LocalePackage.name.placeHolder[locale] }}" error-message="{{ err.name }}" error-message-align="right" input-align="right" value="{{ name.value }}" />
-
     <van-field name="tel" type="number" label="{{ LocalePackage.tel.label[locale] }}" placeholder="{{ LocalePackage.tel.placeHolder[locale] }}" error-message="{{ err.tel }}" error-message-align="right" input-align="right" value="{{ tel.value }}" />
-
     <van-field name="email" type="text" label="{{ LocalePackage.email.label[locale] }}" placeholder="{{ LocalePackage.email.placeHolder[locale] }}" error-message="{{ err.email }}" error-message-align="right" input-align="right" value="{{ email.value }} "/>
-
-    <van-cell title="{{ LocalePackage.region.label[locale] }}" is-link value="{{ options.region[locale][region.value] }}" bind:click="toggle" data-name="region" />
+    <van-cell title="{{ LocalePackage.region.label[locale] }}" is-link value="{{ options.region[locale][region.value] }}" bind:click="toggle" data-name="region" /> 
     <van-popup show="{{ popup.region }}" position="bottom" overlay="{{ true }}" bind:close="toggle" data-name="region">
       <van-picker columns="{{ options.region[locale] }}" data-name="region" show-toolbar bind:cancel="toggle" bind:confirm="setRegion"/>
     </van-popup>
@@ -29,6 +26,6 @@
     <input hidden name="birthday" value="{{ birthday.value }}" />
   </van-cell-group>
   <view class="form-button-wrapper">
-    <button size="large" class="form-button" form-type="submit" loading="{{ pending }}">{{ LocalePackage.submit[locale] }}</button>
+    <button size="large" class="form-button" form-type="submit">{{ LocalePackage.submit[locale] }}</button>
   </view>
 </form>

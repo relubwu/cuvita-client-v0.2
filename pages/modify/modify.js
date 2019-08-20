@@ -4,7 +4,7 @@ import * as LocalePackage from 'locale-package';
 import Sanitizer from '../../utils/sanitizer';
 import Palette from '../../config/palette.config';
 import Autofiller from '../../utils/autofiller';
-import Region from '../../config/region.config';
+import { mapRegionToMatrix, mapIndexToRegion, mapRegionIdToIndex } from '../../utils/region-converter';
 
 const { Store, GlobalLocalePackages } = getApp();
 
@@ -14,7 +14,6 @@ Page({
     popup: {},
     options: {
       gender: [['男', '女', '其他'], ['Male', 'Female', 'Non-Binary']],
-      region: Region,
       minDate: new Date(1990, 0, 1).getTime(),
       maxDate: new Date().getTime()
     }
@@ -23,7 +22,8 @@ Page({
     let { locale } = Store.getState().global;
     // Synchronous storage hook
     this.setData({
-      locale
+      locale,
+      ['options.region']: mapRegionToMatrix()
     });
     wx.setNavigationBarTitle({
       title: LocalePackage.title[Store.getState().global.locale]
@@ -50,6 +50,12 @@ Page({
         birthday: { label: birthday.toLocaleDateString(), value: birthday.getTime() }
       });
       delete fill['birthday.value'];
+    }
+    if (!!fill['region.value']) {
+      this.setData({
+        region: { value: mapRegionIdToIndex(fill['region.value']) }
+      });
+      delete fill['region.value'];
     }
     for (let key of Object.keys(fill)) {
       this.setData({
@@ -96,7 +102,7 @@ Page({
     wx.showLoading({ 
       title: GlobalLocalePackages.loading[this.data.locale]
     });
-    request(API.MEMBER.MODIFY, METHOD.POST, { name, gender, tel, birthday, email, region, openid: Store.getState().global.user.openid })
+    request(API.MEMBER.MODIFY, METHOD.POST, { name, gender, tel: tel.trim(), birthday, email: email.trim(), region: mapIndexToRegion(region).id, openid: Store.getState().global.user.openid })
       .then(res => {
         wx.hideLoading();
         wx.showModal({
