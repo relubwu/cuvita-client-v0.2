@@ -27,13 +27,6 @@ App({
           wx.getSystemInfoSync()
         )
       );
-    // Synchronous memberInfo
-    let member = wx.getStorageSync('member');
-    if (!!member)
-      Store
-        .dispatch(
-          GlobalActions.setMember(member)
-        );
     // Asynchronous dispatch sequence
     getNetworkType()
       .then(res => {
