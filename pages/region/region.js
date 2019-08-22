@@ -56,7 +56,7 @@ Page({
     setTimeout(() => {
       wx.hideLoading();
       wx.reLaunch({
-        url: '/pages/discovery/discovery'
+        url: '/pages/discovery/discovery?preventLocate=true'
       });
     }, 1500);
   }
