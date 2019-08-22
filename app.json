@@ -55,5 +55,10 @@
   "usingComponents": {
     "van-search": "miniprogram_npm/vant-weapp/search/index"
   },
+  "permission": {
+    "scope.userLocation": {
+      "desc": "你的位置信息将用于提供个性化的推荐"
+    }
+  },
   "sitemapLocation": "sitemap.json"
 }
