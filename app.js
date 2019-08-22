@@ -1,4 +1,4 @@
-import { request, METHOD, login, getNetworkType } from 'utils/promisfy';
+import { request, METHOD, login, getNetworkType, getLocation } from 'utils/promisfy';
 import { applyMiddleware, createStore } from 'lib/redux.min';
 import ReduxThunk from 'redux-thunk';
 import reducers from '/reducers';

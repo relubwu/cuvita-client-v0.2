@@ -72,3 +72,19 @@ export function requestPayment(bundle) {
     });
   });
 }
+
+/**
+ * 封装wx.getLocation()
+ */
+export function getLocation() {
+  return new Promise((resolve, reject) => {
+    wx.getLocation({
+      success(res) {
+        resolve(res);
+      },
+      fail(e) {
+        reject(e);
+      }
+    })
+  })
+}
