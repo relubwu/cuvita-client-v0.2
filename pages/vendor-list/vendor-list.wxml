@@ -1,17 +1,5 @@
 <!-- SEARCH -->
-<van-search custom-class="search" field-class="search-field" background="#d1233e" placeholder="{{ LocalePackage.search[locale] }}" use-action-slot bind:search="search" bind:clear="clear" value="{{ search.keyword }}">
-  <view slot="action" class="search-slot d-flex-row align-items-center" bind:tap="filter">
-    {{ LocalePackage.filter[locale] }}<van-icon name="filter-o" custom-class="d-flex-column align-items-center"/>
-  </view>
-</van-search>
-<!-- FILTER -->
-<view class="filter {{ !!showFilter && 'filter-show' }} d-flex-column justify-content-center">
-  <van-tabs color="{{ Palette.primary }}" active="{{ filter }}">
-    <van-tab title="{{ LocalePackage.sortByRating[locale] }}" />
-    <van-tab title="{{ LocalePackage.sortByPrice[locale] }}" disabled />
-    <van-tab title="{{ LocalePackage.sortByDistance[locale] }}" disabled />
-  </van-tabs>
-</view>
+<van-search custom-class="search" field-class="search-field" background="#d1233e" placeholder="{{ LocalePackage.search[locale] }}" use-action-slot bind:search="search" bind:clear="clear" value="{{ search.keyword }}" />
 <!-- TABS -->
 <van-tabs active="{{ current }}" bind:change="onChange" color="{{ Palette.primary }}" swipeable>
   <van-tab title="{{ category.label[locale] }}" wx:for="{{ categories }}" wx:for-item="category" wx:for-index="categoryIndex" wx:key="{{ category.name }}">
@@ -24,7 +12,7 @@
         <view slot="footer" class="card-footer fw d-flex-row align-items-center justify-content-between">
           <view class="d-flex-row align-items-center justify-content-center">
             <van-icon custom-class="d-flex-row align-items-center" name="location-o" color="{{ Palette.descriptive }}" />
-            <label style="color: {{ Palette.descriptive }}">{{ item.region }}</label>
+            <label style="color: {{ Palette.descriptive }};">{{ item.region }}</label>
           </view>
           <van-rate value="{{ item.rating }}" readonly="true" />
         </view>
@@ -32,3 +20,7 @@
     </navigator>
   </van-tab>
 </van-tabs>
+<view class="fvw">
+  <view wx:if="{{ pending }}" class="bottom-notifier d-flex-row align-items-center justify-content-center"><label style="color: {{ Palette.descriptive }};">—— {{ LocalePackage.pending[locale] }} ——</label></view>
+  <view wx:if="{{ eol }}" class="bottom-notifier d-flex-row align-items-center justify-content-center"><label style="color: {{ Palette.descriptive }};">—— {{ LocalePackage.eol[locale] }} ——</label></view>
+</view>

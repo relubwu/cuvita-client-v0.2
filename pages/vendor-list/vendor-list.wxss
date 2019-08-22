@@ -61,3 +61,7 @@
 .card-inset {
   padding-bottom: 34px !important;
 }
+
+.bottom-notifier {
+  height: 20vw;
+}

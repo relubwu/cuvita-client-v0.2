@@ -3,8 +3,9 @@ export const realms = {
   gourmet: ['美食', 'Gourmet'],
   lifestyle: ['生活', 'Lifestyle']
 };
-export const eol = ['到底啦！', 'No more entries!']
-export const sortByRating = ['按评分排序',  'Rating'];
-export const sortByPrice = ['按价格排序', 'Price'];
-export const sortByDistance = ['按距离排序', 'Closest'];
+export const eol = ['没有更多了哦', 'No more entries'];
+export const sortByRating = ['评分最高',  'Rating'];
+export const sortByPrice = ['价格最低', 'Price'];
+export const sortByDistance = ['离我最近', 'Closest'];
 export const filter = ['筛选', 'Filter'];
+export const pending = ['加载中', 'Loading'];

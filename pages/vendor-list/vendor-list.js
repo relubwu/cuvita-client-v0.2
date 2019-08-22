@@ -23,15 +23,14 @@ Page({
       sort: {
         criteria: NaN
       }
-    },
-    filter: '',
-    showFilter: false
+    }
   },
   onLoad: function (options) {
-    let { locale } = Store.getState().global;
+    let { locale, region } = Store.getState().global;
     // Synchronous storage hook
     this.setData({
       locale,
+      region,
       options
     });
     let {
@@ -91,16 +90,23 @@ Page({
   },
   onReachBottom: function (e) {
     let currentCategory = this.data.categories[this.data.current].name;
-    wx.showNavigationBarLoading();
+    this.setData({
+      eol: false
+    });
     if (!!this.data.cursor[currentCategory]) {
       this.data.cursor[currentCategory].skip += 10;
     }
     if (!!this.data.bottomFlag[currentCategory]) {
-      wx.hideNavigationBarLoading();
+      this.setData({
+        eol: true
+      });
       return;
     }
+    this.setData({
+      pending: true
+    });
     let { skip } = this.data.cursor[currentCategory];
-    this.fetchList(currentCategory, skip, wx.hideNavigationBarLoading, this.data.search.keyword);
+    this.fetchList(currentCategory, skip, () => { this.setData({ pending: false }) }, this.data.search.keyword);
   },
   fetchList: function (category, skip, callback, keyword='', destructive=false) {
     request(API.VENDOR.LISTS, METHOD.GET, {
@@ -108,7 +114,8 @@ Page({
       category,
       skip,
       limit: 10,
-      keyword
+      keyword,
+      region: this.data.region
     })
       .then(res => {
         if (res[category].length == 0)
@@ -175,11 +182,6 @@ Page({
       ['search.keyword']: ''
     });
     this.fetchList(currentCategory, 0, () => {}, '', true);
-  },
-  filter: function () {
-    this.setData({
-      showFilter: !this.data.showFilter
-    });
   },
   feedback
 })
