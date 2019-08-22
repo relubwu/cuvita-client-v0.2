@@ -10,6 +10,13 @@ Component({
     addGlobalClass: true
   },
 
+  properties: {
+    recommendations: {
+      type: Array,
+      value: [{ items: [{}, {}, {}] }]
+    }
+  },
+
   lifetimes: {
     attached: function () {
       // Synchronous storage hook
@@ -20,21 +27,11 @@ Component({
       this.unsubscribe = Store.subscribe(() => {
         this.mapStateToComponent();
       });
-      // Fetch data
-      this.fetchData();
     },
     detached: function () {
       this.unsubscribe();
     },
   },
-
-  /**
-   * Component initial data
-   */
-  data: {
-    recommendations: [{ items: [{}, {}, {}] }]
-  },
-
 
   /**
    * Component methods
@@ -46,10 +43,6 @@ Component({
         this.setData({
           locale: newState.global.locale
         });
-    },
-    fetchData: function () {
-      request(FIELD.RECOMMENDATION, METHOD.GET, { region: this.data.region })
-        .then(recommendations => this.setData({ recommendations }));
     },
     feedback
   }

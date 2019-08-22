@@ -10,6 +10,21 @@ Component({
     addGlobalClass: true
   },
 
+  properties: {
+    title: {
+      type: Array,
+      value: []
+    },
+    action: {
+      type: Array,
+      value: []
+    },
+    articles: {
+      type: Array,
+      value: []
+    }
+  },
+
   lifetimes: {
     attached: function () {
       // Synchronous storage hook
@@ -20,23 +35,11 @@ Component({
       this.unsubscribe = Store.subscribe(() => {
         this.mapStateToComponent();
       });
-      // Fetch data
-      this.fetchData();
     },
     detached: function () {
       this.unsubscribe();
     },
   },
-
-  /**
-   * Component initial data
-   */
-  data: {
-    title: [],
-    action: [],
-    articles: []
-  },
-
 
   /**
    * Component methods
@@ -48,10 +51,6 @@ Component({
         this.setData({
           locale: newState.global.locale
         });
-    },
-    fetchData: function () {
-      request(FIELD.FEED, METHOD.GET, { region: this.data.region })
-        .then(res => this.setData({ ...res }));
     },
     feedback
   }

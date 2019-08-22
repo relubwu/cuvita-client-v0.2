@@ -1,6 +1,6 @@
 import * as Actions from 'actions';
 import services from '../../config/services.config';
-import { request, METHOD } from '../../utils/promisfy';
+import { request, METHOD, getLocation } from '../../utils/promisfy';
 import { FIELD } from '../../config/api.config';
 import feedback from '../../utils/feedback';
 
@@ -30,14 +30,17 @@ Page({
     this.unsubscribe = Store.subscribe(() => {
       this.mapStateToPage();
     });
-    request(FIELD.BANNER, METHOD.GET, { region })
-      .then(banner => {
-        this.setData({ banner })
-      });
-    request(FIELD.SERVICES, METHOD.GET)
-      .then(targets => {
-        Store.dispatch(Actions.updateServices(targets));
-      });
+    if (!!options.preventLocate)
+      return this.fetchData();
+    getLocation()
+      .then(({ latitude, longitude }) => {
+        return request(FIELD.REGION, METHOD.GET, { lat: latitude, long: longitude })
+      })
+      .then(({ id }) => {
+        Store.dispatch(GlobalActions.setRegion(id));
+        this.fetchData();
+      })
+      .catch(e => { });
   },
   onScroll: function ({ detail: { scrollTop } }) {
     if (this.data.scrollTop > -this.data.systemInfo.screenWidth * 1.2 && scrollTop <= -this.data.systemInfo.screenWidth * 1.2)
@@ -48,6 +51,23 @@ Page({
   },
   onUnLoad: function () {
     this.unsubscribe();
+  },
+  fetchData: function () {
+    let region = this.data.region;
+    Promise.all([
+      request(FIELD.BANNER, METHOD.GET, { region }),
+      request(FIELD.SERVICES, METHOD.GET),
+      request(FIELD.RECOMMENDATION, METHOD.GET, { region }),
+      request(FIELD.FEED, METHOD.GET, { region })
+    ])
+      .then(res => {
+        Store.dispatch(Actions.updateServices(res[1]));
+        this.setData({
+          banner: res[0],
+          recommendations: res[2],
+          feed: res[3]
+        });
+      });
   },
   feedback
 })

@@ -30,18 +30,21 @@
 <scroll-view class="fvw fvh bd-enclosure" scroll-y enable-back-to-top bind:scroll="onScroll">
   <!--  Banner  -->
   <view class="fvw bd-banner d-flex-column justify-content-center" style="padding: {{ systemInfo.navigationBarHeight }}px 30px; opacity: {{ controller.bannerOpacity(scrollTop, 0.2 * systemInfo.screenWidth) }};">
-    <text class="bd-banner-header" style="color: {{ banner.text.color }}">{{ banner.text.header[locale] }}</text>
-    <text class="bd-banner-description" style="color: {{ banner.text.color }}">{{ banner.text.description[locale] }}</text>
+    <view class="bd-banner-header" style="color: {{ banner.text.color }}">{{ banner.text.header[locale] }}</view>
+    <view class="bd-banner-description d-flex-row align-items-center" style="color: {{ banner.text.color }}">
+      <view>{{ banner.text.description[locale] }}</view>
+      <van-icon name="arrow" color="white" custom-class="d-flex-row align-items-center" />
+    </view>
   </view>
-  <navigator class="fvw bd-banner-overlay bgcol-primary" style="opacity: {{ controller.bannerOverlayOpacity(scrollTop, systemInfo.screenWidth * 0.4) }};" src="{{ banner.target }}" hover-class="none" />
+  <navigator class="fvw bd-banner-overlay bgcol-primary" style="opacity: {{ controller.bannerOverlayOpacity(scrollTop, systemInfo.screenWidth * 0.4) }};" url="{{ banner.target }}" hover-class="none" bind:tap="feedback" />
   <!--  Tray  -->
   <tray />
   <view class="fvw bd-content bgcol-light">
     <!--  Services  -->
     <services />
     <!-- Recommendation -->
-    <recommendation />
+    <recommendation recommendations="{{ recommendations }}"/>
     <!-- Feed -->
-    <feed />
+    <feed title="{{ feed.title }}" action="{{ feed.action }}" articles="{{ feed.articles }}" />
   </view>
 </scroll-view>
