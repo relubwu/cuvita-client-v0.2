@@ -1,6 +1,7 @@
 .enclosure {
   position: absolute;
-  top: 70vw;
+  /* top: 70vw; */
+  top: 68vw;
   box-sizing: border-box;
   padding: 0 15px;
   z-index: 2;

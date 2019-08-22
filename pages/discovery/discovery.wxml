@@ -1,6 +1,6 @@
 <wxs module="controller" src="controller.wxs" />
 <!--  Navbar  -->
-<view class="fvw nav-enclosure" style="height: {{ systemInfo.navigationBarHeight }}px; opacity: {{ controller.navOpacity(scrollTop, 0.4 * systemInfo.screenWidth) }}; background: {{ controller.navBackground(scrollTop, 0.4 * systemInfo.screenWidth) }}">
+<view class="fvw nav-enclosure" style="height: {{ systemInfo.navigationBarHeight }}px; opacity: {{ controller.navOpacity(scrollTop, 0.38 * systemInfo.screenWidth) }}; background: {{ controller.navBackground(scrollTop, 0.38 * systemInfo.screenWidth) }}">
   <view class="fvw fh nav d-flex-row align-items-center hairline-row-bold" style="padding-top: {{ systemInfo.statusBarHeight }}px;">
     <view class="fw d-flex-row align-items-start">
       <navigator enable-flex class="animated d-flex-row align-items-center" hover-class="nav-action-hover" bind:tap="feedback" url="/pages/region/region">
