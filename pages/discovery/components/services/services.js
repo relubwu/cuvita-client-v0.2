@@ -8,18 +8,17 @@ Component({
   },
 
   properties: {
-    targets: {
-      type: Object
+    services: {
+      type: Array
     }
   },
 
   lifetimes: {
     attached: function () {
       // Synchronous storage hook
-      let { global: { locale }, page: { discovery: { services } } } = Store.getState();
+      let { locale } = Store.getState().global;
       this.setData({
-        locale,
-        services: services.slice(4)
+        locale
       });
       this.unsubscribe = Store.subscribe(() => {
         this.mapStateToComponent();
@@ -39,10 +38,6 @@ Component({
       if (this.data.locale !== newState.global.locale)
         this.setData({
           locale: newState.global.locale
-        });
-      if (JSON.stringify(this.data.services) !== JSON.stringify(newState.page.discovery.services.slice(4)))
-        this.setData({
-          services: newState.page.discovery.services.slice(4)
         });
     },
     feedback
