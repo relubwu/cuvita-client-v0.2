@@ -12,3 +12,10 @@ export const trim = ['套件', 'Trim'];
 export const store = ['销售门店', 'Available at'];
 export const disclaimer = ['数据来自CarMax', 'Data Source: CarMax'];
 export const more = ['了解更多', 'Get Details'];
+export const modal = {
+  more: {
+    title: ['联系CarMax', 'Contact CarMax'],
+    content: ['您可以通过以下方式联系CarMax获取更多资讯，本车的识别码是：'],
+    action: ['拨打电话', 'Call']
+  }
+}

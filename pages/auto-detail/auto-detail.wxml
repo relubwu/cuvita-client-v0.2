@@ -26,7 +26,7 @@
 </van-cell-group>
 <!-- ACTIONS -->
 <view class="container vendor-actions d-flex-row align-items-center justify-content-evenly">
-  <view class="vendor-actions-navigate" bind:tap="call">{{ LocalePackage.more[locale] }}</view>
+  <view class="vendor-actions-navigate" bind:tap="more">{{ LocalePackage.more[locale] }}</view>
 </view>
 <view class="container fw d-flex-column vendor-rating align-items-center justify-content-center" style="{{ systemInfo.safeAreaInset && 'padding-bottom: 34px !important' }}">
   <label class="vendor-rating-label">{{ LocalePackage.disclaimer[locale] }}</label>

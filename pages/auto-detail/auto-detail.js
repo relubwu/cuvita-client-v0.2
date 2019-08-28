@@ -54,9 +54,19 @@ Page({
       urls: this.data.gallery
     })
   },
-  call: function () {
-    wx.makePhoneCall({
-      phoneNumber: this.data.vehicle.tel
-    });
+  more: function() {
+    let that = this;
+    wx.showModal({
+      title: LocalePackage.modal.more.title[this.data.locale],
+      content: LocalePackage.modal.more.content[this.data.locale] + this.data.vehicle.stockNumber,
+      confirmColor: Palette.carmax,
+      confirmText: LocalePackage.modal.more.action[this.data.locale],
+      success: function ({ confirm }) {
+        if (confirm)
+          wx.makePhoneCall({
+            phoneNumber: that.data.vehicle.tel
+          });
+      }
+    })
   }
 })
