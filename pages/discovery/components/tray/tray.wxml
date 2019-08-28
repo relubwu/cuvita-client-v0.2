@@ -1,9 +1,24 @@
 <!--  Tray  -->
 <view class="fvw enclosure">
   <view class="fw tray d-flex-row align-items-center justify-content-between">
-    <navigator class="item fh animated d-flex-column align-items-center justify-content-between" wx:for="{{ tray }}" wx:key="{{ index }}" url="{{ item.target }}" hover-class="item-hover" bind:tap="feedback">
-      <image class="icon fw fh" src="{{ item.icon }}" />
-      <label>{{ item.label[locale] }}</label>
+    <navigator class="item fh animated d-flex-row" hover-class="item-hover" bind:tap="feedback">
+      <view class="fh d-flex-column justify-content-center" style="padding-right: 15px;">
+        <image class="icon fw fh" src="/assets/icons/tray-concierge.png" />
+      </view>
+      <view class="d-flex-column justify-content-center">
+        <label class="bold">{{ LocalePackage.concierge.title[locale] }}</label>
+        <label class="descriptive">{{ LocalePackage.concierge.description[locale] }}</label>
+      </view>
+    </navigator>
+    <view class="divider fh" />
+    <navigator class="item item-right fh animated d-flex-row justify-content-end" hover-class="item-hover" bind:tap="feedback">
+      <view class="d-flex-column justify-content-center" style="padding-right: 15px;">
+        <label class="bold">{{ LocalePackage.gbm.title[locale] }}</label>
+        <label class="descriptive">{{ LocalePackage.gbm.description[locale] }}</label>
+      </view>
+      <view class="fh d-flex-column justify-content-center">
+        <image class="icon fw fh" src="/assets/icons/tray-artists.png" />
+      </view>
     </navigator>
   </view>
 </view>

@@ -17,9 +17,14 @@
 }
 
 .item {
-  width: 20%;
+  width: 50%;
   -webkit-transform: perspective(1px) translateZ(0);
   transform: perspective(1px) translateZ(0);
+}
+
+.divider {
+  width: 1px;
+  background: #b2b2b2b2;
 }
 
 .item-hover {
@@ -30,4 +35,18 @@
 .icon {
   width: 80rpx;
   height: 80rpx;
+}
+
+.descriptive {
+  color: #b2b2b2;
+  text-transform: capitalize !important;
+}
+
+.bold {
+  font-size: 14pt;
+  font-weight: bold;
+}
+
+.item-right label {
+  text-align: right;
 }

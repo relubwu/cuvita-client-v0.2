@@ -1,19 +1,20 @@
 import feedback from '../../../../utils/feedback';
+import * as LocalePackage from './locale-package';
 
 const { Store, GlobalActions } = getApp();
 
 Component({
   options: {
     addGlobalClass: true
-  }, 
+  },
 
   lifetimes: {
     attached: function () {
       // Synchronous storage hook
-      let { global: { locale }, page: { discovery: { services } } } = Store.getState();
+      let { locale } = Store.getState().global;
       this.setData({
         locale,
-        tray: services.slice(0, 4)
+        LocalePackage
       });
       this.unsubscribe = Store.subscribe(() => {
         this.mapStateToComponent();
@@ -33,10 +34,6 @@ Component({
       if (this.data.locale !== newState.global.locale)
         this.setData({
           locale: newState.global.locale
-        });
-      if (JSON.stringify(this.data.services) !== JSON.stringify(newState.page.discovery.services.slice(0, 4)))
-        this.setData({
-          tray: newState.page.discovery.services.slice(0, 4)
         });
     },
     feedback
