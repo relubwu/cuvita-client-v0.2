@@ -10,12 +10,12 @@
 <!-- GALLERY -->
 <view class="container fw">
   <view class="vendor-gallery fw">
-    <image wx:for="{{ gallery }}" class="fw fh" src="{{ item }}" mode="aspectFill" style="{{ index == 0 ? 'grid-row: 1/3;' : '' }}" bind:tap="preview" data-index="{{ index }}" />
+    <image wx:for="{{ gallery }}" wx:key="{{ index }}" class="fw fh" src="{{ item }}" mode="aspectFill" style="{{ index == 0 ? 'grid-row: 1/3;' : '' }}" bind:tap="preview" data-index="{{ index }}" />
   </view>
 </view>
 <!-- TAGS -->
 <view class="container fw d-flex-row vendor-tags">
-  <van-tag size="large" wx:for="{{ tag[locale] }}" color="{{ Palette.primary }}" custom-class="vendor-tag">{{ item }}</van-tag>
+  <van-tag size="large" wx:for="{{ tag[locale] }}" wx:key="{{ index }}" color="{{ Palette.primary }}" custom-class="vendor-tag">{{ item }}</van-tag>
 </view>
 <!-- FEATURES -->
 <van-cell-group border="{{ false }}" custom-class="container">
