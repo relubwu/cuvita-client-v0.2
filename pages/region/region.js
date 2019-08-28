@@ -49,15 +49,10 @@ Page({
   },
   setRegion: function ({ detail: { index } }) {
     Store.dispatch(GlobalActions.setRegion(mapIndexToRegion(index).id));
-    wx.showLoading({
-      title: GlobalLocalePackages.applying[this.data.locale],
-      mask: true
-    });
     setTimeout(() => {
-      wx.hideLoading();
       wx.reLaunch({
-        url: '/pages/discovery/discovery?preventLocate=true'
-      });
-    }, 1500);
+        url: '/pages/discovery/discovery?fallback=region'
+      })
+    }, 500);
   }
 })
