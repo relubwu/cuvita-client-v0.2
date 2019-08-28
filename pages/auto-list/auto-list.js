@@ -10,15 +10,17 @@ Page({
   data: {
     LocalePackage,
     Palette,
-    cursor: [],
+    cursor: {},
+    bottomFlag: {},
     current: 0
   },
   onLoad: function () {
     // Synchronous storage hook
-    let { locale, systemInfo } = Store.getState().global;
+    let { locale, systemInfo, region } = Store.getState().global;
     this.setData({
       locale,
-      systemInfo
+      systemInfo,
+      region
     });
     wx.setNavigationBarTitle({
       title: LocalePackage.title[this.data.locale]
@@ -52,15 +54,16 @@ Page({
   }) {
     feedback();
     this.setData({
-      current: index
+      current: index,
+      eol: false
     });
     let currentMake = this.data.makes[index].name;
     wx.showLoading({
       title: GlobalLocalePackages.loading[this.data.locale]
     });
-    if (!this.data.cursor[this.data.makes[index].name])
+    if (!this.data.cursor[currentMake])
       this.setData({
-        [`cursor.${this.data.makes[index].name}`]: {
+        [`cursor.${ currentMake }`]: {
           skip: 0
         }
       });
@@ -68,17 +71,30 @@ Page({
   },
   onReachBottom: function (e) {
     let currentMake = this.data.makes[this.data.current].name;
-    wx.showNavigationBarLoading();
+    if (this.data.cursor[currentMake].skip >= 20)
+      this.setData({
+        [`bottomFlag.${ currentMake }`]: true
+      });
+    if (this.data.bottomFlag[currentMake]) {
+      this.setData({
+        eol: true
+      });
+      return;
+    }
+    this.setData({
+      pending: true,
+      eol: false
+    });
     if (!!this.data.cursor[currentMake]) {
       this.data.cursor[currentMake].skip += 10;
     }
     let { skip } = this.data.cursor[currentMake];
-    this.fetchList(currentMake, skip, wx.hideNavigationBarLoading);
+    this.fetchList(currentMake, skip, () => { this.setData({ pending: false }) });
   },
   fetchList: function (make, skip, callback, keyword = '') {
     request(API.AUTO.LISTS, METHOD.GET, {
       make,
-      region: 'sd',
+      region: this.data.region,
       skip
     })
       .then(res => {

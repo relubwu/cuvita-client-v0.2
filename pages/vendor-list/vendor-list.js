@@ -17,7 +17,7 @@ Page({
     Palette,
     cursor: {},
     current: 0,
-    bottomFlag: [],
+    bottomFlag: {},
     search: {
       keyword: '',
       sort: {
@@ -74,7 +74,8 @@ Page({
     feedback();
     this.setData({
       current: index,
-      ['search.keyword']: ''
+      ['search.keyword']: '',
+      eol: false
     });
     let currentCategory = this.data.categories[index].name;
     wx.showLoading({
@@ -90,9 +91,6 @@ Page({
   },
   onReachBottom: function (e) {
     let currentCategory = this.data.categories[this.data.current].name;
-    this.setData({
-      eol: false
-    });
     if (!!this.data.cursor[currentCategory]) {
       this.data.cursor[currentCategory].skip += 10;
     }
@@ -103,7 +101,8 @@ Page({
       return;
     }
     this.setData({
-      pending: true
+      pending: true,
+      eol: false
     });
     let { skip } = this.data.cursor[currentCategory];
     this.fetchList(currentCategory, skip, () => { this.setData({ pending: false }) }, this.data.search.keyword);
