@@ -1,24 +1,20 @@
-import * as Actions from 'actions';
 import services from '../../config/services.config';
 import { request, METHOD, getLocation } from '../../utils/promisfy';
-import { FIELD } from '../../config/api.config';
+import * as API from '../../config/api.config';
 import feedback from '../../utils/feedback';
 
-const { Store, GlobalActions } = getApp();
+const { Store, GlobalActions, GlobalLocalePackages } = getApp();
 
 Page({
   data: {
-    scrollTop: 0
+    scrollTop: 0,
+    services
   },
   mapStateToPage: function () {
     let newState = Store.getState();
     if (this.data.locale !== newState.global.locale)
       this.setData({
         locale: newState.global.locale
-      });
-    if (this.data.region !== newState.global.region)
-      this.setData({
-        region: newState.global.region
       });
   },
   onLoad: function (options) {
@@ -30,17 +26,15 @@ Page({
     this.unsubscribe = Store.subscribe(() => {
       this.mapStateToPage();
     });
-    if (!!options.preventLocate)
-      return this.fetchData();
-    getLocation()
+    options.fallback !== 'region' ? getLocation()
       .then(({ latitude, longitude }) => {
-        return request(FIELD.REGION, METHOD.GET, { lat: latitude, long: longitude })
+        return request(API.REGION.NEAREST, METHOD.GET, { lat: latitude, long: longitude })
       })
       .then(({ id }) => {
         Store.dispatch(GlobalActions.setRegion(id));
         this.fetchData();
       })
-      .catch(e => { });
+      .catch(e => { this.fetchData() }) : this.fetchData();
   },
   onScroll: function ({ detail: { scrollTop } }) {
     if (this.data.scrollTop > -this.data.systemInfo.screenWidth * 1.2 && scrollTop <= -this.data.systemInfo.screenWidth * 1.2)
@@ -53,20 +47,26 @@ Page({
     this.unsubscribe();
   },
   fetchData: function () {
-    let region = this.data.region;
+    wx.showLoading({
+      title: GlobalLocalePackages.loading[this.data.locale]
+    });
+    let { region } = Store.getState().global;
     Promise.all([
-      request(FIELD.BANNER, METHOD.GET, { region }),
-      request(FIELD.SERVICES, METHOD.GET),
-      request(FIELD.RECOMMENDATION, METHOD.GET, { region }),
-      request(FIELD.FEED, METHOD.GET, { region })
+      request(API.FIELD.BANNER, METHOD.GET, { region }),
+      request(API.FIELD.SERVICES, METHOD.GET),
+      request(API.FIELD.RECOMMENDATION, METHOD.GET, { region }),
+      request(API.FIELD.FEED, METHOD.GET, { region })
     ])
       .then(res => {
-        Store.dispatch(Actions.updateServices(res[1]));
+        for (let index in res[1])
+          res[1][index] = { ...res[1][index], ...this.data.services[index] };
         this.setData({
           banner: res[0],
+          services: res[1],
           recommendations: res[2],
           feed: res[3]
         });
+        wx.hideLoading();
       });
   },
   feedback

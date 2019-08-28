@@ -13,8 +13,6 @@
       <label class="nav-title" style="font-size: {{ systemInfo.fontSizeSetting }}px;">CUVita</label>
     </view>
     <view class="fw" />
-    <!-- inner van-field property custom-style::padding modified: ```3px 0```
-    <van-search custom-class="nav-search" shape="round" background="none" placeholder="搜点什么" /> -->
   </view>
 </view>
 <!--  Background  -->
@@ -41,7 +39,7 @@
   <tray />
   <view class="fvw bd-content bgcol-light">
     <!--  Services  -->
-    <services />
+    <services services="{{ services }}" />
     <!-- Recommendation -->
     <recommendation recommendations="{{ recommendations }}"/>
     <!-- Feed -->
