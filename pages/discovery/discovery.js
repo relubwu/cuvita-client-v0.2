@@ -16,6 +16,10 @@ Page({
       this.setData({
         locale: newState.global.locale
       });
+    if (this.data.region !== newState.global.region)
+      this.setData({
+        region: newState.global.region
+      });
   },
   onLoad: function (options) {
     // Synchronous storage hook
