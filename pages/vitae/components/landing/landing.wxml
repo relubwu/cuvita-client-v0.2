@@ -1,7 +1,7 @@
 <view class="fvw fvh d-flex-column align-items-center justify-content-center">
   <view class="swiper-wrapper fw">
     <swiper class="fw" indicator-dots="{{ true }}" autoplay="{{ true }}" circular="{{ true }}">
-      <swiper-item wx:for="{{ layout }}" class="fw fh d-flex-column align-items-center justify-content-center">
+      <swiper-item wx:for="{{ layout }}" wx:key="{{ index }}" class="fw fh d-flex-column align-items-center justify-content-center">
         <view class="swiper-agenda">{{ item.agenda[locale] }}</view>
         <label class="swiper-description descriptive">{{ item.description[locale] }}</label>
         <image src="{{ item.src }}" mode="aspectFit" />
