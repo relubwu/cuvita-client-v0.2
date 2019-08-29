@@ -1,4 +1,4 @@
-import { request, METHOD, requestPayment } from '../../utils/promisfy';
+import { request, METHOD } from '../../utils/promisfy';
 import * as API from '../../config/api.config';
 import * as LocalePackage from 'locale-package';
 import Sanitizer from '../../utils/sanitizer';
@@ -6,7 +6,7 @@ import Palette from '../../config/palette.config';
 import Autofiller from '../../utils/autofiller';
 import { mapRegionToMatrix, mapIndexToRegion, mapRegionIdToIndex } from '../../utils/region-converter';
 
-const { Store, GlobalLocalePackages } = getApp();
+const { Store, GlobalActions, GlobalLocalePackages } = getApp();
 
 Page({
   data: {
@@ -102,8 +102,13 @@ Page({
     wx.showLoading({ 
       title: GlobalLocalePackages.loading[this.data.locale]
     });
-    request(API.MEMBER.MODIFY, METHOD.POST, { name, gender, tel: tel.trim(), birthday, email: email.trim(), region: mapIndexToRegion(region).id, openid: Store.getState().global.user.openid })
+    let { openid } = Store.getState().global.user;
+    request(API.MEMBER.MODIFY, METHOD.POST, { name, gender, tel: tel.trim(), birthday, email: email.trim(), region: mapIndexToRegion(region).id, openid })
       .then(res => {
+        return request(API.MEMBER.GETINFO, METHOD.GET, { openid });
+      })
+      .then(res => {
+        Store.dispatch(GlobalActions.updateMember(res));
         wx.hideLoading();
         wx.showModal({
           title: LocalePackage.modal.success.title[this.data.locale],

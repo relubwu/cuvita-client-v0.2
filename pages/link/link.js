@@ -4,7 +4,7 @@ import * as LocalePackage from 'locale-package';
 import Sanitizer from '../../utils/sanitizer';
 import Palette from '../../config/palette.config';
 
-const { Store, GlobalActions } = getApp();
+const { Store, GlobalActions, GlobalLocalePackages } = getApp();
 
 Page({
   data: {

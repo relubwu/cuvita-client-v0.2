@@ -101,7 +101,7 @@ function member(state = DEFAULT_MEMBER, { type, res }) {
       wx.removeStorage({
         key: 'member'
       });
-      return DEFAULT_MEMBER;
+      return null;
       break;
     default:
       return state;

@@ -6,7 +6,6 @@ import * as GlobalActions from '/actions';
 import * as GlobalLocalePackages from '/locale-package';
 import * as API from '/config/api.config';
 // import logger from 'redux-logger';
-import Implement from '/utils/implement';
 
 // const Store = createStore(reducers, applyMiddleware(logger, ReduxThunk));
 const Store = createStore(reducers, applyMiddleware(ReduxThunk));
@@ -42,10 +41,9 @@ App({
         wx.hideLoading();
         if (!!member) {
           Store.dispatch(GlobalActions.updateMember(member));
-          Implement(member, Store.getState().global.locale);
-        }
-        else if (!!Store.getState().global.member)
+        } else if (!!Store.getState().global.member) {
           Store.dispatch(GlobalActions.purgeMember());
+        }
       })
       .catch(e => {
         wx.showToast({

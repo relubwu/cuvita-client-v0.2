@@ -2,6 +2,7 @@ import { request, METHOD } from '../../utils/promisfy';
 import * as API from '../../config/api.config';
 import * as LocalePackage from 'locale-package';
 import feedback from '../../utils/feedback';
+import implement from '../../utils/implement';
 
 const { Store, GlobalActions } = getApp();
 
@@ -41,15 +42,16 @@ Page({
     this.fetchData(wx.stopPullDownRefresh);
   },
   fetchData: function (callback) {
-    let { openid } = Store.getState().global.user;
+    let { user: { openid }, locale, member } = Store.getState().global;
     request(API.MEMBER.GETINFO, METHOD.GET, { openid })
       .then(res => {
         Store.dispatch(GlobalActions.updateMember(res));
+        implement(res, locale);
         if (!!callback)
           callback();
       })
       .catch(e => {
-        if (e === 404 && !!Store.getState().global.member) Store.dispatch(GlobalActions.purgeMember());
+        if (e === 404 && !!member) Store.dispatch(GlobalActions.purgeMember());
         if (!!callback)
           callback();
       });
