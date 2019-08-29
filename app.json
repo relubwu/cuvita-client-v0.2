@@ -16,7 +16,10 @@
     "pages/auto-detail/auto-detail",
     "pages/finance/finance",
     "pages/insurance/insurance",
-    "pages/region/region"
+    "pages/region/region",
+    "pages/communication/communication",
+    "pages/consulting/consulting",
+    "pages/job/job"
   ],
   "window": {
     "backgroundTextStyle": "light",
