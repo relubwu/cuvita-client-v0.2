@@ -1,0 +1,1 @@
+export const title = ["求职", "Job"];

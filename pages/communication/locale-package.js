@@ -1,0 +1,1 @@
+export const title = ["通讯", "Communication"];
