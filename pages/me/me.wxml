@@ -1,45 +1,44 @@
 <!-- USER_INFO -->
-<view class="user container fw d-flex-row align-items-center" style="padding-top: {{ systemInfo.navigationBarHeight }}px;">
-  <open-data class="user-avatar" type="userAvatarUrl" />
-  <view class="user-info d-flex-column align-items-start justify-content-start">
-    <open-data class="user-info-nickname" type="userNickName" />
-    <open-data class="user-info-region" type="userCity" />
+<navigator class="user container fw d-flex-row justify-content-between" style="padding-top: {{ systemInfo.navigationBarHeight }}px;" url="/pages/modify/modify" hover-class="none">
+  <view class="fh d-flex-row align-items-center">
+    <open-data class="user-avatar" type="userAvatarUrl" />
+    <view class="user-info d-flex-column align-items-start justify-content-start">
+      <open-data class="user-info-nickname" type="userNickName" />
+      <open-data class="user-info-region" type="userCity" />
+    </view>
   </view>
-</view>
+  <view class="fh d-flex-row align-items-center">
+    <van-icon name="arrow" custom-class="d-flex-row align-items-center" color="white" />
+  </view>
+</navigator>
 <view class="body fw">
   <!-- BASE -->
-  <label class="body-cell-group-title">{{ LocalePackage.mine[locale] }}</label>
+  <label class="body-cell-group-title">{{ localePackage.mine[locale] }}</label>
   <van-cell-group custom-class="body-cell-group" border="{{ false }}">
-    <van-cell title="{{ LocalePackage.tickets[locale] }}" icon="label" is-link />
+    <van-cell title="{{ localePackage.tickets[locale] }}" icon="label" is-link />
   </van-cell-group>
-  <!-- MEMBERSHIP -->
-  <label wx:if="{{ !!member }}" class="body-cell-group-title">{{ LocalePackage.membership[locale] }}</label>
-  <van-cell-group wx:if="{{ !!member }}" custom-class="body-cell-group" border="{{ false }}">
-    <van-cell title="{{ LocalePackage.modify[locale] }}" icon="column" is-link url="/pages/modify/modify" />
-  </van-cell-group>
-  <!-- SETTINGS -->
-  <label class="body-cell-group-title">{{ LocalePackage.settings[locale] }}</label>
+  <label class="body-cell-group-title">{{ localePackage.settings[locale] }}</label>
   <van-collapse custom-class="body-cell-group" value="{{ currentSetting }}" bind:change="onChange" accordion border="{{ false }}">
-    <van-collapse-item title="{{ LocalePackage.locale[locale] }}" icon="chat" name="locale">
+    <van-collapse-item title="{{ localePackage.locale[locale] }}" icon="chat" name="locale">
       <van-radio-group value="{{ options.locale[locale] }}">
         <van-cell-group border="{{ false }}">
-          <van-cell title="简体中文" clickable value-class="value-class" bind:click="setLocale" data-locale="0" >
+          <van-cell title="简体中文" clickable value-class="value-class" bind:click="setlocale" data-locale="0" >
             <van-radio name="zh" checked-color="{{ Palette.primary }}" />
           </van-cell>
-          <van-cell title="English" clickable value-class="value-class" bind:click="setLocale" data-locale="1" border="{{ false }}">
+          <van-cell title="English" clickable value-class="value-class" bind:click="setlocale" data-locale="1" border="{{ false }}">
             <van-radio name="en" checked-color="{{ Palette.primary }}" />
           </van-cell>
         </van-cell-group>
       </van-radio-group>
     </van-collapse-item>
   </van-collapse>
-  <label class="body-cell-group-title">{{ LocalePackage.others[locale] }}</label>
+  <label class="body-cell-group-title">{{ localePackage.others[locale] }}</label>
   <van-cell-group custom-class="body-cell-group" border="{{ false }}">
-    <van-cell title="{{ LocalePackage.license[locale] }}" icon="info-o" is-link url="/pages/license/license" />
+    <van-cell title="{{ localePackage.license[locale] }}" icon="info-o" is-link url="/pages/license/license" />
   </van-cell-group>
   <view class="weui-footer" style="padding-bottom: 34px">
     <view class="weui-footer__links">
-      <button class="weui-footer__link contact" open-type="contact">{{ LocalePackage.customerService[locale] }}</button>
+      <button class="weui-footer__link contact" open-type="contact">{{ localePackage.customerService[locale] }}</button>
     </view>
   </view>
 </view>
