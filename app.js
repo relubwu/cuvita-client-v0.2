@@ -1,42 +1,30 @@
-import { request, METHOD, login, getNetworkType, getLocation } from 'utils/promisfy';
-import { applyMiddleware, createStore } from 'lib/redux.min';
-import ReduxThunk from 'redux-thunk';
 import reducers from '/reducers';
+import reduxThunk from 'redux-thunk';
+import * as redux from 'redux';
 import * as GlobalActions from '/actions';
-import * as GlobalLocalePackages from '/locale-package';
-import * as API from '/config/api.config';
-// import logger from 'redux-logger';
+import * as GlobalLocalePackage from '/locale-package';
+import * as promisfy from 'lib/wx.promisfy';
+import logger from 'redux-logger';
 
-// const Store = createStore(reducers, applyMiddleware(logger, ReduxThunk));
-const Store = createStore(reducers, applyMiddleware(ReduxThunk));
+const Store = redux.createStore(reducers, redux.applyMiddleware(logger, reduxThunk));
+// const Store = redux.createStore(reducers, redux.applyMiddleware(reduxThunk));
 
 App({
   Store,
   GlobalActions,
-  GlobalLocalePackages,
+  GlobalLocalePackage,
   onLaunch: function () {
     wx.showLoading({
-      title: this.GlobalLocalePackages.loading[Store.getState().global.locale],
+      title: this.GlobalLocalePackage.loading[Store.getState().global.locale],
       mask: true
     });
     // Synchronous core systemInfo
-    Store
-      .dispatch(
-        GlobalActions.setSystemInfo(
-          wx.getSystemInfoSync()
-        )
-      );
-    // Asynchronous dispatch sequence
-    getNetworkType()
-      .then(res => {
-        Store.dispatch(GlobalActions.setNetworkStatus(res));
-      });
-    // Event subscribers
-    this.onNetworkStatusChange();
+    Store.dispatch(GlobalActions.setLocale(wx.getStorageSync('locale')));
+    Store.dispatch(GlobalActions.setSystemInfo(wx.getSystemInfoSync()));
     // Acquire user token
-    login()
-      .then(code => request(API.DISPATCH, METHOD.GET, { code }))
-      .then(({ openid, user, member }) => {
+    promisfy.login()
+      .then(code => promisfy.fetch(`/dispatch/${ code }`))
+      .then(({ data: { openid, user, member } }) => {
         Store.dispatch(GlobalActions.setUser({ openid, ...user }));
         wx.hideLoading();
         if (!!member) {
@@ -44,17 +32,6 @@ App({
         } else if (!!Store.getState().global.member) {
           Store.dispatch(GlobalActions.purgeMember());
         }
-      })
-      .catch(e => {
-        wx.showToast({
-          title: GlobalLocalePackages.requestFailed[Store.getState().global.locale],
-          image: '/assets/icons/request-fail.png'
-        });
       });
-  },
-  onNetworkStatusChange: function () {
-    wx.onNetworkStatusChange(({ networkType }) => {
-      Store.dispatch(GlobalActions.setNetworkStatus(networkType));
-    });
   }
 })
