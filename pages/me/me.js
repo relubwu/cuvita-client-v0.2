@@ -1,45 +1,29 @@
-import { request, METHOD } from '../../utils/promisfy';
-import * as API from '../../config/api.config';
-import * as LocalePackage from 'locale-package';
-import Palette from '../../config/palette.config';
 import feedback from '../../utils/feedback';
+import palette from '../../config/palette.config';
+import mapStateToPage from '../../lib/wx.state.binder';
+import * as localePackage from 'locale-package';
 
 const { Store, GlobalActions } = getApp();
 
 Page({
   data: {
-    LocalePackage,
-    Palette,
+    localePackage,
+    palette,
     options: {
       locale: ['zh', 'en']
     }
   },
   onLoad: function () {
     let { locale, systemInfo, member, region } = Store.getState().global;
-    // Synchronous storage hook
     this.setData({
       locale, systemInfo, member, region
     });
     this.unsubscribe = Store.subscribe(() => {
-      this.mapStateToPage();
+      mapStateToPage(Store, this, { locale: 'global.locale', member: 'global.member' });
     });
-  },
-  mapStateToPage: function () {
-    let newState = Store.getState();
-    if (this.data.locale !== newState.global.locale)
-      this.setData({
-        locale: newState.global.locale
-      });
-    if (JSON.stringify(this.data.member) !== JSON.stringify(newState.global.member))
-      this.setData({
-        member: newState.global.member
-      });
   },
   onUnload: function () {
     this.unsubscribe();
-  },
-  sorry: function () {
-    sorry(Store.getState().global.locale);
   },
   onChange: function (e) {
     this.setData({
