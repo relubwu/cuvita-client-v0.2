@@ -1,4 +1,4 @@
-import * as LocalePackage from '../../locale-package';
+import * as localePackage from '../../locale-package';
 
 const { Store } = getApp();
 
@@ -6,7 +6,6 @@ Component({
   options: {
     addGlobalClass: true
   },
-
   lifetimes: {
     attached: function () {
       // Synchronous storage hook
@@ -22,15 +21,10 @@ Component({
       this.unsubscribe();
     },
   },
-
   data: {
-    LocalePackage, 
+    localePackage, 
     activeNames: ['history']
   },
-
-  /**
-   * Component methods
-   */
   methods: {
     mapStateToComponent: function () {
       let newState = Store.getState();

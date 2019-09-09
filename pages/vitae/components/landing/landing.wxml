@@ -9,12 +9,12 @@
     </swiper>
   </view>
   <view class="button-wrapper fw">
-    <van-button size="large" custom-class="button button-link" catch:click="link">{{ LocalePackage.link[locale] }}</van-button>
-    <van-button size="large" custom-class="button button-register" catch:click="register">{{ LocalePackage.register[locale] }}</van-button>
+    <van-button size="large" custom-class="button button-link" catch:click="link">{{ localePackage.link[locale] }}</van-button>
+    <van-button size="large" custom-class="button button-register" catch:click="register">{{ localePackage.register[locale] }}</van-button>
   </view>
   <view class="footer-wrapper">
     <view class="weui-footer">
-      <view class="weui-footer__text">{{ LocalePackage.disclaimer[locale] }}</view>
+      <view class="weui-footer__text">{{ localePackage.disclaimer[locale] }}</view>
     </view>
   </view>
 </view>

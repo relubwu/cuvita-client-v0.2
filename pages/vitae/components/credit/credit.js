@@ -1,5 +1,5 @@
-import * as LocalePackage from '../../locale-package';
-import * as CreditPolicy from '../../../../config/credit.config';
+import * as localePackage from '../../locale-package';
+import * as creditPolicy from '../../../../config/credit.config';
 
 const { Store } = getApp();
 
@@ -25,8 +25,8 @@ Component({
   },
 
   data: {
-    LocalePackage,
-    ...CreditPolicy
+    localePackage,
+    ...creditPolicy
   },
 
   /**
