@@ -1,6 +1,5 @@
 import { combineReducers } from 'lib/redux.min';
 import detectInset from 'utils/detect-inset';
-import changeTabLocal from 'utils/change-tab-locale';
 import {
   SET_LOCALE,
   SET_REGION,
@@ -18,10 +17,14 @@ import {
  * Constants
  */
 const DEFAULT_SYSTEM_INFO = null;
-const DEFAULT_LOCALE = wx.getStorageSync("locale") || 0;
+const DEFAULT_LOCALE = 0;
 const DEFAULT_LOCALE_MAPPING = ["zh", "en"];
+const DEFAULT_TAB_LOCALE = {
+  "zh": ["发现", "VITA", "我"],
+  "en": ["Discovery", "VITA", "Me"]
+};
 const DEFAULT_ROUTER = { path: "/pages/discovery/discovery", delta: 0 };
-const DEFAULT_REGION = "ucsd";
+const DEFAULT_REGION = { alias: "sd", name: ["加州大学圣迭戈分校", "UC San Diego"], zipCode: 92092, geoLocation: { lat: 32.88, long: -117.23 } };
 const DEFAULT_USER = null;
 const DEFAULT_MEMBER = wx.getStorageSync("member") || null;
 
@@ -45,8 +48,12 @@ function systemInfo(state = DEFAULT_SYSTEM_INFO, { type, res }) {
 
 function locale(state = DEFAULT_LOCALE, { type, locale }) {
   switch (type) {
-    case SET_LOCALE:
-      changeTabLocal(DEFAULT_LOCALE_MAPPING[locale]);
+    case SET_LOCALE: 
+      for (let i = 0; i < DEFAULT_TAB_LOCALE[DEFAULT_LOCALE_MAPPING[locale]].length; i++)
+        wx.setTabBarItem({
+          index: i,
+          text: DEFAULT_TAB_LOCALE[DEFAULT_LOCALE_MAPPING[locale]][i]
+        });
       wx.setStorage({
         key: 'locale',
         data: locale
