@@ -1,14 +1,14 @@
-import { request, METHOD } from '../../utils/promisfy';
-import * as API from '../../config/api.config';
-import * as LocalePackage from 'locale-package';
 import feedback from '../../utils/feedback';
-import implement from '../../utils/implement';
+import palette from '../../config/palette.config';
+import mapStateToPage from '../../lib/wx.state.binder';
+import * as promisfy from '../../lib/wx.promisfy';
+import * as localePackage from 'locale-package';
 
 const { Store, GlobalActions } = getApp();
 
 Page({
   data: {
-    LocalePackage,
+    localePackage,
     palette: {
       card: ['linear-gradient(60deg, #a6403e, #b24846)' ,'linear-gradient(-45deg, #2b2b2b, #454545)'],
       font: ['beige', '#a6403e']
@@ -16,23 +16,30 @@ Page({
     schema: 0
   },
   onLoad: function () {
-    let { systemInfo, member } = Store.getState().global;
-    // Synchronous storage hook
+    let { systemInfo, member, locale } = Store.getState().global;
     this.setData({
-      systemInfo, member
+      systemInfo, member, locale
     });
-  },
-  mapStateToPage: function () {
-    let newState = Store.getState();
-    if (JSON.stringify(this.data.member) !== JSON.stringify(newState.global.member))
-      this.setData({
-        member: newState.global.member
-      });
+    this.unsubscribe = Store.subscribe(() => {
+      mapStateToPage(Store, this, { member: 'global.member' });
+    });
+    if (member) {
+      let { name, gender, tel, school, birthday, email } = member;
+      if (!name || gender === null || !tel || !school || !birthday || !email)
+        wx.showModal({
+          title: localePackage.implement.title[locale],
+          content: localePackage.implement.content[locale],
+          confirmColor: palette.primary,
+          success: function () {
+            wx.navigateTo({
+              url: '/pages/modify/modify',
+            })
+          },
+          confirmText: localePackage.implement.confirm[locale]
+        });
+    }
   },
   onShow: function () {
-    this.unsubscribe = Store.subscribe(() => {
-      this.mapStateToPage();
-    });
     this.fetchData();
   },
   onUnload: function () {
@@ -41,20 +48,13 @@ Page({
   onPullDownRefresh: function () {
     this.fetchData(wx.stopPullDownRefresh);
   },
-  fetchData: function (callback) {
-    let { user: { openid }, locale, member } = Store.getState().global;
-    request(API.MEMBER.GETINFO, METHOD.GET, { openid })
-      .then(res => {
-        Store.dispatch(GlobalActions.updateMember(res));
-        implement(res, locale);
-        if (!!callback)
-          callback();
-      })
-      .catch(e => {
-        if (e === 404 && !!member) Store.dispatch(GlobalActions.purgeMember());
-        if (!!callback)
-          callback();
+  fetchData: function (cb) {
+    let { user: { openid }, member } = Store.getState().global;
+    promisfy.fetch(`/member/${ openid }`)
+      .then(({ statusCode, data }) => {
+        statusCode === 404 ? !!member && Store.dispatch(GlobalActions.purgeMember()) : Store.dispatch(GlobalActions.updateMember(data)); 
       });
+    cb && cb();
   },
   feedback,
   switchSchema: function () {
@@ -65,7 +65,7 @@ Page({
   showQR: function () {
     feedback();
     wx.navigateTo({
-      url: `/pages/qrcode/qrcode?context=${Store.getState().global.member.cardID}`
+      url: `/pages/qrcode/qrcode?context=${Store.getState().global.member.cardid}`
     })
   }
 })
