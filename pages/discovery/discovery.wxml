@@ -43,6 +43,6 @@
     <!-- Recommendation -->
     <recommendation recommendations="{{ recommendations }}"/>
     <!-- Feed -->
-    <feed title="{{ feed.title }}" action="{{ feed.action }}" articles="{{ feed.articles }}" />
+    <feed articles="{{ feed }}" />
   </view>
 </scroll-view>

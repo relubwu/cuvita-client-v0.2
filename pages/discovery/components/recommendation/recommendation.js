@@ -1,7 +1,4 @@
-import services from '../../../../config/services.config';
 import feedback from '../../../../utils/feedback';
-import { request, METHOD } from '../../../../utils/promisfy';
-import { FIELD } from '../../../../config/api.config';
 
 const { Store, GlobalActions } = getApp();
 
@@ -9,14 +6,12 @@ Component({
   options: {
     addGlobalClass: true
   },
-
   properties: {
     recommendations: {
       type: Array,
       value: [{ items: [{}, {}, {}] }]
     }
   },
-
   lifetimes: {
     attached: function () {
       // Synchronous storage hook
@@ -32,7 +27,6 @@ Component({
       this.unsubscribe();
     },
   },
-
   /**
    * Component methods
    */

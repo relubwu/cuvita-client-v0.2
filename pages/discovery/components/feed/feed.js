@@ -1,7 +1,5 @@
-import services from '../../../../config/services.config';
 import feedback from '../../../../utils/feedback';
-import { request, METHOD } from '../../../../utils/promisfy';
-import { FIELD } from '../../../../config/api.config';
+import * as localePackage from 'locale-package';
 
 const { Store, GlobalActions } = getApp();
 
@@ -9,16 +7,10 @@ Component({
   options: {
     addGlobalClass: true
   },
-
+  data: {
+    localePackage
+  },
   properties: {
-    title: {
-      type: Array,
-      value: []
-    },
-    action: {
-      type: Array,
-      value: []
-    },
     articles: {
       type: Array,
       value: []

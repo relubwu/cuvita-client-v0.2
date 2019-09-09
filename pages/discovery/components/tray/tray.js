@@ -1,41 +1,39 @@
 import feedback from '../../../../utils/feedback';
-import * as LocalePackage from './locale-package';
+import mapStateToComponent from '../../../../lib/wx.state.binder';
+import * as localePackage from './locale-package';
 
-const { Store, GlobalActions } = getApp();
+const { Store, GlobalActions, GlobalLocalePackage } = getApp();
 
 Component({
   options: {
     addGlobalClass: true
   },
-
   lifetimes: {
     attached: function () {
       // Synchronous storage hook
       let { locale } = Store.getState().global;
       this.setData({
         locale,
-        LocalePackage
+        localePackage
       });
       this.unsubscribe = Store.subscribe(() => {
-        this.mapStateToComponent();
+        mapStateToComponent(Store, this, { locale: 'global.locale' });
       });
     },
     detached: function () {
       this.unsubscribe();
     },
   },
-
   /**
    * Component methods
    */
   methods: {
-    mapStateToComponent: function () {
-      let newState = Store.getState();
-      if (this.data.locale !== newState.global.locale)
-        this.setData({
-          locale: newState.global.locale
-        });
-    },
-    feedback
+    feedback: function () {
+      feedback();
+      wx.showToast({
+        title: GlobalLocalePackage.sorry[this.data.locale],
+        icon: 'none'
+      });
+    }
   }
 })

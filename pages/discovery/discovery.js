@@ -1,9 +1,8 @@
 import services from '../../config/services.config';
-import { request, METHOD, getLocation } from '../../utils/promisfy';
-import * as API from '../../config/api.config';
 import feedback from '../../utils/feedback';
+import * as promisfy from '../../lib/wx.promisfy';
 
-const { Store, GlobalActions, GlobalLocalePackages } = getApp();
+const { Store, GlobalActions, GlobalLocalePackage } = getApp();
 
 Page({
   data: {
@@ -30,12 +29,12 @@ Page({
     this.unsubscribe = Store.subscribe(() => {
       this.mapStateToPage();
     });
-    options.fallback !== 'region' ? getLocation()
+    options.fallback !== 'region' ? promisfy.getLocation()
       .then(({ latitude, longitude }) => {
-        return request(API.REGION.NEAREST, METHOD.GET, { lat: latitude, long: longitude })
+        return promisfy.fetch('/region/nearest', { lat: latitude, long: longitude })
       })
-      .then(({ id }) => {
-        Store.dispatch(GlobalActions.setRegion(id));
+      .then(({ data }) => {
+        Store.dispatch(GlobalActions.setRegion(data));
         this.fetchData();
       })
       .catch(e => { this.fetchData() }) : this.fetchData();
@@ -52,23 +51,23 @@ Page({
   },
   fetchData: function () {
     wx.showLoading({
-      title: GlobalLocalePackages.loading[this.data.locale]
+      title: GlobalLocalePackage.loading[this.data.locale]
     });
-    let { region } = Store.getState().global;
+    let { region: { alias } } = Store.getState().global;
     Promise.all([
-      request(API.FIELD.BANNER, METHOD.GET, { region }),
-      request(API.FIELD.SERVICES, METHOD.GET),
-      request(API.FIELD.RECOMMENDATION, METHOD.GET, { region }),
-      request(API.FIELD.FEED, METHOD.GET, { region })
+      promisfy.fetch(`/field/services`),
+      promisfy.fetch(`/field/banner/${ alias }`),
+      promisfy.fetch(`/field/recommendation/${ alias }`),
+      promisfy.fetch(`/field/feed/${ alias }`)
     ])
       .then(res => {
-        for (let index in res[1])
-          res[1][index] = { ...res[1][index], ...this.data.services[index] };
+        for (let index in res[0].data)
+          res[0].data[index] = { ...res[0].data[index], ...this.data.services[index] };
         this.setData({
-          banner: res[0],
-          services: res[1],
-          recommendations: res[2],
-          feed: res[3]
+          services: res[0].data,
+          banner: res[1].data,
+          recommendations: res[2].data,
+          feed: res[3].data
         });
         wx.hideLoading();
       });
