@@ -1,5 +1,6 @@
 import services from '../../config/services.config';
 import feedback from '../../utils/feedback';
+import mapStateToPage from '../../lib/wx.state.binder';
 import * as promisfy from '../../lib/wx.promisfy';
 
 const { Store, GlobalActions, GlobalLocalePackage } = getApp();
@@ -9,17 +10,6 @@ Page({
     scrollTop: 0,
     services
   },
-  mapStateToPage: function () {
-    let newState = Store.getState();
-    if (this.data.locale !== newState.global.locale)
-      this.setData({
-        locale: newState.global.locale
-      });
-    if (this.data.region !== newState.global.region)
-      this.setData({
-        region: newState.global.region
-      });
-  },
   onLoad: function (options) {
     // Synchronous storage hook
     let { locale, systemInfo, region } = Store.getState().global
@@ -27,7 +17,7 @@ Page({
       locale, systemInfo, region
     });
     this.unsubscribe = Store.subscribe(() => {
-      this.mapStateToPage();
+      mapStateToPage(Store, this, { locale: 'global.locale', region: 'global.region' });
     });
     options.fallback !== 'region' ? promisfy.getLocation()
       .then(({ latitude, longitude }) => {

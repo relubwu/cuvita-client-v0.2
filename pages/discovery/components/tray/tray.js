@@ -10,7 +10,6 @@ Component({
   },
   lifetimes: {
     attached: function () {
-      // Synchronous storage hook
       let { locale } = Store.getState().global;
       this.setData({
         locale,
@@ -24,9 +23,6 @@ Component({
       this.unsubscribe();
     },
   },
-  /**
-   * Component methods
-   */
   methods: {
     feedback: function () {
       feedback();
