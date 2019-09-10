@@ -1,10 +1,9 @@
 import feedback from '../../utils/feedback';
 import palette from '../../config/palette.config';
-import mapStateToPage from '../../lib/wx.state.binder';
 import * as promisfy from '../../lib/wx.promisfy';
 import * as localePackage from 'locale-package';
 
-const { Store, GlobalActions, GlobalLocalePackage } = getApp();
+const { Store, GlobalLocalePackage } = getApp();
 const limit = 10;
 
 Page({
@@ -17,9 +16,10 @@ Page({
     vendors: {}
   },
   onLoad: function ({ realm }) {
-    let { locale, region } = Store.getState().global;
+    let { locale, region, systemInfo } = Store.getState().global;
     this.setData({
       locale,
+      systemInfo,
       region,
       realm
     });
@@ -39,10 +39,7 @@ Page({
           .then(() => { 
             wx.hideLoading();
           });
-      })
-  },
-  onHide: function () {
-    this.unsubscribe();
+      });
   },
   onChange: function({ detail: { index } }) {
     feedback();
