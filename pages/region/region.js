@@ -26,13 +26,18 @@ Page({
         for (let index in data) {
           markers.push({ id: index, iconPath: `https://cuvita-1254391499.cos.na-siliconvalley.myqcloud.com/icons/region_pin.png`, width: 40, height: 40, index, latitude: data[index].geoLocation.lat, longitude: data[index].geoLocation.long, zIndex: data.length - index });
         }
+        let currentRegion = 0;
+        for (let index in data) {
+          if (region.alias === data[index].alias) currentRegion = index;
+        }
         this.setData({
           locale,
           regionMatrix,
           regions: data,
-          currentRegion: 0,
+          currentRegion,
           ['map.markers']: markers
-        })
+        });
+        wx.hideLoading();
       });
   },
   markerTap: function ({ markerId }) {
@@ -59,11 +64,9 @@ Page({
     });
   },
   setRegion: function ({ detail: { index } }) {
-    Store.dispatch(GlobalActions.setRegion(mapIndexToRegion(index).id));
-    setTimeout(() => {
-      wx.reLaunch({
-        url: '/pages/discovery/discovery?fallback=region'
-      })
-    }, 500);
+    Store.dispatch(GlobalActions.setRegion(this.data.regions[index]));
+    wx.reLaunch({
+      url: '/pages/discovery/discovery?fallback=region'
+    });
   }
 })
