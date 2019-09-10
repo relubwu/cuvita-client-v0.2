@@ -25,7 +25,7 @@ Page({
     });
     if (member) {
       let { name, gender, tel, school, birthday, email } = member;
-      if (!name || gender === null || !tel || !school || !birthday || !email)
+      if (!name || gender === undefined || !tel || !school || !birthday || !email)
         wx.showModal({
           title: localePackage.implement.title[locale],
           content: localePackage.implement.content[locale],
