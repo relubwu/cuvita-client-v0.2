@@ -1,18 +1,18 @@
-<van-tabs active="{{ current }}" bind:change="onChange" color="{{ Palette.carmax }}" swipeable>
+<van-tabs active="{{ current }}" bind:change="onChange" color="{{ palette.carmax }}" swipeable>
   <van-tab title="{{ make.label[locale] }}" wx:for="{{ makes }}" wx:for-item="make" wx:for-index="makeIndex" wx:key="{{ make.name }}">
   <!-- CARDS -->
-    <navigator class="card-container" wx:for="{{ cars[make.name] }}" wx:key="{{ item.stockNumber }}" url="/pages/auto-detail/auto-detail?stockNumber={{ item.stockNumber }}">
+    <navigator class="card-container" wx:for="{{ vehicles[make.name] }}" wx:key="{{ item.stockNumber }}" url="/pages/auto-detail/auto-detail?stockNumber={{ item.stockNumber }}">
       <van-card desc="" title="{{ item.year }} {{ item.make }} {{ item.model }}" thumb="{{ item.thumbnail }}" thumb-mode="aspectFill" custom-class="card {{ (systemInfo.safeAreaInset && vendors[category.name].length - 1 == index) && 'card-inset' }}" title-class="card-title" desc-class="card-description" lazy-load price="{{ item.basePrice }}" currency="$" origin-price="{{ item.msrp }}" price-class="card-price">
         <view slot="tags">
-          <van-tag wx:if="{{ item.trim.length > 1 }}" custom-class="card-tag" color="{{ Palette.carmax }}">{{ item.trim }}</van-tag>
+          <van-tag wx:if="{{ item.trim.length > 1 }}" custom-class="card-tag" color="{{ palette.carmax }}">{{ item.trim }}</van-tag>
         </view>
         <view slot="footer" class="card-footer fw d-flex-row align-items-center justify-content-between">
           <view class="d-flex-row align-items-center justify-content-center">
-            <van-icon custom-class="d-flex-row align-items-center" name="location-o" color="{{ Palette.descriptive }}" />
+            <van-icon custom-class="d-flex-row align-items-center" name="location-o" color="{{ palette.descriptive }}" />
             <label class="descriptive" style="text-transform: capitalize;">{{ item.storeName }}</label>
           </view>
           <view class="d-flex-row align-items-center justify-content-center">
-            <van-icon name="clock-o" color="{{ Palette.descriptive }}" class="d-flex-column align-items-center" style="padding: 0 5px;"/>
+            <van-icon name="clock-o" color="{{ palette.descriptive }}" class="d-flex-column align-items-center" style="padding: 0 5px;"/>
             <label class="descriptive">{{ item.mileage }} mi</label>
           </view>
           
@@ -22,6 +22,6 @@
   </van-tab>
 </van-tabs>
 <view class="fvw">
-  <view wx:if="{{ pending }}" class="bottom-notifier d-flex-row align-items-center justify-content-center"><label style="color: {{ Palette.descriptive }};">—— {{ LocalePackage.pending[locale] }} ——</label></view>
-  <view wx:if="{{ eol }}" class="bottom-notifier d-flex-row align-items-center justify-content-center"><label style="color: {{ Palette.descriptive }};">—— {{ LocalePackage.eol[locale] }} ——</label></view>
+  <view wx:if="{{ pending }}" class="bottom-notifier d-flex-row align-items-center justify-content-center"><label style="color: {{ palette.descriptive }};">—— {{ localePackage.pending[locale] }} ——</label></view>
+  <view wx:if="{{ eol }}" class="bottom-notifier d-flex-row align-items-center justify-content-center"><label style="color: {{ palette.descriptive }};">—— {{ localePackage.eol[locale] }} ——</label></view>
 </view>
