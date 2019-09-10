@@ -1,11 +1,11 @@
-import { mapRegionToMatrix, mapRegionIdToIndex, mapRegionToMarkerArray, mapIndexToRegion } from '../../utils/region-converter';
-import * as LocalePackage from 'locale-package';
+import * as promisfy from '../../lib/wx.promisfy';
+import * as localePackage from 'locale-package';
 
-const { Store, GlobalActions, GlobalLocalePackages } = getApp();
+const { Store, GlobalActions, GlobalLocalePackage } = getApp();
 
 Page({
   data:{
-    options: {
+    map: {
       long: -117.55,
       lat: 33.4,
       scale: 6
@@ -13,33 +13,44 @@ Page({
   },
   onLoad: function () {
     let { locale, region } = Store.getState().global;
-    // Synchronous storage hook
-    this.setData({
-      locale, region,
-      ['options.region']: mapRegionToMatrix(),
-      ['options.regionIndex']: mapRegionIdToIndex(region),
-      ['options.markers']: mapRegionToMarkerArray()
-    });
-    wx.setNavigationBarTitle({
-      title: LocalePackage.title[Store.getState().global.locale]
-    });
+    wx.setNavigationBarTitle({ title: localePackage.title[locale] });
+    wx.showLoading({ title: GlobalLocalePackage.loading[locale] });
+    promisfy.fetch(`/region`)
+      .then(({ data }) => {
+        let regionMatrix = [[], []];
+        data.map(v => {
+          regionMatrix[0].push(v.name[0]);
+          regionMatrix[1].push(v.name[1]);
+        });
+        let markers = [];
+        for (let index in data) {
+          markers.push({ id: index, iconPath: `https://cuvita-1254391499.cos.na-siliconvalley.myqcloud.com/icons/region_pin.png`, width: 40, height: 40, index, latitude: data[index].geoLocation.lat, longitude: data[index].geoLocation.long, zIndex: data.length - index });
+        }
+        this.setData({
+          locale,
+          regionMatrix,
+          regions: data,
+          currentRegion: 0,
+          ['map.markers']: markers
+        })
+      });
   },
   markerTap: function ({ markerId }) {
-    let { geoLocation: { long, lat } } = mapIndexToRegion(markerId);
+    let { geoLocation: { long, lat } } = this.data.regions[markerId];
     this.setData({
-      ['options.regionIndex']: markerId,
-      ['options.long']: long,
-      ['options.lat']: lat,
-      ['options.scale']: 10
+      currentRegion: markerId,
+      ['map.long']: long,
+      ['map.lat']: lat,
+      ['map.scale']: 10
     });
   },
   onChange: function ({ detail: { index } }) {
-    let { geoLocation: { long, lat } } = mapIndexToRegion(index);
+    let { geoLocation: { long, lat } } = this.data.regions[index];
     this.setData({
-      ['options.regionIndex']: index,
-      ['options.long']: long,
-      ['options.lat']: lat,
-      ['options.scale']: 10
+      currentRegion: index,
+      ['map.long']: long,
+      ['map.lat']: lat,
+      ['map.scale']: 10
     });
   },
   onCancel: function () {

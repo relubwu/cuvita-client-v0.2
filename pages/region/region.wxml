@@ -1,2 +1,2 @@
-<map id="map" longitude="{{ options.long }}" latitude="{{ options.lat }}" scale="{{ options.scale }}" markers="{{ options.markers }}" show-location bindmarkertap="markerTap" />
-<van-picker columns="{{ options.region[locale] }}" data-name="region" show-toolbar bind:cancel="onCancel" bind:confirm="setRegion" bind:change="onChange" default-index="{{ options.regionIndex }}" />
+<map id="map" longitude="{{ map.long }}" latitude="{{ map.lat }}" scale="{{ map.scale }}" markers="{{ map.markers }}" show-location bindmarkertap="markerTap" />
+<van-picker columns="{{ regionMatrix[locale] }}" data-name="region" show-toolbar bind:cancel="onCancel" bind:confirm="setRegion" bind:change="onChange" default-index="{{ currentRegion }}" />
