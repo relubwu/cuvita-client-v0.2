@@ -22,11 +22,11 @@
     <van-collapse-item title="{{ localePackage.locale[locale] }}" icon="chat" name="locale">
       <van-radio-group value="{{ options.locale[locale] }}">
         <van-cell-group border="{{ false }}">
-          <van-cell title="简体中文" clickable value-class="value-class" bind:click="setlocale" data-locale="0" >
-            <van-radio name="zh" checked-color="{{ Palette.primary }}" />
+          <van-cell title="简体中文" clickable value-class="value-class" bind:click="setLocale" data-locale="0" >
+            <van-radio name="zh" checked-color="{{ palette.primary }}" />
           </van-cell>
-          <van-cell title="English" clickable value-class="value-class" bind:click="setlocale" data-locale="1" border="{{ false }}">
-            <van-radio name="en" checked-color="{{ Palette.primary }}" />
+          <van-cell title="English" clickable value-class="value-class" bind:click="setLocale" data-locale="1" border="{{ false }}">
+            <van-radio name="en" checked-color="{{ palette.primary }}" />
           </van-cell>
         </van-cell-group>
       </van-radio-group>
