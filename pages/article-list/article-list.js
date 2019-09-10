@@ -1,43 +1,28 @@
-import { request, METHOD } from '../../utils/promisfy';
-import { ARTICLE } from '../../config/api.config';
-import * as LocalePackage from 'locale-package';
+import mapStateToPage from '../../lib/wx.state.binder';
+import * as promisfy from '../../lib/wx.promisfy';
+import * as localePackage from 'locale-package';
 
-const { Store, GlobalLocalePackages } = getApp();
-
-/**
- * CUVita Client Side Implementations - index.js
- * @scope /pages/article/list
- * @author relubwu
- * @version 0.1.6
- * @copyright  © CHINESE UNION 2019
- */
+const { Store, GlobalLocalePackage } = getApp();
 
 Page({
   data: {
     articles: [{}, {}, {}]
   },
   onLoad() {
-    let { locale, systemInfo } = Store.getState().global;
+    let { locale, systemInfo, region } = Store.getState().global;
     this.setData({
       locale, systemInfo
     });
     wx.setNavigationBarTitle({
-      title: LocalePackage.title[this.data.locale]
+      title: localePackage.title[this.data.locale]
     });
     wx.showLoading({
-      title: GlobalLocalePackages.loading[this.data.locale]
+      title: GlobalLocalePackage.loading[this.data.locale]
     });
-    request(ARTICLE.LIST, METHOD.GET)
-      .then(articles => {
-        this.setData({ articles });
+    promisfy.fetch(`/article/lists/${ region.alias }`)
+      .then(({ data }) => {
+        this.setData({ articles: data });
         wx.hideLoading();
       })
-      .catch(e => {
-        wx.showToast({
-          title: GlobalLocalePackages.requestFailed[this.data.locale],
-          image: '/assets/icons/request-fail.png'
-        });
-        wx.hideLoading();
-      });
   }
 })
