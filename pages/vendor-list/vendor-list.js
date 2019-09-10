@@ -1,186 +1,86 @@
-import { request, METHOD } from '../../utils/promisfy';
-import * as API from '../../config/api.config';
-import * as LocalePackage from 'locale-package';
-// import * as Toasts from '../../utils/toasts';
-import Palette from '../../config/palette.config';
 import feedback from '../../utils/feedback';
+import palette from '../../config/palette.config';
+import mapStateToPage from '../../lib/wx.state.binder';
+import * as promisfy from '../../lib/wx.promisfy';
+import * as localePackage from 'locale-package';
 
-const {
-  Store,
-  GlobalActions,
-  GlobalLocalePackages
-} = getApp();
+const { Store, GlobalActions, GlobalLocalePackage } = getApp();
+const limit = 10;
 
 Page({
   data: {
-    LocalePackage,
-    Palette,
-    cursor: {},
-    current: 0,
     bottomFlag: {},
-    search: {
-      keyword: '',
-      sort: {
-        criteria: NaN
-      }
-    }
+    currentCategory: { index: 0, alias: '' },
+    localePackage,
+    palette,
+    skip: {},
+    vendors: {}
   },
-  onLoad: function (options) {
+  onLoad: function ({ realm }) {
     let { locale, region } = Store.getState().global;
-    // Synchronous storage hook
     this.setData({
       locale,
       region,
-      options
-    });
-    let {
       realm
-    } = options;
+    });
     wx.setNavigationBarTitle({
-      title: LocalePackage.realms[realm][this.data.locale]
+      title: localePackage.realms[realm][this.data.locale]
     });
     wx.showLoading({
-      title: GlobalLocalePackages.loading[this.data.locale]
+      title: GlobalLocalePackage.loading[this.data.locale]
     });
-    request(API.VENDOR.CATEGORIES, METHOD.GET, {
-      realm: this.data.options.realm
-    })
-      .then(categories => {
+    promisfy.fetch(`/vendor/categories/${ realm }`)
+      .then(({ data }) => {
         this.setData({
-          categories,
-          [`cursor.${ categories[0].name }`]: {
-            skip: 0
-          }
+          categories: data,
+          ['currentCategory.alias']: data[0].name
         });
-        this.fetchList(categories[0].name, 0, wx.hideLoading);
+        this.fetchList()
+          .then(() => { 
+            wx.hideLoading();
+          });
       })
-  },
-  mapStateToPage: function () {
-
-  },
-  onShow: function () {
-    this.unsubscribe = Store.subscribe(() => {
-      this.mapStateToPage();
-    });
   },
   onHide: function () {
     this.unsubscribe();
   },
-  onChange: function({
-    detail: {
-      index
-    }
-  }) {
+  onChange: function({ detail: { index } }) {
     feedback();
     this.setData({
-      current: index,
-      ['search.keyword']: '',
+      currentCategory: { index, alias: this.data.categories[index].name },
       eol: false
     });
-    let currentCategory = this.data.categories[index].name;
-    wx.showLoading({
-      title: GlobalLocalePackages.loading[this.data.locale]
-    });
-    if (!this.data.cursor[this.data.categories[index].name])
-      this.setData({
-        [`cursor.${ this.data.categories[index].name }`]: {
-          skip: 0
-        }
+    let { alias } = this.data.currentCategory;
+    wx.showLoading({ title: GlobalLocalePackage.loading[this.data.locale] });
+    this.fetchList()
+      .then(length => {
+        length < limit && this.setData({ pending: false, [`bottomFlag.${ alias }`]: true, eol: true });
+        wx.hideLoading();
       });
-    this.fetchList(currentCategory, 0, wx.hideLoading);
   },
   onReachBottom: function (e) {
-    let currentCategory = this.data.categories[this.data.current].name;
-    if (!!this.data.cursor[currentCategory]) {
-      this.data.cursor[currentCategory].skip += 10;
-    }
-    if (!!this.data.bottomFlag[currentCategory]) {
-      this.setData({
-        eol: true
-      });
+    let { alias } = this.data.currentCategory;
+    if (this.data.bottomFlag[alias]) {
+      this.setData({ eol: true });
       return;
     }
-    this.setData({
-      pending: true,
-      eol: false
-    });
-    let { skip } = this.data.cursor[currentCategory];
-    this.fetchList(currentCategory, skip, () => { this.setData({ pending: false }) }, this.data.search.keyword);
-  },
-  fetchList: function (category, skip, callback, keyword='', destructive=false) {
-    request(API.VENDOR.LISTS, METHOD.GET, {
-      realm: this.data.options.realm,
-      category,
-      skip,
-      limit: 10,
-      keyword,
-      region: this.data.region
-    })
-      .then(res => {
-        if (res[category].length == 0)
-          return wx.showToast({
-            title: LocalePackages.eol[this.data.locale],
-            image: 'none'
-          });;
-        if (res[category].length < 10) {
-          this.setData({
-            [`bottomFlag.${category}`]: true
-          });
-        } else {
-          this.setData({
-            [`bottomFlag.${category}`]: false
-          });
-        }
-        let vendors;
-        if (!this.data.vendors) {
-          vendors = res;
-        } else if (destructive) {
-          this.setData({
-            [`vendors.${category}`]: null,
-            [`cursor.${category}.skip`]: 0
-          });
-          vendors = {
-            ...this.data.vendors,
-            ...res
-          }
-        } else {
-          res[category] = !!this.data.vendors[category] ? [...this.data.vendors[category], ...res[category]] : res[category];
-          vendors = {
-            ...this.data.vendors,
-            ...res
-          };
-        }
-        this.setData({
-          vendors
-        });
-        callback();
-      })
-      .catch(e => {
-        wx.showToast({
-          title: GlobalLocalePackages.requestFailed[this.data.locale],
-          image: '/assets/icons/request-fail.png'
-        });
-        callback();
+    this.setData({ pending: true, eol: false });
+    this.fetchList()
+      .then(length => {
+        length < limit ? this.setData({ pending: false,  [`bottomFlag.${ alias }`]: true, eol: true }) : this.setData({ pending: false });
       });
   },
-  search: function ({ detail }) {
-    wx.showLoading({
-      title: GlobalLocalePackages.loading[this.data.locale]
+  fetchList: function () {
+    let { realm, region, currentCategory, skip, bottomFlag, vendors } = this.data;
+    if (bottomFlag[currentCategory]) return;
+    skip[currentCategory.alias] === undefined ? this.setData({ [`skip.${currentCategory.alias}`]: 0 }) : this.setData({ [`skip.${currentCategory.alias}`]: this.data.skip[currentCategory.alias] + limit });
+    return new Promise((resolve, reject) => {
+      promisfy.fetch(`/vendor/lists/${ realm }/${ currentCategory.alias }/${ region.alias }?limit=${ limit }&skip=${ skip[currentCategory.alias] }`)
+        .then(({ data }) => {
+          vendors[currentCategory.alias] ? this.setData({ [`vendors.${currentCategory.alias}`]: vendors[currentCategory.alias].concat(data) }) : this.setData({ [`vendors.${currentCategory.alias}`]: data });
+          resolve(data.length);
+        });
     });
-    let currentCategory = this.data.categories[this.data.current].name;
-    this.setData({
-      ['search.keyword']: detail
-    });
-    this.fetchList(currentCategory, 0, wx.hideLoading, detail, true);
-  },
-  clear: function () {
-    if (this.data.search.keyword.length == 0)
-      return;
-    let currentCategory = this.data.categories[this.data.current].name;
-    this.setData({
-      ['search.keyword']: ''
-    });
-    this.fetchList(currentCategory, 0, () => {}, '', true);
   },
   feedback
 })

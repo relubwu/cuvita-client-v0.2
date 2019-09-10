@@ -1,11 +1,3 @@
-.search {
-  padding: 0;
-}
-
-.search-slot {
-  color: white;
-}
-
 .filter {
   background: white !important;
   height: 0px !important;
