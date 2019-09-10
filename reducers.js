@@ -26,7 +26,7 @@ const DEFAULT_TAB_LOCALE = {
 const DEFAULT_ROUTER = { path: "/pages/discovery/discovery", delta: 0 };
 const DEFAULT_REGION = { alias: "sd", name: ["加州大学圣迭戈分校", "UC San Diego"], zipCode: 92092, geoLocation: { lat: 32.88, long: -117.23 } };
 const DEFAULT_USER = null;
-const DEFAULT_MEMBER = wx.getStorageSync("member") || null;
+const DEFAULT_MEMBER = null;
 
 /**
  * Global Reducers

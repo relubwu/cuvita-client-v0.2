@@ -6,8 +6,8 @@ import * as GlobalLocalePackage from '/locale-package';
 import * as promisfy from 'lib/wx.promisfy';
 import logger from 'redux-logger';
 
-const Store = redux.createStore(reducers, redux.applyMiddleware(logger, reduxThunk));
-// const Store = redux.createStore(reducers, redux.applyMiddleware(reduxThunk));
+const Store = redux.createStore(reducers, redux.applyMiddleware(logger, reduxThunk)); // 开发环境下开启logger
+// const Store = redux.createStore(reducers, redux.applyMiddleware(reduxThunk)); // 生产环境屏蔽logger输出
 
 App({
   Store,
@@ -18,7 +18,7 @@ App({
       title: this.GlobalLocalePackage.loading[Store.getState().global.locale],
       mask: true
     });
-    Store.dispatch(GlobalActions.setLocale(wx.getStorageSync('locale')));
+    Store.dispatch(GlobalActions.setLocale(wx.getStorageSync('locale') || 0));
     Store.dispatch(GlobalActions.setSystemInfo(wx.getSystemInfoSync()));
     promisfy.login()
       .then(code => promisfy.fetch(`/dispatch/${ code }`))
