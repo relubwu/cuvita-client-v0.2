@@ -63,7 +63,7 @@ Component({
           value[field.name] = validator.escape(value[field.name]);
           if (field.is === 'integer') value[field.name] = validator.toInt(value[field.name]);
           if (field.is === 'email') value[field.name] = validator.normalizeEmail(value[field.name]);
-          if (field.is === 'date') value[field.name] = validator.toDate(value[field.name]);
+          if (field.is === 'date') value[field.name] = new Date(validator.toInt(value[field.name])).toISOString();
           this.setData({ [`error.${ field.name }`]: "" });
           delete errors[field.name];
         }
