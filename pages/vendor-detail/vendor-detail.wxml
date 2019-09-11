@@ -19,16 +19,16 @@
 </view>
 <!-- FEATURES -->
 <van-cell-group border="{{ false }}" custom-class="container">
-  <van-cell title="{{ LocalePackage.address[locale] }}" value="{{ address.street }}, {{ address.city }}" icon="location-o" border="{{ false }}" />
-  <van-cell title="{{ LocalePackage.contact[locale] }}" value="{{ tel }}" icon="phone-circle-o" border="{{ false }}" />
+  <van-cell title="{{ localePackage.address[locale] }}" value="{{ address.street }}, {{ address.city }}" icon="location-o" border="{{ false }}" />
+  <van-cell title="{{ localePackage.contact[locale] }}" value="{{ tel }}" icon="phone-circle-o" border="{{ false }}" />
 </van-cell-group>
 <!-- RATING -->
 <view class="container fw d-flex-column vendor-rating align-items-center justify-content-center">
   <van-rate value="{{ rating }}" readonly="{{ true }}" size="32" />
-  <label class="vendor-rating-label">{{ LocalePackage.rating[locale] }}</label>
+  <label class="vendor-rating-label">{{ localePackage.rating[locale] }}</label>
 </view>
 <!-- ACTIONS -->
 <view class="container vendor-actions d-flex-row align-items-center justify-content-evenly" style="{{ systemInfo.safeAreaInset && 'padding-bottom: 34px !important' }}">
-  <navigator class="vendor-actions-waitlist" bind:tap="call" >{{ LocalePackage.call[locale] }}</navigator>
-  <navigator class="vendor-actions-navigate" bind:tap="navigate">{{ LocalePackage.navigate[locale] }}</navigator>
+  <navigator class="vendor-actions-waitlist" bind:tap="call" >{{ localePackage.call[locale] }}</navigator>
+  <navigator class="vendor-actions-navigate" bind:tap="navigate">{{ localePackage.navigate[locale] }}</navigator>
 </view>

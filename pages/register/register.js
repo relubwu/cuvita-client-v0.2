@@ -1,153 +1,61 @@
-import { request, METHOD, requestPayment } from '../../utils/promisfy';
-import * as API from '../../config/api.config';
-import * as LocalePackage from 'locale-package';
-import Sanitizer from '../../utils/sanitizer';
-import Palette from '../../config/palette.config';
-import { mapRegionToMatrix, mapIndexToRegion } from '../../utils/region-converter';
+import palette from '../../config/palette.config';
+import * as promisfy from '../../lib/wx.promisfy';
+import * as localePackage from 'locale-package';
 
-const { Store, GlobalActions, GlobalLocalePackages } = getApp();
+const { Store, GlobalActions, GlobalLocalePackage } = getApp();
 
 Page({
   data: {
-    LocalePackage,
-    pending: false,
-    popup: {},
-    options: {
-      gender: [['男', '女', '其他'], ['Male', 'Female', 'Non-Binary']],
-      minDate: new Date(1990, 0, 1).getTime(),
-      maxDate: new Date().getTime()
-    }
+    localePackage
   },
   onLoad: function () {
     let { locale } = Store.getState().global;
-    // Synchronous storage hook
     this.setData({
       locale,
-      ['options.region']: mapRegionToMatrix()
+      fields: [
+        [
+          { tag: 'van-field', name: 'name', type: 'text', label: localePackage.name.label[locale], placeholder: localePackage.name.placeholder[locale], required: true },
+          { tag: 'van-field', name: 'tel', type: 'text', label: localePackage.tel.label[locale], placeholder: localePackage.tel.placeholder[locale], required: true },
+          { tag: 'van-field', name: 'email', type: 'text', label: localePackage.email.label[locale], placeholder: localePackage.email.placeholder[locale], required: true, is: 'email' },
+          { tag: 'van-picker', name: 'school', title: localePackage.school.label[locale], required: true },
+          { tag: 'van-picker', name: 'gender', options: [['男', '女', '其他'], ['Male', 'Female', 'Non-Binary']][locale], values: [0, 1, 2], title: localePackage.gender.label[locale], required: true, is: 'integer' },
+          { tag: 'van-datetime-picker', name: 'birthday', title: localePackage.birthday.label[locale], options: { minDate: new Date(1990, 0, 1).getTime(), maxDate: new Date().getTime() }, required: true, is: 'date'  }
+        ]
+      ]
     });
-    wx.setNavigationBarTitle({
-      title: LocalePackage.title[Store.getState().global.locale]
-    });
-  },
-  mapStateToPage: function () {
-    
-  },
-  mapRegionToValue: function () {
-    let region = [[], []];
-    Region.map(v => {
-      region[0].push(v.name[0]);
-      region[1].push(v.name[1]);
-    });
-    return { region };
-  },
-  onShow: function () {
-    this.unsubscribe = Store.subscribe(() => {
-      this.mapStateToPage();
-    });
-  },
-  onUnload: function () {
-    this.unsubscribe();
-  },
-  onSubmit: function ({ detail: { value } }) {
-    let { clearance, failedItems } = Sanitizer(value, {
-      name: 'avail',
-      tel: 'avail',
-      email: 'avail',
-      gender: 'avail',
-      birthday: 'avail',
-      region: 'avail'
-    });
-    for (let key in value) {
-      if (!!failedItems[key]) {
-        if (LocalePackage[key].err)
-          this.setData({
-            [`err.${key}`]: LocalePackage[key].err[failedItems[key]][this.data.locale]
-          });
-      } else {
-        if (LocalePackage[key].err)
-          this.setData({
-            [`err.${key}`]: ''
-          });
-      }
-    }
-    if (!clearance) { 
-      wx.showToast({
-        title: GlobalLocalePackages.incompleteForm[this.data.locale],
-        icon: 'none'
-      });
-      return;
-    }
-    let { name, gender, tel, birthday, email, region } = value;
-    gender = parseInt(gender);
-    birthday = parseInt(birthday);
-    region = parseInt(region);
     wx.showLoading({
-      title: GlobalLocalePackages.loading[this.data.locale]
+      title: GlobalLocalePackage.loading[locale],
+      mask: true
     });
-    this.setData({
-      pending: true
-    });
-    request(API.MEMBER.REGISTER, METHOD.POST, { name, gender, tel: tel.trim(), birthday, email: email.trim(), region: mapIndexToRegion(region).id, openid: Store.getState().global.user.openid })
-      .then(bundle => { 
-        wx.hideLoading();
+    promisfy.fetch(`/region`)
+      .then(({ data }) => {
+        let regionMatrix = [];
+        let regionValues = []
+        data.map(v => {
+          regionMatrix.push(v.name[locale]);
+          regionValues.push(v.alias);
+        });
         this.setData({
-          pending: false
+          ['fields[0][3].options']: regionMatrix,
+          ['fields[0][3].values']: regionValues
         });
-        return requestPayment(bundle)
-      })
-      .then(() => {
-        wx.showLoading({
-          title: GlobalLocalePackages.loading[this.data.locale]
-        });
-        return request(API.MEMBER.GETINFO, METHOD.GET, { openid: Store.getState().global.user.openid })
+        wx.hideLoading();
+      });
+    wx.setNavigationBarTitle({
+      title: localePackage.title[Store.getState().global.locale]
+    });
+  },
+  onSubmit: function ({ detail }) {
+    wx.showLoading({ title: GlobalLocalePackage.loading[this.data.locale] });
+    console.log(detail);
+    promisfy.post('/member/register', { ...detail, openid: Store.getState().global.user.openid })
+      .then(({ data }) => { 
+        wx.hideLoading();
+        return promisfy.requestPayment(data);
       })
       .then(res => {
-        Store.dispatch(GlobalActions.updateMember(res));
-        wx.hideLoading();
-        wx.showModal({
-          title: LocalePackage.modal.success.title[this.data.locale],
-          content: LocalePackage.modal.success.content[this.data.locale],
-          confirmColor: Palette.primary,
-          showCancel: false,
-          success: function () {
-            wx.reLaunch({
-              url: '/pages/vitae/vitae'
-            });
-          }
-        });
+        return promisfy.fetch(`/member/${ Store.getState().global.user.openid }`)
       })
-      .catch(e => {
-        this.setData({
-          pending: false
-        });
-        wx.hideLoading();
-        wx.showToast({
-          title: GlobalLocalePackages.paymentFailed[this.data.locale],
-          icon: 'none'
-        }); 
-      });
-  },
-  toggle: function ({ target: { dataset: { name } } }) {
-    this.setData({
-      [`popup.${name}`]: !this.data.popup[name]
-    })
-  },
-  setGender: function ({ detail: { index, value } }) {
-    this.setData({
-      gender: { label: value, value: index }
-    });
-    this.toggle({ target: { dataset: { name: 'gender' } } });
-  },
-  setRegion: function ({ detail:  { index, value } }) {
-    this.setData({
-      region: { label: value, value: index }
-    });
-    this.toggle({ target: { dataset: { name: 'region' } } });
-  },
-  setBirthday: function ({ detail }) {
-    this.setData({
-      birthday: { label: new Date(detail).toLocaleDateString(), value: detail }
-    });
-    this.toggle({ target: { dataset: { name: 'birthday' } } });
+      .then();
   }
 })

@@ -1,18 +1,16 @@
-<!-- SEARCH -->
-<van-search custom-class="search" field-class="search-field" background="#d1233e" placeholder="{{ LocalePackage.search[locale] }}" use-action-slot bind:search="search" bind:clear="clear" value="{{ search.keyword }}" />
 <!-- TABS -->
-<van-tabs active="{{ current }}" bind:change="onChange" color="{{ Palette.primary }}" swipeable>
+<van-tabs active="{{ current }}" bind:change="onChange" color="{{ palette.primary }}" swipeable>
   <van-tab title="{{ category.label[locale] }}" wx:for="{{ categories }}" wx:for-item="category" wx:for-index="categoryIndex" wx:key="{{ category.name }}">
     <!-- CARDS -->
     <navigator class="card-container" wx:for="{{ vendors[category.name] }}" wx:key="{{ item.reference }}" url="/pages/vendor-detail/vendor-detail?reference={{ item.reference }}">
       <van-card desc="{{ item.description[locale] }}" title="{{ item.name[locale] }}" thumb="{{ item.thumbnail }}" thumb-mode="aspectFill" custom-class="card {{ (systemInfo.safeAreaInset && vendors[category.name].length - 1 == index) && 'card-inset' }}" title-class="card-title" desc-class="card-description" lazy-load>
         <view slot="tags">
-          <van-tag custom-class="card-tag" color="{{ Palette.primary }}" wx:for="{{ item.tag[locale] }}" wx:for-index="tagIndex" wx:key="{{ tagIndex }}">{{ item }}</van-tag>
+          <van-tag custom-class="card-tag" color="{{ palette.primary }}" wx:for="{{ item.tag[locale] }}" wx:for-index="tagIndex" wx:key="{{ tagIndex }}">{{ item }}</van-tag>
         </view>
         <view slot="footer" class="card-footer fw d-flex-row align-items-center justify-content-between">
           <view class="d-flex-row align-items-center justify-content-center">
-            <van-icon custom-class="d-flex-row align-items-center" name="location-o" color="{{ Palette.descriptive }}" />
-            <label style="color: {{ Palette.descriptive }};">{{ item.region }}</label>
+            <van-icon custom-class="d-flex-row align-items-center" name="location-o" color="{{ palette.descriptive }}" />
+            <label style="color: {{ palette.descriptive }};">{{ item.region }}</label>
           </view>
           <van-rate value="{{ item.rating }}" readonly="true" />
         </view>
@@ -21,6 +19,6 @@
   </van-tab>
 </van-tabs>
 <view class="fvw">
-  <view wx:if="{{ pending }}" class="bottom-notifier d-flex-row align-items-center justify-content-center"><label style="color: {{ Palette.descriptive }};">—— {{ LocalePackage.pending[locale] }} ——</label></view>
-  <view wx:if="{{ eol }}" class="bottom-notifier d-flex-row align-items-center justify-content-center"><label style="color: {{ Palette.descriptive }};">—— {{ LocalePackage.eol[locale] }} ——</label></view>
+  <view wx:if="{{ pending }}" class="bottom-notifier d-flex-row align-items-center justify-content-center"><label style="color: {{ palette.descriptive }};">—— {{ localePackage.pending[locale] }} ——</label></view>
+  <view wx:if="{{ eol }}" class="bottom-notifier d-flex-row align-items-center justify-content-center"><label style="color: {{ palette.descriptive }};">—— {{ localePackage.eol[locale] }} ——</label></view>
 </view>

@@ -117,6 +117,8 @@
 }
 
 .nav-region-label {
+  overflow: hidden;
+  text-overflow: ellipsis;
   color: white;
   font-size: 11pt;
   text-transform: uppercase;

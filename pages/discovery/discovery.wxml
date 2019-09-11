@@ -5,7 +5,7 @@
     <view class="fw d-flex-row align-items-start">
       <navigator enable-flex class="animated d-flex-row align-items-center" hover-class="nav-action-hover" bind:tap="feedback" url="/pages/region/region">
         <van-icon name="location" custom-class="d-flex-row align-items-center" color="white" />
-        <label class="nav-region-label" style="font-size: {{ systemInfo.fontSizeSetting }}px;">{{ region }}</label>
+        <label class="nav-region-label" style="font-size: {{ systemInfo.fontSizeSetting }}px;">{{ region.name[locale] }}</label>
         <van-icon name="arrow" custom-class="d-flex-row align-items-center" color="white" />
       </navigator>
     </view>
@@ -43,6 +43,6 @@
     <!-- Recommendation -->
     <recommendation recommendations="{{ recommendations }}"/>
     <!-- Feed -->
-    <feed title="{{ feed.title }}" action="{{ feed.action }}" articles="{{ feed.articles }}" />
+    <feed articles="{{ feed }}" />
   </view>
 </scroll-view>

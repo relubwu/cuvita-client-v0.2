@@ -1,52 +1,34 @@
-import { request, METHOD } from '../../utils/promisfy';
-import * as API from '../../config/api.config';
-import * as LocalePackage from 'locale-package';
-import Palette from '../../config/palette.config';
 import feedback from '../../utils/feedback';
+import palette from '../../config/palette.config';
+import * as promisfy from '../../lib/wx.promisfy';
+import * as localePackage from 'locale-package';
 
-const { Store, GlobalActions, GlobalLocalePackages } = getApp();
+const { Store, GlobalLocalePackage } = getApp();
 
 Page({
   data: {
-    LocalePackage, Palette
+    localePackage, palette
   },
   onLoad: function ({ stockNumber }) {
-    // Synchronous storage hook
     let { locale, systemInfo } = Store.getState().global;
     this.setData({
       locale,
       systemInfo
     });
     wx.setNavigationBarTitle({
-      title: LocalePackage.title[this.data.locale]
+      title: localePackage.title[this.data.locale]
     });
     wx.showLoading({
-      title: GlobalLocalePackages.loading[Store.getState().global.locale]
+      title: GlobalLocalePackage.loading[Store.getState().global.locale]
     });
-    request(API.AUTO.DETAIL, METHOD.GET, { stockNumber })
-      .then(res => {
+    promisfy.fetch(`/auto/detail/${ stockNumber }`)
+      .then(({ data }) => {
+        console.log(data);
         this.setData({
-          vehicle: res
+          vehicle: data
         })
         wx.hideLoading();
       })
-      .catch(e => {
-        wx.showToast({
-          title: GlobalLocalePackages.requestFailed[this.data.locale],
-          image: '/assets/icons/request-fail.png'
-        });
-      });
-  },
-  mapStateToPage: function () {
-
-  },
-  onShow: function (options) {
-    this.unsubscribe = Store.subscribe(() => {
-      this.mapStateToPage();
-    });
-  },
-  onHide: function () {
-    this.unsubscribe();
   },
   preview: function ({ target: { dataset: { index } } }) {
     wx.previewImage({
@@ -57,10 +39,10 @@ Page({
   more: function() {
     let that = this;
     wx.showModal({
-      title: LocalePackage.modal.more.title[this.data.locale],
-      content: LocalePackage.modal.more.content[this.data.locale] + this.data.vehicle.stockNumber,
-      confirmColor: Palette.carmax,
-      confirmText: LocalePackage.modal.more.action[this.data.locale],
+      title: localePackage.modal.more.title[this.data.locale],
+      content: localePackage.modal.more.content[this.data.locale] + this.data.vehicle.stockNumber,
+      confirmColor: palette.carmax,
+      confirmText: localePackage.modal.more.action[this.data.locale],
       success: function ({ confirm }) {
         if (confirm)
           wx.makePhoneCall({

@@ -29,7 +29,7 @@
 
 .user-info-nickname {
   font-size: 20pt;
-  font-weight: bold;
+  font-weight: normal;
 }
 
 .user-info-region {

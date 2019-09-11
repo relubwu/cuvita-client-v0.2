@@ -1,8 +1,8 @@
 <view class="feed fw">
   <view class="section-info fvw d-flex-row align-items-center justify-content-between">
-    <label class="section-info-title">{{ title[locale] }}</label>
+    <label class="section-info-title">{{ localePackage.title[locale] }}</label>
     <navigator class="section-info-description d-flex-row animated align-items-center justify-content-center" hover-class="section-info-description-hover" bind:tap="feedback" data-id="feedDescription" url="/pages/article-list/article-list">
-      {{ action[locale] }}
+      {{ localePackage.action[locale] }}
     </navigator>
   </view>
   <view class="items container fw d-flex-column align-items-center">

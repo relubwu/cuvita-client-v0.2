@@ -1,4 +1,4 @@
-import * as LocalePackage from '../../locale-package';
+import * as localePackage from '../../locale-package';
 import layout from '../../../../config/landing.config';
 
 const { Store } = getApp();
@@ -26,7 +26,7 @@ Component({
 
   data: {
     layout, 
-    LocalePackage
+    localePackage
   },
 
   /**

@@ -19,7 +19,9 @@
     "pages/region/region",
     "pages/communication/communication",
     "pages/consulting/consulting",
-    "pages/job/job"
+    "pages/job/job",
+    "pages/concierge-landing/concierge-landing",
+    "pages/concierge-portal/concierge-portal"
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -43,7 +45,7 @@
       },
       {
         "pagePath": "pages/vitae/vitae",
-        "text": "Vitae",
+        "text": "VITA",
         "iconPath": "/assets/icons/tab-vitae-ia.png",
         "selectedIconPath": "/assets/icons/tab-vitae-a.png"
       },
