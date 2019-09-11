@@ -32,7 +32,7 @@ Page({
         }
         this.setData({
           locale,
-          regionMatrix,
+          options: regionMatrix,
           regions: data,
           currentRegion,
           ['map.markers']: markers
