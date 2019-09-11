@@ -1,0 +1,72 @@
+.nav {
+  position: absolute;
+  z-index: 100;
+}
+
+.nav-button {
+  width: 45rpx;
+  height: 45rpx;
+  margin: 7px 15px;
+}
+
+.nav-icon {
+  width: 100%;
+  height: 100%;
+}
+
+.background {
+  position: absolute;
+  top: 0;
+  z-index: -1;
+}
+
+.title {
+  font-size: 25pt;
+  padding: 0px 15px;
+  margin-bottom: 20px;
+}
+
+form {
+  position: absolute;
+  bottom: 0;
+  background: white;
+  height: 40vh;
+  border-radius: 50rpx 50rpx 0 0;
+  box-sizing: border-box;
+  padding: 0 30px;
+  transition-property: all !important;
+  z-index: 2;
+}
+
+.button-wrapper {
+  box-sizing: border-box;
+  padding: 42px 0px;
+}
+
+.button {
+  background-color: #d1233e !important;
+  color: white !important;
+  overflow: hidden !important;
+  border-radius: 5px !important;
+  text-transform: capitalize;
+  padding: 0 60px;
+  font-weight: bold;
+}
+
+.hover {
+  position: absolute;
+  z-index: 1;
+}
+
+.hover-body {
+  background: #4a4a4a66;
+  width: 60vw;
+  padding: 15px 30px;
+  border-radius: 10px;
+  margin-left: 30px;
+  padding-bottom: 30px;
+}
+
+.hover-body label {
+  color: white;
+}

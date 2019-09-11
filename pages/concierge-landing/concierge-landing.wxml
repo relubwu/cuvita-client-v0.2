@@ -1,0 +1,46 @@
+<nav />
+<view class="background fvw fvh">
+  <image class="fw fh" src="https://cuvita-1254391499.cos.na-siliconvalley.myqcloud.com/images/concierge.png" mode="aspectFill" />
+</view>
+<view class="hover d-flex-row" style="top: {{ systemInfo.navigationBarHeight + 30 }}px">
+  <view class="hover-body d-flex-column align-items-start">
+    <label style="font-size: 18pt; ">{{ localePackage.features.summary[locale] }}</label>
+    <label wx:for="{{ localePackage.features.features }}" wx:key="{{ index }}">{{ item[locale] }}</label>
+  </view>
+</view>
+<form class="fvw animated" style="height: {{ stages[currentStage].layout.formHeight }}; padding-top: {{ stages[currentStage].layout.formPaddingTop }}; border-radius: {{ stages[currentStage].layout.formBorderRadius }};" bind:submit="findFlight">
+  <view class="title">{{ localePackage.title[locale] }}</view>
+  <van-cell-group border="{{ false }}" wx:if="{{ currentStage === 0 }}">
+    <van-field name="flight" type="text" label="{{ localePackage.flight.label[locale] }}" placeholder="{{ localePackage.flight.placeholder[locale] }}" input-align="right" left-icon="https://cuvita-1254391499.cos.na-siliconvalley.myqcloud.com/icons/flight.svg"
+      disabled="{{ currentStage !== 0 }}" />
+    <van-cell title="{{ localePackage.departTime.label[locale] }}" is-link value="{{ stages[0].data.departTime.label }}" bind:click="toggle" data-name="departTime" icon="todo-list-o" border="{{ false }}" />
+    <van-popup show="{{ stages[0].popup.departTime }}" position="bottom" overlay="{{ true }}" bind:close="toggle" data-name="departTime">
+      <van-datetime-picker type="datetime" value="{{ stages[0].data.departTime.value }}" min-date="{{ options.minDate }}" max-date="{{ options.maxDate }}" bind:cancel="toggle" data-name="departTime" bind:confirm="confirmDateTimePicker" />
+    </van-popup>
+    <input hidden name="departTime" value="{{ stages[0].data.departTime.value }}" />
+  </van-cell-group>
+  <van-cell-group border="{{ false }}" wx:if="{{ currentStage !== 0 }}">
+    <van-collapse value="{{ stages[1].collapse }}" border="{{ false }}">
+      <van-collapse-item title="{{ localePackage.flight.label[locale] }}" name="1" value="{{ stages[1].data.flight.ident }}" icon="https://cuvita-1254391499.cos.na-siliconvalley.myqcloud.com/icons/flight.svg">
+        <van-cell wx:for="{{ stages[1].data.flights }}" wx:key="{{ index }}" title="{{ item.ident }}" label="{{ item.origin }} - {{ item.destination }}" value="{{ item.departuretime }}" is-link bind:tap="confirmFlight" data-index="{{ index }}" border="{{ index !== stages[1].data.flights.length - 1 }}" />
+      </van-collapse-item>
+    </van-collapse>
+  </van-cell-group>
+  <van-cell-group border="{{ false }}" wx:if="{{ currentStage !== 0 && currentStage !== 1 }}">
+    <van-collapse value="{{ stages[2].collapse }}" border="{{ false }}">
+      <van-collapse-item title="{{ localePackage.destination.label[locale] }}" name="2" value="{{ stages[2].data.destination.name[locale] }}" icon="location-o">
+        <van-cell wx:for="{{ stages[2].data.destinations }}" wx:key="{{ index }}" title="{{ item.name[locale] }}" is-link bind:tap="confirmDestination" data-index="{{ index }}" border="{{ index !== stages[2].data.destinations.length - 1 }}" />
+      </van-collapse-item>
+    </van-collapse>
+  </van-cell-group>
+  <van-cell-group border="{{ false }}" wx:if="{{ currentStage !== 0 && currentStage !== 1 && currentStage !== 2 }}">
+    <van-collapse value="{{ stages[3].collapse }}" border="{{ false }}">
+      <van-collapse-item title="{{ localePackage.schedule.label[locale] }}" name="3" value="{{ stages[3].data.schedule.label }}" icon="underway-o">
+        <van-cell wx:for="{{ stages[3].data.schedules }}" wx:key="{{ index }}" title="{{ item.label }}" is-link bind:tap="confirmSchedule" data-index="{{ index }}" border="{{ index !== stages[3].data.schedules.length - 1 }}" />
+      </van-collapse-item>
+    </van-collapse>
+  </van-cell-group>
+  <view class="d-flex-row align-items-center button-wrapper">
+    <button size="large" class="button" form-type="submit">{{ stages[currentStage].layout.formAction }}</button>
+  </view>
+</form>
