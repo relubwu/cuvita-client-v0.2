@@ -1,20 +1,20 @@
-<view class="form-header">
-  <view class="form-title">{{ LocalePackage.header[locale] }}</view>
-  <view class="form-description">{{ LocalePackage.description[locale] }}</view>
+<!-- <view class="form-header">
+  <view class="form-title">{{ localePackage.header[locale] }}</view>
+  <view class="form-description">{{ localePackage.description[locale] }}</view>
 </view>
 <form bind:submit="onSubmit">
   <van-cell-group custom-class="form-group" border="{{ false }}">
-    <van-field name="cardID" type="number" required clearable label="{{ LocalePackage.cardID.label[locale] }}" placeholder="{{ LocalePackage.cardID.placeHolder[locale] }}" error-message="{{ err.cardID }}" error-message-align="right" input-align="right" 
+    <van-field name="cardID" type="number" required clearable label="{{ localePackage.cardID.label[locale] }}" placeholder="{{ localePackage.cardID.placeHolder[locale] }}" error-message="{{ err.cardID }}" error-message-align="right" input-align="right" 
     />
-    <van-field name="name" type="text" label="{{ LocalePackage.name.label[locale] }}" placeholder="{{ LocalePackage.name.placeHolder[locale] }}" required border="{{ false }}" error-message="{{ err.name }}" error-message-align="right" input-align="right" />
+    <van-field name="name" type="text" label="{{ localePackage.name.label[locale] }}" placeholder="{{ localePackage.name.placeHolder[locale] }}" required border="{{ false }}" error-message="{{ err.name }}" error-message-align="right" input-align="right" />
   </van-cell-group>
   <view class="form-button-wrapper">
-    <button size="large" class="form-button" form-type="submit">{{ LocalePackage.submit[locale] }}</button>
+    <button size="large" class="form-button" form-type="submit">{{ localePackage.submit[locale] }}</button>
+  </view> -->
+<form header="{{ localePackage.header[locale] }}" description="{{ localePackage.description[locale] }}" fields="{{ fields }}" action="{{ localePackage.submit[locale] }}" bind:submit="onSubmit" />
+<view class="weui-footer">
+  <view class="weui-footer__links">
+    <button class="weui-footer__link contact" open-type="contact">{{ localePackage.customerService.contact[locale] }}</button>
   </view>
-  <view class="weui-footer">
-    <view class="weui-footer__links">
-      <button class="weui-footer__link contact" open-type="contact">{{ LocalePackage.customerService.contact[locale] }}</button>
-    </view>
-    <view class="weui-footer__text">{{ LocalePackage.customerService.description[locale] }}</view>
-  </view>
-</form>
+  <view class="weui-footer__text">{{ localePackage.customerService.description[locale] }}</view>
+</view>

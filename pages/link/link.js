@@ -1,90 +1,56 @@
-import { request, METHOD } from '../../utils/promisfy';
-import * as API from '../../config/api.config';
-import * as LocalePackage from 'locale-package';
-import Sanitizer from '../../utils/sanitizer';
-import Palette from '../../config/palette.config';
 
-const { Store, GlobalActions, GlobalLocalePackages } = getApp();
+import palette from '../../config/palette.config';
+import * as promisfy from '../../lib/wx.promisfy';
+import * as localePackage from 'locale-package';
+
+const { Store, GlobalActions, GlobalLocalePackage } = getApp();
 
 Page({
   data: {
-    LocalePackage,
+    localePackage,
     pending: false
   },
   onLoad: function () {
     let { locale } = Store.getState().global;
-    // Synchronous storage hook
     this.setData({
-      locale
+      locale,
+      fields: [
+        [
+          { tag: 'van-field', name: 'name', type: 'text', label: localePackage.name.label[locale], placeholder: localePackage.name.placeholder[locale], required: true },
+          { tag: 'van-field', name: 'cardid', type: 'number', label: localePackage.cardid.label[locale], placeholder: localePackage.cardid.placeholder[locale], required: true }
+          
+        ]
+      ]
     });
     wx.setNavigationBarTitle({
-      title: LocalePackage.title[Store.getState().global.locale]
+      title: localePackage.title[Store.getState().global.locale]
     });
   },
-  mapStateToPage: function () {
-    
-  },
-  onShow: function () {
-    this.unsubscribe = Store.subscribe(() => {
-      this.mapStateToPage();
-    });
-  },
-  onUnload: function () {
-    this.unsubscribe();
-  },
-  onSubmit: function ({ detail: { value } }) {
-    let { clearance, failedItems } = Sanitizer(value, {
-      name: 'avail',
-      cardID: 'avail'
-    });
-    for (let key in value) {
-      if (!!failedItems[key]) {
-        if (LocalePackage[key].err)
-          this.setData({
-            [`err.${key}`]: LocalePackage[key].err[failedItems[key]][this.data.locale]
-          });
-      } else {
-        if (LocalePackage[key].err)
-          this.setData({
-            [`err.${key}`]: ''
-          });
-      }
-    }
-    if (!clearance) {
-      wx.showToast({
-        title: GlobalLocalePackages.incompleteForm[this.data.locale],
-        icon: 'none'
-      });
-      return;
-    }
+  onSubmit: function ({ detail }) {
+    let { name, cardid } = detail;
+    let { openid } = Store.getState().global.user;
     wx.showLoading({
-      title: GlobalLocalePackages.loading[this.data.locale]
+      title: GlobalLocalePackage.loading[this.data.locale]
     });
-    let { cardID, name } = value;
-    request(API.MEMBER.LINK, METHOD.GET, { cardID, name, openid: Store.getState().global.user.openid })
-      .then(res => {
-        Store.dispatch(GlobalActions.updateMember(res));
+    promisfy.post('/member/link', { openid, name, cardid })
+      .then(({ statusCode }) => {
+        if (statusCode === 404) {
+          wx.showToast({ title: localePackage.fail[this.data.locale], icon: 'none' });
+          throw new Error('Unmatched');
+        }
+        return promisfy.fetch(`/member/${ openid }`);
+      })
+      .then(({ data }) => {
+        Store.dispatch(GlobalActions.updateMember(data));
         wx.hideLoading();
         wx.showModal({
-          title: LocalePackage.modal.success.title[this.data.locale],
-          content: LocalePackage.modal.success.content[this.data.locale],
+          title: localePackage.success.title[this.data.locale],
+          content: localePackage.success.content[this.data.locale],
+          confirmColor: palette.primary,
           showCancel: false,
-          confirmColor: Palette.primary,
-          success: function () {
-            wx.reLaunch({
-              url: '/pages/vitae/vitae'
-            });
-          }
+          success: wx.navigateBack({ delta: 1 })
         });
       })
-      .catch(e => {
-        wx.hideLoading();
-        wx.showModal({
-          title: LocalePackage.modal.fail.title[this.data.locale],
-          content: LocalePackage.modal.fail.content[this.data.locale],
-          showCancel: false,
-          confirmColor: Palette.primary
-        });
-      })
+      .catch();
   }
 })
