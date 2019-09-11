@@ -11,7 +11,6 @@ Page({
     services
   },
   onLoad: function (options) {
-    // Synchronous storage hook
     let { locale, systemInfo, region } = Store.getState().global
     this.setData({
       locale, systemInfo, region
@@ -40,9 +39,6 @@ Page({
     this.unsubscribe();
   },
   fetchData: function () {
-    wx.showLoading({
-      title: GlobalLocalePackage.loading[this.data.locale]
-    });
     let { region: { alias } } = Store.getState().global;
     Promise.all([
       promisfy.fetch(`/field/services`),
@@ -59,7 +55,6 @@ Page({
           recommendations: res[2].data,
           feed: res[3].data
         });
-        wx.hideLoading();
       });
   },
   feedback
