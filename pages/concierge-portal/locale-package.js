@@ -1,0 +1,9 @@
+export const depart = ['到达机场', 'Arrival Airport'];
+export const destination = ['目的地', 'Destination'];
+export const etd = ['预计出发时间', 'ETD'];
+export const eta = ['预计到达时间', 'ETA'];
+export const emergencycontact = ['紧急联系人', 'Emergency Contact'];
+export const copyright = ['©️ 中国同学联合会安心计划新生接送服务', '©️ CU Concierge Services'];
+export const pending = ['等待出发', 'Pending'];
+export const enroute = ['行程中', 'Enroute'];
+export const selectnew = ['其他班次', 'Schedule'];
