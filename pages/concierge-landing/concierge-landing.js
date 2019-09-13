@@ -2,13 +2,13 @@ import validator from 'validator';
 import * as promisfy from '../../lib/wx.promisfy';
 import * as localePackage from 'locale-package';
 
-const { Store, GlobalLocalePackage } = getApp();
+const { Store, GlobalActions, GlobalLocalePackage } = getApp();
 
 Page({
   data: {
     localePackage,
     currentStage: 0,
-    options: { minDate: new Date().getTime(), maxDate: new Date(2019, 8, 19).getTime() }
+    options: { minDate: new Date(2019, 8, 14).getTime(), maxDate: new Date(2019, 8, 19).getTime() }
   },
   onLoad: function () {
     let { locale, systemInfo } = Store.getState().global;
@@ -21,9 +21,6 @@ Page({
             formHeight: '45vh',
             formPaddingTop: '30px',
             formAction: localePackage.query[locale]
-          },
-          data: {
-
           },
           popup: {}
         },
@@ -59,22 +56,27 @@ Page({
       ]
     });
   },
-  toggle: function () {
+  toggleDateTimePicker: function () {
     if (this.data.currentStage !== 0) return;
     this.setData({
       [`stages[0].popup.departTime`]: !this.data.stages[0].popup.departTime
     });
   },
-  confirmDateTimePicker: function ({ target: { dataset: { name } }, detail }) {
+  toggleCollapse: function ({ target: { dataset: { index } } }) {
+    index < this.data.currentStage && this.setData({
+      currentStage: index
+    })
+  },
+  confirmDateTimePicker: function ({ detail }) {
     this.setData({
-      [`stages[0].popup.${name}`]: false,
-      [`stages[0].data.${name}.label`]: new Date(detail).toLocaleString(),
-      [`stages[0].data.${name}.value`]: detail
+      [`stages[0].popup.departTime`]: false,
+      [`stages[0].data.departTime.label`]: new Date(detail).toLocaleString(),
+      [`stages[0].data.departTime.value`]: detail
     });
   },
   findFlight: function ({ detail: { value: { flight, departTime } } }) {
     if (flight === null || flight.length === 0) flight = 'CA887';
-    if (departTime === "") return;
+    if (departTime === "") departTime = new Date(2019, 8, 14, 9).getTime().toString();
     flight = flight.trim();
     flight = validator.blacklist(flight, ' ');
     flight = flight.toUpperCase();
@@ -90,7 +92,7 @@ Page({
           ['stages[1].data.flights']: data,
           ['stages[1].collapse']: ['1']
         })
-        this.proceed();
+        this.proceed(1);
       });
 
   },
@@ -98,7 +100,9 @@ Page({
     let flight = this.data.stages[1].data.flights[index];
     this.setData({
       ['stages[1].data.flight']: flight,
-      ['stages[1].collapse']: []
+      ['stages[1].collapse']: [],
+      ['stages[2].data.destination']: null,
+      ['stages[3].data.schedule']: null
     });
     wx.showLoading({
       title: GlobalLocalePackage.loading[this.data.locale]
@@ -110,7 +114,7 @@ Page({
           ['stages[2].data.destinations']: data,
           ['stages[2].collapse']: ['2']
         });
-        this.proceed();
+        this.proceed(2);
       });
   },
   confirmDestination: function ({ target: { dataset: { index } } }) {
@@ -118,7 +122,8 @@ Page({
     let flight = this.data.stages[1].data.flight;
     this.setData({
       ['stages[2].data.destination']: destination,
-      ['stages[2].collapse']: []
+      ['stages[2].collapse']: [],
+      ['stages[3].data.schedule']: null
     });
     wx.showLoading({
       title: GlobalLocalePackage.loading[this.data.locale]
@@ -134,7 +139,7 @@ Page({
           ['stages[3].data.schedules']: data,
           ['stages[3].collapse']: ['3']
         });
-        this.proceed();
+        this.proceed(3);
       });
   },
   confirmSchedule: function ({ target: { dataset: { index } } }) {
@@ -143,9 +148,20 @@ Page({
       ['stages[3].data.schedule']: schedule,
       ['stages[3].collapse']: []
     });
-    this.proceed();
+    this.proceed(4);
   },
-  proceed: function () {
-     this.data.currentStage < this.data.stages.length - 1 && this.setData({ currentStage: this.data.currentStage + 1 });
+  proceed: function (stage) {
+    this.setData({ currentStage: stage });
+  },
+  submit: function () {
+    let { openid } = Store.getState().global.user;
+    promisfy.post(`/concierge/stage`, { openid, schedule: this.data.stages[3].data.schedule._id, flight: this.data.stages[1].data.flight })
+      .then(() => promisfy.fetch(`/user/${ openid }`))
+      .then(({ data }) => {
+        Store.dispatch(GlobalActions.setUser(data));
+        wx.redirectTo({
+          url: '/pages/concierge-portal/concierge-portal'
+        });
+      });
   }
 })
