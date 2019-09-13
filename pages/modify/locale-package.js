@@ -1,6 +1,6 @@
-import * as LocalePackage from '../register/locale-package';
+import * as localePackage from '../register/locale-package';
 
-export const { name, gender, tel, email, region, birthday } = LocalePackage;
+export const { name, gender, tel, email, school, birthday } = localePackage;
 
 export const title = ["会员信息", "Membership"];
 export const header = ["修改会员信息", "Information"];
