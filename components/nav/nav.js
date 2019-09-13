@@ -14,8 +14,12 @@ Component({
   },
   methods: {
     back: function () {
+      getCurrentPages().length > 1 ? 
       wx.navigateBack({
         delta: 1
+      }) :
+      wx.reLaunch({
+        url: '/pages/discovery/discovery',
       });
     }
   }
