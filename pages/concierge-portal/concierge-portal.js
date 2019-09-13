@@ -1,4 +1,3 @@
-import QQMapSDK from '../../lib/wx.qqmap.jssdk.min';
 import key from '../../config/qqmap.config';
 import palette from '../../config/palette.config';
 import feedback from '../../utils/feedback';
@@ -9,13 +8,12 @@ const { Store, GlobalActions, GlobalLocalePackage } = getApp();
 
 Page({
   data: {
-    localePackage, palette
+    localePackage, palette, subkey: key
   },
   onLoad: function ({ id }) {
-    let qqmap = new QQMapSDK({ key });
     let { locale, user } = Store.getState().global;
     this.setData({
-      locale
+      locale, user, id
     });
     id ? id = id : id = user.concierge.schedule;
     wx.showLoading({
@@ -23,17 +21,30 @@ Page({
     });
     promisfy.fetch(`/concierge/schedule/${id}`)
       .then(({ data }) => {
+        data.departTime = new Date(data.departTime).toLocaleString();
         this.setData({ schedule: data });
-        switch (data.status) {
-          case 'PENDING':
-            this.setData({
-              
-            });
-        }
+        wx.hideLoading();
+        if (data.status === 'ENROUTE') promisfy.getDirection({
+          ['from']: { latitude: this.data.schedule.location.lat, longitude: this.data.schedule.location.long },
+          to: { latitude: this.data.schedule.destination.location.lat, longitude: this.data.schedule.destination.location.long }
+        })
+          .then(res => console.log(res));
       });
   },
   selectSchedule: function () {
     feedback();
     wx.redirectTo({ url: '/pages/concierge-landing/concierge-landing' });
+  },
+  makePhoneCall: function () {
+    feedback();
+    wx.makePhoneCall({
+      phoneNumber: this.data.schedule.contact
+    });
+  },
+  onShareAppMessage: function () {
+    return {
+      title: 'CUVita - 迎新接机服务',
+      path: this.data.id ? `/pages/concierge-portal/concierge-portal?id=${ this.data.id }` : `/pages/concierge-portal/concierge-portal?id=${ this.data.schedule._id }`
+    }
   }
 })

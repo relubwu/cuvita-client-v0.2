@@ -155,6 +155,9 @@ Page({
   },
   submit: function () {
     let { openid } = Store.getState().global.user;
+    wx.showLoading({
+      title: GlobalLocalePackage.loading[this.data.locale]
+    });
     promisfy.post(`/concierge/stage`, { openid, schedule: this.data.stages[3].data.schedule._id, flight: this.data.stages[1].data.flight })
       .then(() => promisfy.fetch(`/user/${ openid }`))
       .then(({ data }) => {

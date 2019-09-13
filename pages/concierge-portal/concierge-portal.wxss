@@ -5,11 +5,11 @@ page {
 }
 
 map {
-  height: 50vh;
+  height: 52vh;
 }
 
 .status {
-  padding-top: 24px;
+  padding-top: 12px;
 }
 
 .status label {
@@ -31,6 +31,6 @@ map {
 }
 
 .contact {
-  padding-top: 30px;
+  padding-top: 20px;
   color: #d1233e;
 }

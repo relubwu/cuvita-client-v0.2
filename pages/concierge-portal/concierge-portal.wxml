@@ -1,5 +1,5 @@
 <nav />
-<map class="fvw" show-location show-scale latitude="{{ map.lat }}" longitude="{{ map.long }}" />
+<map class="fvw" show-location show-scale latitude="{{ schedule.map.lat }}" longitude="{{ schedule.map.long }}" include-points="{{ schedule.map.include }}" subkey="{{ subkey }}" markers="{{ schedule.map.markers }}" scale="17" />
 <view class="info container fvw">
   <view class="status fw d-flex-column align-items-center">
     <label wx:if="{{ schedule.status === 'PENDING' }}" style="color: #d1233e;">{{ localePackage.pending[locale] }}</label>
@@ -11,10 +11,11 @@
   <van-cell-group border="{{ false }}">
     <van-cell title="{{ localePackage.depart[locale] }}" value="{{ schedule.depart.name[locale] }}" icon="https://cuvita-1254391499.cos.na-siliconvalley.myqcloud.com/icons/airport.svg" />
     <van-cell title="{{ localePackage.destination[locale] }}" value="{{ schedule.destination.name[locale] }}" icon="location" />
-    <van-cell title="{{ localePackage.etd[locale] }}" value="{{ schedule.departTime }}" border="{{ false }}" icon="clock" />
+    <van-cell wx:if="{{ schedule.status === 'PENDING' }}" title="{{ localePackage.etd[locale] }}" value="{{ schedule.departTime }}" border="{{ false }}" icon="clock" />
+    <van-cell wx:if="{{ schedule.status === 'ENROUTE' }}" title="{{ localePackage.eta[locale] }}" value="{{ schedule.departTime }}" border="{{ false }}" icon="clock" />
   </van-cell-group>
   <view class="contact container fw d-flex-row justify-content-center">
-    <navigator class="d-flex-row">
+    <navigator class="d-flex-row" wx:if="{{ user.concierge }}" bind:tap="makePhoneCall">
       <van-icon name="phone-circle-o" class="d-flex-column justify-content-center" />{{ localePackage.emergencycontact[locale] }}</navigator>
   </view>
   <view class="weui-footer">
