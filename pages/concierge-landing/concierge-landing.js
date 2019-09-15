@@ -70,7 +70,7 @@ Page({
   confirmDateTimePicker: function ({ detail }) {
     this.setData({
       [`stages[0].popup.departTime`]: false,
-      [`stages[0].data.departTime.label`]: new Date(detail).toLocaleString(),
+      [`stages[0].data.departTime.label`]: new Date(detail).toLocaleDateString(),
       [`stages[0].data.departTime.value`]: detail
     });
   },
@@ -133,7 +133,7 @@ Page({
         wx.hideLoading();
         for (let index in data) {
           data[index].departTime = new Date(data[index].departTime);
-          data[index].label = data[index].departTime.toLocaleString();
+          data[index].label = data[index].departTime.toLocaleString('en-US', { timeZone: 'America/Los_Angeles' });
         }
         this.setData({
           ['stages[3].data.schedules']: data,

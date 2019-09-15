@@ -20,8 +20,8 @@ Page({
     });
     promisfy.fetch(`/concierge/schedule/${id}`)
       .then(({ data }) => {
-        data.departTime = new Date(data.departTime).toLocaleString();
-        data.arrivalTime = data.arrivalTime ? new Date(data.arrivalTime).toLocaleString() : null;
+        data.departTime = new Date(data.departTime).toLocaleString('en-US', { timeZone: 'America/Los_Angeles' });
+        data.arrivalTime = data.arrivalTime ? new Date(data.arrivalTime).toLocaleString('en-US', { timeZone: 'America/Los_Angeles' }) : null;
         this.setData({ schedule: data });
         wx.hideLoading();
       });
