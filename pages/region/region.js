@@ -17,25 +17,16 @@ Page({
     wx.showLoading({ title: GlobalLocalePackage.loading[locale] });
     promisfy.fetch(`/region`)
       .then(({ data }) => {
-        let regionMatrix = [[], []];
-        data.map(v => {
-          regionMatrix[0].push(v.name[0]);
-          regionMatrix[1].push(v.name[1]);
-        });
-        let markers = [];
-        for (let index in data) {
-          markers.push({ id: index, iconPath: `https://cuvita-1254391499.cos.na-siliconvalley.myqcloud.com/icons/region_pin.png`, width: 40, height: 40, index, latitude: data[index].geoLocation.lat, longitude: data[index].geoLocation.long, zIndex: data.length - index });
-        }
         let currentRegion = 0;
-        for (let index in data) {
-          if (region.alias === data[index].alias) currentRegion = index;
+        for (let index in data.list) {
+          if (data.list[index].alias === region.alias) currentRegion = index;
         }
         this.setData({
           locale,
-          options: regionMatrix,
-          regions: data,
+          options: data.matrix,
+          regions: data.list,
           currentRegion,
-          ['map.markers']: markers
+          ['map.markers']: data.markers
         });
         wx.hideLoading();
       });

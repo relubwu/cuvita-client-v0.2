@@ -6,4 +6,6 @@ export const emergencycontact = ['紧急联系人', 'Emergency Contact'];
 export const copyright = ['©️ 中国同学联合会安心计划新生接送服务', '©️ CU Concierge Services'];
 export const pending = ['等待出发', 'Pending'];
 export const enroute = ['行程中', 'Enroute'];
+export const arrived = ['已到达', 'Arrived'];
 export const selectnew = ['其他班次', 'Schedule'];
+export const share = ['分享行程', 'Share'];

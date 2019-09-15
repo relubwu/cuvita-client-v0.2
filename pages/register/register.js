@@ -10,6 +10,9 @@ Page({
   },
   onLoad: function () {
     let { locale } = Store.getState().global;
+    wx.setNavigationBarTitle({
+      title: localePackage.title[Store.getState().global.locale]
+    });
     this.setData({
       locale,
       fields: [
@@ -27,27 +30,17 @@ Page({
       title: GlobalLocalePackage.loading[locale],
       mask: true
     });
-    promisfy.fetch(`/region`)
+    promisfy.fetch(`/school`)
       .then(({ data }) => {
-        let regionMatrix = [];
-        let regionValues = []
-        data.map(v => {
-          regionMatrix.push(v.name[locale]);
-          regionValues.push(v.alias);
-        });
         this.setData({
-          ['fields[0][3].options']: regionMatrix,
-          ['fields[0][3].values']: regionValues
+          ['fields[0][3].options']: data.matrix[locale],
+          ['fields[0][3].values']: data.values
         });
         wx.hideLoading();
       });
-    wx.setNavigationBarTitle({
-      title: localePackage.title[Store.getState().global.locale]
-    });
   },
   onSubmit: function ({ detail }) {
     wx.showLoading({ title: GlobalLocalePackage.loading[this.data.locale] });
-    console.log(detail);
     promisfy.post('/member/register', { ...detail, openid: Store.getState().global.user.openid })
       .then(({ data }) => { 
         wx.hideLoading();
@@ -56,6 +49,25 @@ Page({
       .then(res => {
         return promisfy.fetch(`/member/${ Store.getState().global.user.openid }`)
       })
-      .then();
+      .then(({ data, statusCode }) => {
+        if (statusCode === 404) wx.showToast({
+          title: localePackage.unexpectedFail[this.data.locale],
+          icon: 'none'
+        });
+        Store.dispatch(GlobalActions.updateMember(data));
+        wx.showModal({
+          title: localePackage.modal.success.title[this.data.locale],
+          content: localePackage.modal.success.content[this.data.locale],
+          confirmColor: palette.primary,
+          showCancel: false,
+          success: wx.navigateBack({ delta: 1 })
+        });
+      })
+      .catch(e => {
+        wx.showToast({
+          title: localePackage.paymentFailed[this.data.locale],
+          icon: 'none'
+        });
+      });
   }
 })

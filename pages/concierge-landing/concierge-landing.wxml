@@ -14,7 +14,7 @@
     <van-field name="flight" type="text" label="{{ localePackage.flight.label[locale] }}" placeholder="{{ localePackage.flight.placeholder[locale] }}" input-align="right" left-icon="https://cuvita-1254391499.cos.na-siliconvalley.myqcloud.com/icons/flight.svg" />
     <van-cell title="{{ localePackage.departTime.label[locale] }}" is-link value="{{ stages[0].data.departTime.label }}" bind:click="toggleDateTimePicker" data-name="departTime" icon="todo-list-o" border="{{ false }}" />
     <van-popup show="{{ stages[0].popup.departTime }}" position="bottom" overlay="{{ true }}" bind:close="toggleDateTimePicker" data-name="departTime">
-      <van-datetime-picker type="datetime" value="{{ stages[0].data.departTime.value }}" min-date="{{ options.minDate }}" max-date="{{ options.maxDate }}" bind:cancel="toggleDateTimePicker" data-name="departTime" bind:confirm="confirmDateTimePicker" />
+      <van-datetime-picker type="date" value="{{ stages[0].data.departTime.value }}" min-date="{{ options.minDate }}" max-date="{{ options.maxDate }}" bind:cancel="toggleDateTimePicker" data-name="departTime" bind:confirm="confirmDateTimePicker" />
     </van-popup>
     <input hidden name="departTime" value="{{ stages[0].data.departTime.value }}" />
   </van-cell-group>

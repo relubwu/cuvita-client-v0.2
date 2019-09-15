@@ -1,4 +1,3 @@
-
 import palette from '../../config/palette.config';
 import * as promisfy from '../../lib/wx.promisfy';
 import * as localePackage from 'locale-package';

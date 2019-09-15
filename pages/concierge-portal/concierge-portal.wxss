@@ -15,6 +15,7 @@ map {
 .status label {
   font-size: 20pt;
   text-transform: uppercase;
+  font-weight: bold;
 }
 
 .option {
@@ -30,7 +31,22 @@ map {
   color: #b2b2b2;
 }
 
-.contact {
+.actions {
   padding-top: 20px;
+}
+
+.contact {
   color: #d1233e;
+}
+
+.share {
+  color: #1aad19;
+}
+
+.actions button {
+  background: none;
+}
+
+.actions button::after {
+  border: none; 
 }

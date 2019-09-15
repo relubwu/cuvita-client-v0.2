@@ -62,3 +62,17 @@ page {
   background: #d1233e;
   color: white;
 }
+
+.form-button-wrapper {
+  box-sizing: border-box;
+  padding: 42px 0px;
+}
+
+.form-button {
+  overflow: hidden !important;
+  border-radius: 5px !important;
+  text-transform: capitalize;
+  padding: 0 30px;
+  font-weight: bold;
+  margin: 0 10px;
+}

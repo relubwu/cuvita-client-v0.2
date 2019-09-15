@@ -10,6 +10,22 @@
   border-radius: 5px !important;
 }
 
+.form-button-wrapper {
+  box-sizing: border-box;
+  padding: 42px 0px;
+}
+
+.form-button {
+  background-color: #d1233e !important;
+  color: white !important;
+  overflow: hidden !important;
+  border-radius: 5px !important;
+  text-transform: capitalize;
+  padding: 0 15px;
+  margin: 0 5px;
+  font-weight: bold;
+}
+
 .button-link {
   color: black !important;
   background-color: white !important;
@@ -26,4 +42,5 @@ swiper {
 
 .swiper-agenda {
   font-size: 28pt;
+  font-weight: bold;
 }

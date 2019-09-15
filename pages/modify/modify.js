@@ -11,6 +11,9 @@ Page({
   },
   onLoad: function () {
     let { locale } = Store.getState().global;
+    wx.setNavigationBarTitle({
+      title: localePackage.title[Store.getState().global.locale]
+    });
     this.setData({
       locale,
       fields: [
@@ -28,42 +31,34 @@ Page({
       title: GlobalLocalePackage.loading[locale],
       mask: true
     });
-    promisfy.fetch(`/school`)
-      .then(({ data }) => {
-        let schoolMatrix = [];
-        let schoolValues = []
-        data.map(v => {
-          schoolMatrix.push(v.name[locale]);
-          schoolValues.push(v.alias);
-        });
+    Promise.all([
+      promisfy.fetch(`/member/${ Store.getState().global.user.openid }`),
+      promisfy.fetch(`/school`)
+    ])
+      .then(res => {
+        let member = res[0].data;
+        let school = res[1].data;
+        let fill = autofiller(['name', 'tel', 'email', 'school', 'gender', 'birthday'], member);
+        for (let index in school.list)
+          if (school.list[index].alias === fill.school) fill.school = school.list[index].name[this.data.locale];
         this.setData({
-          ['fields[0][3].options']: schoolMatrix,
-          ['fields[0][3].values']: schoolValues
-        });
-        return data;
-      })
-      .then(schools => {
-        let fill = autofiller([ 'name', 'tel', 'email', 'school', 'gender', 'birthday' ], Store.getState().global.member);
-        for (let index in schools)
-          if (fill.school === schools[index].alias) fill.school = schools[index].name[this.data.locale]
-        this.setData({
+          ['fields[0][3].options']: school.matrix[this.data.locale],
+          ['fields[0][3].values']: school.values,
           ['fields[0][0].value']: fill.name,
           ['fields[0][1].value']: fill.tel,
           ['fields[0][2].value']: fill.email,
           ['fields[0][3].label']: fill.school,
           ['fields[0][4].label']: [['男', '女', '其他'], ['Male', 'Female', 'Non-Binary']][this.data.locale][fill.gender],
           ['fields[0][5].label']: new Date(fill.birthday).toLocaleDateString()
-        })
-      })
-    wx.setNavigationBarTitle({
-      title: localePackage.title[Store.getState().global.locale]
-    });
+        });
+        wx.hideLoading();
+      });
   },
   onSubmit: function ({ detail }) {
     wx.showLoading({ title: GlobalLocalePackage.loading[this.data.locale] });
-    promisfy.post('/member/register', { ...detail, openid: Store.getState().global.user.openid })
+    promisfy.post('/member/modify', { ...detail, openid: Store.getState().global.user.openid })
       .then(({ data }) => {
         wx.hideLoading();
-      })
+      });
   }
 })

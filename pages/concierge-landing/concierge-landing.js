@@ -77,14 +77,14 @@ Page({
   findFlight: function ({ detail: { value: { flight, departTime } } }) {
     if (flight === null || flight.length === 0) flight = 'CA887';
     if (departTime === "") departTime = new Date(2019, 8, 14, 9).getTime().toString();
-    flight = flight.trim();
+    flight = flight.trim().toUpperCase();
     flight = validator.blacklist(flight, ' ');
     flight = flight.toUpperCase();
-    departTime = new Date(validator.toInt(departTime));
+    departTime = new Date(validator.toInt(departTime)).toUTCString();
     wx.showLoading({
       title: GlobalLocalePackage.loading[this.data.locale]
     })
-    promisfy.fetch(`/concierge/flight/${flight}/${departTime.getTime()}/${departTime.getTimezoneOffset()}`)
+    promisfy.fetch(`/concierge/flight/${flight}/${departTime}`)
       .then(({ data, statusCode }) => {
         wx.hideLoading();
         if (statusCode === 404) return wx.showToast({ title: localePackage.flight.notFound[this.data.locale], icon: 'none' });

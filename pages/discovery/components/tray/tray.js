@@ -10,13 +10,14 @@ Component({
   },
   lifetimes: {
     attached: function () {
-      let { locale } = Store.getState().global;
+      let { locale, user } = Store.getState().global;
       this.setData({
         locale,
-        localePackage
+        localePackage,
+        user
       });
       this.unsubscribe = Store.subscribe(() => {
-        mapStateToComponent(Store, this, { locale: 'global.locale' });
+        mapStateToComponent(Store, this, { locale: 'global.locale', user: 'global.user' });
       });
     },
     detached: function () {
@@ -24,7 +25,8 @@ Component({
     },
   },
   methods: {
-    feedback: function () {
+    feedback,
+    implementing: function () {
       feedback();
       wx.showToast({
         title: GlobalLocalePackage.sorry[this.data.locale],
