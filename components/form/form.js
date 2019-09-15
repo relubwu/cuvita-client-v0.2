@@ -13,6 +13,15 @@ Component({
     fields: { type: Array },
     action: { type: String }
   },
+  observers: {
+    fields: function () {
+      for (let group of this.data.fields)
+        for (let field of group) {
+          if (field.value !== undefined) this.setData({ [`value.${field.name}`]: field.value });
+          if (field.label !== undefined) this.setData({ [`label.${field.name}`]: field.label });
+        }
+    }
+  },
   lifetimes: {
     attached: function () {
       let { locale } = Store.getState().global;

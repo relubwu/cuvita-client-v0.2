@@ -40,7 +40,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 13,
+			"current": 15,
 			"list": [
 				{
 					"id": 0,
@@ -123,7 +123,7 @@
 					"id": 11,
 					"name": "auto-detail",
 					"pathName": "pages/auto-detail/auto-detail",
-					"query": "stockNumber=17745923",
+					"query": "stockNumber=17906570",
 					"scene": null
 				},
 				{
@@ -137,6 +137,21 @@
 					"id": -1,
 					"name": "region",
 					"pathName": "pages/region/region",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": 14,
+					"name": "concierge-landing",
+					"pathName": "pages/concierge-landing/concierge-landing",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": 15,
+					"name": "concierge-portal",
+					"pathName": "pages/concierge-portal/concierge-portal",
+					"query": "id=5d7926e3035cffa3073b49dc",
 					"scene": null
 				}
 			]

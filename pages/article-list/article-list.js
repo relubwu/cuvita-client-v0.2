@@ -1,4 +1,3 @@
-import mapStateToPage from '../../lib/wx.state.binder';
 import * as promisfy from '../../lib/wx.promisfy';
 import * as localePackage from 'locale-package';
 
@@ -23,6 +22,6 @@ Page({
       .then(({ data }) => {
         this.setData({ articles: data });
         wx.hideLoading();
-      })
+      });
   }
 })

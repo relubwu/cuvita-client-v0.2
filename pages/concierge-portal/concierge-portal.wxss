@@ -1,0 +1,52 @@
+@import '/assets/stylesheets/weui.wxss';
+
+page {
+  background: white;
+}
+
+map {
+  height: 52vh;
+}
+
+.status {
+  padding-top: 12px;
+}
+
+.status label {
+  font-size: 20pt;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
+.option {
+  padding-bottom: 12px;
+}
+
+.option label {
+  color: #b2b2b2;
+}
+
+.itinerary label {
+  font-size: 11pt;
+  color: #b2b2b2;
+}
+
+.actions {
+  padding-top: 20px;
+}
+
+.contact {
+  color: #d1233e;
+}
+
+.share {
+  color: #1aad19;
+}
+
+.actions button {
+  background: none;
+}
+
+.actions button::after {
+  border: none; 
+}

@@ -1,6 +1,8 @@
 import services from '../../config/services.config';
 import feedback from '../../utils/feedback';
 import mapStateToPage from '../../lib/wx.state.binder';
+import palette from '../../config/palette.config';
+import * as localePackage from 'locale-package';
 import * as promisfy from '../../lib/wx.promisfy';
 
 const { Store, GlobalActions, GlobalLocalePackage } = getApp();
@@ -22,8 +24,8 @@ Page({
       .then(({ latitude, longitude }) => {
         return promisfy.fetch('/region/nearest', { lat: latitude, long: longitude })
       })
-      .then(({ data }) => {
-        Store.dispatch(GlobalActions.setRegion(data));
+      .then(({ data, statusCode }) => {
+        statusCode === 404 ? wx.showModal({ title: localePackage.modal.noservice.title[this.data.locale], content: localePackage.modal.noservice.content[this.data.locale], showCancel: false, confirmColor: palette.primary }) : Store.dispatch(GlobalActions.setRegion(data));
         this.fetchData();
       })
       .catch(e => { this.fetchData() }) : this.fetchData();

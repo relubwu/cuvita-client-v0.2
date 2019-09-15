@@ -28,7 +28,11 @@
   <label class="vendor-rating-label">{{ localePackage.rating[locale] }}</label>
 </view>
 <!-- ACTIONS -->
-<view class="container vendor-actions d-flex-row align-items-center justify-content-evenly" style="{{ systemInfo.safeAreaInset && 'padding-bottom: 34px !important' }}">
+<view class="container d-flex-row align-items-center justify-content-center form-button-wrapper" style="{{ systemInfo.safeAreaInset && 'padding-bottom: 34px !important' }}">
+    <button class="form-button vendor-actions-waitlist" bind:tap="call">{{ localePackage.call[locale] }}</button>
+    <button class="form-button vendor-actions-navigate" bind:tap="navigate">{{ localePackage.navigate[locale] }}</button>
+  </view>
+<!-- <view class="container vendor-actions d-flex-row align-items-center justify-content-evenly" style="{{ systemInfo.safeAreaInset && 'padding-bottom: 34px !important' }}">
   <navigator class="vendor-actions-waitlist" bind:tap="call" >{{ localePackage.call[locale] }}</navigator>
   <navigator class="vendor-actions-navigate" bind:tap="navigate">{{ localePackage.navigate[locale] }}</navigator>
-</view>
+</view> -->

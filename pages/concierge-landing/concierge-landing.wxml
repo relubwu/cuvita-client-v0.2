@@ -11,36 +11,30 @@
 <form class="fvw animated" style="height: {{ stages[currentStage].layout.formHeight }}; padding-top: {{ stages[currentStage].layout.formPaddingTop }}; border-radius: {{ stages[currentStage].layout.formBorderRadius }};" bind:submit="findFlight">
   <view class="title">{{ localePackage.title[locale] }}</view>
   <van-cell-group border="{{ false }}" wx:if="{{ currentStage === 0 }}">
-    <van-field name="flight" type="text" label="{{ localePackage.flight.label[locale] }}" placeholder="{{ localePackage.flight.placeholder[locale] }}" input-align="right" left-icon="https://cuvita-1254391499.cos.na-siliconvalley.myqcloud.com/icons/flight.svg"
-      disabled="{{ currentStage !== 0 }}" />
-    <van-cell title="{{ localePackage.departTime.label[locale] }}" is-link value="{{ stages[0].data.departTime.label }}" bind:click="toggle" data-name="departTime" icon="todo-list-o" border="{{ false }}" />
-    <van-popup show="{{ stages[0].popup.departTime }}" position="bottom" overlay="{{ true }}" bind:close="toggle" data-name="departTime">
-      <van-datetime-picker type="datetime" value="{{ stages[0].data.departTime.value }}" min-date="{{ options.minDate }}" max-date="{{ options.maxDate }}" bind:cancel="toggle" data-name="departTime" bind:confirm="confirmDateTimePicker" />
+    <van-field name="flight" type="text" label="{{ localePackage.flight.label[locale] }}" placeholder="{{ localePackage.flight.placeholder[locale] }}" input-align="right" left-icon="https://cuvita-1254391499.cos.na-siliconvalley.myqcloud.com/icons/flight.svg" />
+    <van-cell title="{{ localePackage.departTime.label[locale] }}" is-link value="{{ stages[0].data.departTime.label }}" bind:click="toggleDateTimePicker" data-name="departTime" icon="todo-list-o" border="{{ false }}" />
+    <van-popup show="{{ stages[0].popup.departTime }}" position="bottom" overlay="{{ true }}" bind:close="toggleDateTimePicker" data-name="departTime">
+      <van-datetime-picker type="date" value="{{ stages[0].data.departTime.value }}" min-date="{{ options.minDate }}" max-date="{{ options.maxDate }}" bind:cancel="toggleDateTimePicker" data-name="departTime" bind:confirm="confirmDateTimePicker" />
     </van-popup>
     <input hidden name="departTime" value="{{ stages[0].data.departTime.value }}" />
   </van-cell-group>
   <van-cell-group border="{{ false }}" wx:if="{{ currentStage !== 0 }}">
-    <van-collapse value="{{ stages[1].collapse }}" border="{{ false }}">
-      <van-collapse-item title="{{ localePackage.flight.label[locale] }}" name="1" value="{{ stages[1].data.flight.ident }}" icon="https://cuvita-1254391499.cos.na-siliconvalley.myqcloud.com/icons/flight.svg">
-        <van-cell wx:for="{{ stages[1].data.flights }}" wx:key="{{ index }}" title="{{ item.ident }}" label="{{ item.origin }} - {{ item.destination }}" value="{{ item.departuretime }}" is-link bind:tap="confirmFlight" data-index="{{ index }}" border="{{ index !== stages[1].data.flights.length - 1 }}" />
+    <van-collapse value="{{ currentStage + '' }}" border="{{ false }}" accordion>
+      <van-collapse-item title="{{ localePackage.flight.label[locale] }}" name="1" value="{{ stages[1].data.flight.ident }}" icon="https://cuvita-1254391499.cos.na-siliconvalley.myqcloud.com/icons/flight.svg" bind:tap="toggleCollapse" data-index="1">
+        <van-cell wx:for="{{ stages[1].data.flights }}" wx:key="{{ index }}" title="{{ item.ident }}" label="{{ item.origin }} - {{ item.destination }}" value="{{ item.departuretime }}" is-link catch:tap="confirmFlight" data-index="{{ index }}" border="{{ index !== stages[1].data.flights.length - 1 }}" />
+      </van-collapse-item>
+      <van-collapse-item title="{{ localePackage.destination.label[locale] }}" name="2" value="{{ stages[2].data.destination.name[locale] }}" icon="location-o" bind:tap="toggleCollapse" data-index="2">
+        <van-cell wx:for="{{ stages[2].data.destinations }}" wx:key="{{ index }}" title="{{ item.name[locale] }}" is-link catch:tap="confirmDestination" data-index="{{ index }}" border="{{ false }}" />
+      </van-collapse-item>
+      <van-collapse-item title="{{ localePackage.schedule.label[locale] }}" name="3" value="{{ stages[3].data.schedule.label }}" icon="underway-o" bind:tap="toggleCollapse" data-index="3">
+        <van-cell wx:for="{{ stages[3].data.schedules }}" wx:key="{{ index }}" title="{{ item.label }}" is-link catch:tap="confirmSchedule" data-index="{{ index }}" border="{{ false }}" />
       </van-collapse-item>
     </van-collapse>
   </van-cell-group>
-  <van-cell-group border="{{ false }}" wx:if="{{ currentStage !== 0 && currentStage !== 1 }}">
-    <van-collapse value="{{ stages[2].collapse }}" border="{{ false }}">
-      <van-collapse-item title="{{ localePackage.destination.label[locale] }}" name="2" value="{{ stages[2].data.destination.name[locale] }}" icon="location-o">
-        <van-cell wx:for="{{ stages[2].data.destinations }}" wx:key="{{ index }}" title="{{ item.name[locale] }}" is-link bind:tap="confirmDestination" data-index="{{ index }}" border="{{ index !== stages[2].data.destinations.length - 1 }}" />
-      </van-collapse-item>
-    </van-collapse>
-  </van-cell-group>
-  <van-cell-group border="{{ false }}" wx:if="{{ currentStage !== 0 && currentStage !== 1 && currentStage !== 2 }}">
-    <van-collapse value="{{ stages[3].collapse }}" border="{{ false }}">
-      <van-collapse-item title="{{ localePackage.schedule.label[locale] }}" name="3" value="{{ stages[3].data.schedule.label }}" icon="underway-o">
-        <van-cell wx:for="{{ stages[3].data.schedules }}" wx:key="{{ index }}" title="{{ item.label }}" is-link bind:tap="confirmSchedule" data-index="{{ index }}" border="{{ index !== stages[3].data.schedules.length - 1 }}" />
-      </van-collapse-item>
-    </van-collapse>
-  </van-cell-group>
-  <view class="d-flex-row align-items-center button-wrapper">
-    <button size="large" class="button" form-type="submit">{{ stages[currentStage].layout.formAction }}</button>
+  <view wx:if="{{ currentStage === 0 }}" class="d-flex-row align-items-center button-wrapper">
+    <button size="large" class="button" form-type="submit">{{ stages[0].layout.formAction }}</button>
+  </view>
+  <view wx:if="{{ stages[1].data.flight && stages[2].data.destination && stages[3].data.schedule }}" class="d-flex-row align-items-center button-wrapper">
+    <button size="large" class="button" style="margin-top: 5vh;" bind:tap="submit">{{ stages[4].layout.formAction }}</button>
   </view>
 </form>

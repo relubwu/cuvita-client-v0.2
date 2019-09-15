@@ -32,3 +32,5 @@ export const modal = {
     content: ['欢迎您的加入，尊贵的VITA会员', "Welcome, it's time to enjoy your membership benefits. "]
   }
 }
+export const unexpectedFailed = ['注册失败, 请联系客服获取详情', 'Oops! Something went wrong, please contact customer services'];
+export const paymentFailed = ['支付失败', 'Payment Failed'];

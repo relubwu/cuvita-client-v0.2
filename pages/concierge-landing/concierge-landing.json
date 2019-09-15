@@ -11,5 +11,7 @@
     "van-collapse-item": "/miniprogram_npm/vant-weapp/collapse-item/index",
     "nav": "/components/nav/nav"
   },
-  "navigationStyle": "custom"
+  "navigationStyle": "custom",
+  "navigationBarTextStyle": "black",
+  "backgroundColorTop": "#ffffff"
 }
