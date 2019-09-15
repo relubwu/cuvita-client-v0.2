@@ -28,7 +28,7 @@ Page({
   },
   selectSchedule: function () {
     feedback();
-    wx.navigateTo({ url: '/pages/concierge-landing/concierge-landing' });
+    wx.redirectTo({ url: '/pages/concierge-landing/concierge-landing' });
   },
   makePhoneCall: function () {
     feedback();
