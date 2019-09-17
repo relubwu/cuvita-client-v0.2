@@ -13,7 +13,7 @@
 		"checkInvalidKey": true
 	},
 	"compileType": "miniprogram",
-	"libVersion": "2.8.1",
+	"libVersion": "2.8.2",
 	"appid": "wxb578ff9d59271c56",
 	"projectname": "CUVita",
 	"debugOptions": {
