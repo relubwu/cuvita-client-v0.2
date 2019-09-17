@@ -15,7 +15,7 @@
 </view>
 <!-- TAGS -->
 <view class="container fw d-flex-row vendor-tags">
-  <van-tag size="large" wx:for="{{ tag[locale] }}" wx:key="{{ index }}" color="{{ Palette.primary }}" custom-class="vendor-tag">{{ item }}</van-tag>
+  <van-tag size="large" wx:for="{{ tag[locale] }}" wx:key="{{ index }}" color="{{ palette.primary }}" custom-class="vendor-tag">{{ item }}</van-tag>
 </view>
 <!-- FEATURES -->
 <van-cell-group border="{{ false }}" custom-class="container">
