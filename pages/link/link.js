@@ -47,7 +47,9 @@ Page({
           content: localePackage.success.content[this.data.locale],
           confirmColor: palette.primary,
           showCancel: false,
-          success: wx.navigateBack({ delta: 1 })
+          success: function () {
+            wx.navigateBack({ delta: 1 });
+          }
         });
       })
       .catch();
