@@ -49,7 +49,8 @@ Page({
           ['fields[0][2].value']: fill.email,
           ['fields[0][3].label']: fill.school,
           ['fields[0][4].label']: [['男', '女', '其他'], ['Male', 'Female', 'Non-Binary']][this.data.locale][fill.gender],
-          ['fields[0][5].label']: new Date(fill.birthday).toLocaleDateString()
+          ['fields[0][5].label']: new Date(fill.birthday).toLocaleDateString(),
+          ['fields[0][5].value']: new Date(fill.birthday).getTime(),
         });
         wx.hideLoading();
       });

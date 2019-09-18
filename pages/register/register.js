@@ -3,6 +3,7 @@ import * as promisfy from '../../lib/wx.promisfy';
 import * as localePackage from 'locale-package';
 
 const { Store, GlobalActions, GlobalLocalePackage } = getApp();
+const minimumAge = 16;
 
 Page({
   data: {
@@ -22,7 +23,7 @@ Page({
           { tag: 'van-field', name: 'email', type: 'text', label: localePackage.email.label[locale], placeholder: localePackage.email.placeholder[locale], required: true, is: 'email' },
           { tag: 'van-picker', name: 'school', title: localePackage.school.label[locale], required: true },
           { tag: 'van-picker', name: 'gender', options: [['男', '女', '其他'], ['Male', 'Female', 'Non-Binary']][locale], values: [0, 1, 2], title: localePackage.gender.label[locale], required: true, is: 'integer' },
-          { tag: 'van-datetime-picker', name: 'birthday', title: localePackage.birthday.label[locale], options: { minDate: new Date(1990, 0, 1).getTime(), maxDate: new Date().getTime() }, required: true, is: 'date'  }
+          { tag: 'van-datetime-picker', name: 'birthday', title: localePackage.birthday.label[locale], options: { minDate: new Date(1960, 0, 1).getTime(), maxDate: new Date().setFullYear(new Date().getFullYear() - minimumAge) }, required: true, is: 'date'  }
         ]
       ]
     });
@@ -34,7 +35,8 @@ Page({
       .then(({ data }) => {
         this.setData({
           ['fields[0][3].options']: data.matrix[locale],
-          ['fields[0][3].values']: data.values
+          ['fields[0][3].values']: data.values,
+          ['fields[0][5].value']: this.data.fields[0][5].options.maxDate
         });
         wx.hideLoading();
       });
@@ -50,18 +52,23 @@ Page({
         return promisfy.fetch(`/member/${ Store.getState().global.user.openid }`)
       })
       .then(({ data, statusCode }) => {
-        if (statusCode === 404) wx.showToast({
-          title: localePackage.unexpectedFail[this.data.locale],
-          icon: 'none'
-        });
-        Store.dispatch(GlobalActions.updateMember(data));
-        wx.showModal({
-          title: localePackage.modal.success.title[this.data.locale],
-          content: localePackage.modal.success.content[this.data.locale],
-          confirmColor: palette.primary,
-          showCancel: false,
-          success: wx.navigateBack({ delta: 1 })
-        });
+        if (statusCode === 404) {
+          wx.showToast({
+            title: localePackage.unexpectedFail[this.data.locale],
+            icon: 'none'
+          });
+        } else {
+          Store.dispatch(GlobalActions.updateMember(data));
+          wx.showModal({
+            title: localePackage.modal.success.title[this.data.locale],
+            content: localePackage.modal.success.content[this.data.locale],
+            confirmColor: palette.primary,
+            showCancel: false,
+            success: function () { 
+              wx.navigateBack({ delta: 1 });
+            }
+          });
+        }
       })
       .catch(e => {
         wx.showToast({
