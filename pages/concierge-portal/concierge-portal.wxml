@@ -1,10 +1,10 @@
 <nav />
-<map class="fvw" show-location show-scale latitude="{{ schedule.map.lat }}" longitude="{{ schedule.map.long }}" include-points="{{ schedule.map.include }}" markers="{{ schedule.map.markers }}" polyline="{{ schedule.map.polyline }}" />
+<map class="fvw" show-location="{{ !schedule.map.hideLocation }}" show-scale latitude="{{ schedule.map.lat }}" longitude="{{ schedule.map.long }}" include-points="{{ schedule.map.include }}" markers="{{ schedule.map.markers }}" polyline="{{ schedule.map.polyline }}" />
 <view class="info container fvw">
   <view class="status fw d-flex-column align-items-center">
     <label wx:if="{{ schedule.status === 'PENDING' }}" style="color: #d1233e;">{{ localePackage.pending[locale] }}</label>
-    <label wx:if="{{ schedule.status === 'ENROUTE' }}" style="color: #1aad19;">{{ localePackage.enroute[locale] }}</label>
-    <label wx:if="{{ schedule.status === 'ARRIVED' }}" style="color: #1aad19;">{{ localePackage.arrived[locale] }}</label>
+    <label wx:if="{{ schedule.status === 'ENROUTE' }}" style="color: {{ palette.success }};">{{ localePackage.enroute[locale] }}</label>
+    <label wx:if="{{ schedule.status === 'ARRIVED' }}" style="color: {{ palette.success }};">{{ localePackage.arrived[locale] }}</label>
   </view>
   <view class="option fw d-flex-row align-items-center justify-content-center">
     <label bind:tap="selectSchedule">{{ localePackage.selectnew[locale] }}</label><van-icon name="arrow" color="{{ palette.descriptive }}" class="d-flex-column justify-content-center" />

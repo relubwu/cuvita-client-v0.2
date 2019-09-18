@@ -11,10 +11,10 @@ Page({
   },
   onLoad: function ({ id }) {
     let { locale, user } = Store.getState().global;
+    id ? id = id : id = user.concierge.schedule;
     this.setData({
       locale, user, id
     });
-    id ? id = id : id = user.concierge.schedule;
     wx.showLoading({
       title: GlobalLocalePackage.loading[locale]
     });
@@ -24,6 +24,11 @@ Page({
         data.arrivalTime = data.arrivalTime ? new Date(data.arrivalTime).toLocaleString('en-US', { timeZone: 'America/Los_Angeles' }) : null;
         this.setData({ schedule: data });
         wx.hideLoading();
+        if (data.status === 'ENROUTE')
+          promisfy.getLocation()
+            .then(({ latitude, longitude }) => {
+              promisfy.post(`/concierge/report/${id}`, { latitude, longitude });
+            }); 
       });
   },
   selectSchedule: function () {
