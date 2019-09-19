@@ -8,7 +8,7 @@ Page({
   data: {
     localePackage,
     currentStage: 0,
-    options: { minDate: new Date(2019, 8, 14).getTime(), maxDate: new Date(2019, 8, 19).getTime() }
+    options: { minDate: new Date(2019, 8, 18).getTime(), maxDate: new Date(2019, 8, 18).getTime() }
   },
   onLoad: function () {
     let { locale, systemInfo } = Store.getState().global;
