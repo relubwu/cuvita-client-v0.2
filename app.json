@@ -19,9 +19,7 @@
     "pages/region/region",
     "pages/communication/communication",
     "pages/consulting/consulting",
-    "pages/job/job",
-    "pages/concierge-landing/concierge-landing",
-    "pages/concierge-portal/concierge-portal"
+    "pages/job/job"
   ],
   "window": {
     "backgroundTextStyle": "light",
