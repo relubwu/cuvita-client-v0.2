@@ -4,10 +4,10 @@ import * as redux from 'redux';
 import * as GlobalActions from '/actions';
 import * as GlobalLocalePackage from '/locale-package';
 import * as promisfy from 'lib/wx.promisfy';
-// import logger from 'redux-logger';
+import logger from 'redux-logger';
 
-// const Store = redux.createStore(reducers, redux.applyMiddleware(logger, reduxThunk)); // 开发环境下开启logger
-const Store = redux.createStore(reducers, redux.applyMiddleware(reduxThunk)); // 生产环境屏蔽logger输出
+const Store = redux.createStore(reducers, redux.applyMiddleware(logger, reduxThunk)); // 开发环境下开启logger
+// const Store = redux.createStore(reducers, redux.applyMiddleware(reduxThunk)); // 生产环境屏蔽logger输出
 
 App({
   Store,
@@ -22,8 +22,8 @@ App({
     Store.dispatch(GlobalActions.setSystemInfo(wx.getSystemInfoSync()));
     promisfy.login()
       .then(code => promisfy.fetch(`/dispatch/${ code }`))
-      .then(({ data: { openid, user, member } }) => {
-        Store.dispatch(GlobalActions.setUser({ openid, ...user }));
+      .then(({ user, member }) => {
+        Store.dispatch(GlobalActions.setUser(user));
         wx.hideLoading();
         member ? Store.dispatch(GlobalActions.updateMember(member)) : Store.getState().global.member && Store.dispatch(GlobalActions.purgeMember());
       });
