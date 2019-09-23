@@ -29,10 +29,10 @@ Page({
       title: GlobalLocalePackage.loading[this.data.locale]
     });
     promisfy.fetch(`/auto/makes`)
-      .then(({ data }) => {
+      .then(makes => {
         this.setData({
-          makes: data,
-          ['currentMake.alias']: data[0].name
+          makes,
+          ['currentMake.alias']: makes[0].name
         });
         this.fetchList()
           .then(() => {
@@ -72,7 +72,7 @@ Page({
     skip[currentMake.alias] === undefined ? this.setData({ [`skip.${currentMake.alias}`]: 0 }) : this.setData({ [`skip.${currentMake.alias}`]: this.data.skip[currentMake.alias] + limit });
     return new Promise((resolve, reject) => {
       promisfy.fetch(`/auto/lists/${ currentMake.alias }/${ region.alias }?limit=${ limit }&skip=${ skip[currentMake.alias] }`)
-        .then(({ data }) => {
+        .then(data => {
           vehicles[currentMake.alias] ? this.setData({ [`vehicles.${currentMake.alias}`]: vehicles[currentMake.alias].concat(data) }) : this.setData({ [`vehicles.${ currentMake.alias }`]: data });
           resolve(data.length);
         });
