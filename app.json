@@ -19,7 +19,9 @@
     "pages/region/region",
     "pages/communication/communication",
     "pages/consulting/consulting",
-    "pages/job/job"
+    "pages/job/job",
+    "pages/ticket/ticket",
+    "pages/boxoffice/boxoffice"
   ],
   "window": {
     "backgroundTextStyle": "light",
