@@ -16,7 +16,7 @@ Page({
     wx.setNavigationBarTitle({ title: localePackage.title[locale] });
     wx.showLoading({ title: GlobalLocalePackage.loading[locale] });
     promisfy.fetch(`/region`)
-      .then(({ data }) => {
+      .then(data => {
         let currentRegion = 0;
         for (let index in data.list) {
           if (data.list[index].alias === region.alias) currentRegion = index;
