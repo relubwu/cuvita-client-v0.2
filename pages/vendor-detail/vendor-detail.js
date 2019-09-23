@@ -16,7 +16,7 @@ Page({
       title: GlobalLocalePackage.loading[Store.getState().global.locale]
     });
     promisfy.fetch(`/vendor/detail/${ reference }`)
-      .then(({ data }) => {
+      .then(data => {
         let markers = [{ iconPath: '/assets/icons/vendor-pin.png', id: 0, longitude: data.location.coordinates[0], latitude: data.location.coordinates[1], width: 65, height: 65 }];
         this.setData({ ...this.data, ...data, markers });
         wx.hideLoading();
