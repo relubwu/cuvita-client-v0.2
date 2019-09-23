@@ -8,6 +8,11 @@ Component({
   options: {
     addGlobalClass: true
   },
+  properties: {
+    tray: {
+      type: Object
+    }
+  },
   lifetimes: {
     attached: function () {
       let { locale, user } = Store.getState().global;

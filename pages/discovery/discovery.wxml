@@ -36,7 +36,7 @@
   </view>
   <navigator class="fvw bd-banner-overlay bgcol-primary" style="opacity: {{ controller.bannerOverlayOpacity(scrollTop, systemInfo.screenWidth * 0.4) }};" url="{{ banner.target }}" hover-class="none" bind:tap="feedback" />
   <!--  Tray  -->
-  <tray />
+  <tray tray="{{ tray }}"/>
   <view class="fvw bd-content bgcol-light">
     <!--  Services  -->
     <services services="{{ services }}" />

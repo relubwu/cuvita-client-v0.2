@@ -1,23 +1,23 @@
 <!--  Tray  -->
 <view class="fvw enclosure">
   <view class="fw tray d-flex-row align-items-center justify-content-between">
-    <navigator class="item fh animated d-flex-row" hover-class="item-hover" bind:tap="feedback" url="{{ user ? user.concierge ? '/pages/concierge-portal/concierge-portal' : '/pages/concierge-landing/concierge-landing' : '' }}">
+    <navigator class="item fh animated d-flex-row" hover-class="item-hover" bind:tap="{{ tray.left.disabled ? 'implementing' : 'feedback' }}" url="{{ tray.left.url }}">
       <view class="fh d-flex-column justify-content-center" style="padding-right: 15px;">
-        <image class="icon fw fh" src="/assets/icons/tray-concierge.png" />
+        <image class="icon fw fh" src="{{ tray.left.icon }}" />
       </view>
       <view class="d-flex-column justify-content-center">
-        <label class="bold">{{ localePackage.concierge.title[locale] }}</label>
-        <label class="descriptive">{{ localePackage.concierge.description[locale] }}</label>
+        <label class="bold">{{ tray.left.title[locale] }}</label>
+        <label class="descriptive">{{ tray.left.description[locale] }}</label>
       </view>
     </navigator>
     <view class="divider fh" />
-    <navigator class="item item-right fh animated d-flex-row justify-content-end" hover-class="item-hover" bind:tap="implementing">
+    <navigator class="item item-right fh animated d-flex-row justify-content-end" hover-class="item-hover" url="{{ tray.right.url }}" bind:tap="{{ tray.right.disabled ? 'implementing' : 'feedback' }}">
       <view class="d-flex-column justify-content-center" style="padding-right: 15px;">
-        <label class="bold">{{ localePackage.gbm.title[locale] }}</label>
-        <label class="descriptive">{{ localePackage.gbm.description[locale] }}</label>
+        <label class="bold">{{ tray.right.title[locale] }}</label>
+        <label class="descriptive">{{ tray.right.description[locale] }}</label>
       </view>
       <view class="fh d-flex-column justify-content-center">
-        <image class="icon fw fh" src="/assets/icons/tray-artists.png" />
+        <image class="icon fw fh" src="{{ tray.right.icon }}" />
       </view>
     </navigator>
   </view>

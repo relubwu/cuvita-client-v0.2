@@ -24,8 +24,8 @@ Page({
       .then(({ latitude, longitude }) => {
         return promisfy.fetch('/region/nearest', { lat: latitude, long: longitude })
       })
-      .then(({ data, statusCode }) => {
-        statusCode === 404 ? wx.showModal({ title: localePackage.modal.noservice.title[this.data.locale], content: localePackage.modal.noservice.content[this.data.locale], showCancel: false, confirmColor: palette.primary }) : Store.dispatch(GlobalActions.setRegion(data));
+      .then(region => {
+        region ? wx.showModal({ title: localePackage.modal.noservice.title[this.data.locale], content: localePackage.modal.noservice.content[this.data.locale], showCancel: false, confirmColor: palette.primary }) : Store.dispatch(GlobalActions.setRegion(data));
         this.fetchData();
       })
       .catch(e => { this.fetchData() }) : this.fetchData();
@@ -43,19 +43,21 @@ Page({
   fetchData: function () {
     let { region: { alias } } = Store.getState().global;
     Promise.all([
+      promisfy.fetch(`/field/tray/${ alias }`),
       promisfy.fetch(`/field/services`),
       promisfy.fetch(`/field/banner/${ alias }`),
       promisfy.fetch(`/field/recommendation/${ alias }`),
       promisfy.fetch(`/field/feed/${ alias }`)
     ])
       .then(res => {
-        for (let index in res[0].data)
-          res[0].data[index] = { ...res[0].data[index], ...this.data.services[index] };
+        for (let index in res[1])
+          res[1][index] = { ...res[1][index], ...this.data.services[index] };
         this.setData({
-          services: res[0].data,
-          banner: res[1].data,
-          recommendations: res[2].data,
-          feed: res[3].data
+          tray: res[0],
+          services: res[1],
+          banner: res[2],
+          recommendations: res[3],
+          feed: res[4]
         });
       });
   },
