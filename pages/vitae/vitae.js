@@ -51,8 +51,8 @@ Page({
   fetchData: function (cb) {
     let { user: { openid }, member } = Store.getState().global;
     promisfy.fetch(`/member/${ openid }`)
-      .then(({ statusCode, data }) => {
-        statusCode === 404 ? !!member && Store.dispatch(GlobalActions.purgeMember()) : Store.dispatch(GlobalActions.updateMember(data)); 
+      .then(data => {
+        data ? Store.dispatch(GlobalActions.updateMember(data)) : member && Store.dispatch(GlobalActions.purgeMember());
       });
     cb && cb();
   },
