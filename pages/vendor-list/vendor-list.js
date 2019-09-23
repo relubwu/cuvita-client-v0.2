@@ -30,10 +30,10 @@ Page({
       title: GlobalLocalePackage.loading[this.data.locale]
     });
     promisfy.fetch(`/vendor/categories/${ realm }`)
-      .then(({ data }) => {
+      .then(categories => {
         this.setData({
-          categories: data,
-          ['currentCategory.alias']: data[0].name
+          categories,
+          ['currentCategory.alias']: categories[0].name
         });
         this.fetchList()
           .then(() => { 
@@ -73,7 +73,7 @@ Page({
     skip[currentCategory.alias] === undefined ? this.setData({ [`skip.${currentCategory.alias}`]: 0 }) : this.setData({ [`skip.${currentCategory.alias}`]: this.data.skip[currentCategory.alias] + limit });
     return new Promise((resolve, reject) => {
       promisfy.fetch(`/vendor/lists/${ realm }/${ currentCategory.alias }/${ region.alias }?limit=${ limit }&skip=${ skip[currentCategory.alias] }`)
-        .then(({ data }) => {
+        .then(data => {
           vendors[currentCategory.alias] ? this.setData({ [`vendors.${currentCategory.alias}`]: vendors[currentCategory.alias].concat(data) }) : this.setData({ [`vendors.${currentCategory.alias}`]: data });
           resolve(data.length);
         });
