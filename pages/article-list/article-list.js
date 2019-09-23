@@ -19,8 +19,8 @@ Page({
       title: GlobalLocalePackage.loading[this.data.locale]
     });
     promisfy.fetch(`/article/lists/${ region.alias }`)
-      .then(({ data }) => {
-        this.setData({ articles: data });
+      .then(articles => {
+        this.setData({ articles });
         wx.hideLoading();
       });
   }
