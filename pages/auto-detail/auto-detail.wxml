@@ -1,6 +1,6 @@
 <!-- GALLERY -->
 <swiper class="fvw" skip-hidden-item-layout>
-  <swiper-item wx:for="{{ vehicle.images }}" wx:key="{{ index }}">
+  <swiper-item wx:for="{{ vehicle.images }}" wx:key="{{ index }}" bind:tap="preview" data-index="{{ index }}">
     <image class="fw fh" src="{{ item }}" mode="aspectFill" lazy-load />
   </swiper-item>
 </swiper>

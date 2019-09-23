@@ -22,19 +22,16 @@ Page({
       title: GlobalLocalePackage.loading[Store.getState().global.locale]
     });
     promisfy.fetch(`/auto/detail/${ stockNumber }`)
-      .then(({ data }) => {
-        console.log(data);
-        this.setData({
-          vehicle: data
-        })
+      .then(vehicle => {
+        this.setData({ vehicle });
         wx.hideLoading();
       })
   },
-  preview: function ({ target: { dataset: { index } } }) {
+  preview: function ({ currentTarget: { dataset: { index } } }) {
     wx.previewImage({
       current: index.toString(),
-      urls: this.data.gallery
-    })
+      urls: this.data.vehicle.images
+    });
   },
   more: function() {
     let that = this;
