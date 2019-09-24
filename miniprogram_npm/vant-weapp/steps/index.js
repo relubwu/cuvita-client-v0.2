@@ -12,6 +12,12 @@ VantComponent({
         activeColor: {
             type: String,
             value: GREEN
+        },
+        activeIcon: {
+          type: String
+        },
+        inactiveIcon: {
+          type: String
         }
     }
 });
