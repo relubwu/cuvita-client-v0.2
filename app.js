@@ -18,14 +18,15 @@ App({
       title: this.GlobalLocalePackage.loading[Store.getState().global.locale],
       mask: true
     });
-    Store.dispatch(GlobalActions.setLocale(wx.getStorageSync('locale') || 0));
     Store.dispatch(GlobalActions.setSystemInfo(wx.getSystemInfoSync()));
+    Store.dispatch(GlobalActions.setLocale(wx.getStorageSync('locale') || 0));
+    Store.dispatch(GlobalActions.setMember(wx.getStorageSync('member') || null));
     promisfy.login()
       .then(code => promisfy.fetch(`/dispatch/${ code }`))
       .then(({ user, member }) => {
         Store.dispatch(GlobalActions.setUser(user));
-        wx.hideLoading();
         member ? Store.dispatch(GlobalActions.updateMember(member)) : Store.getState().global.member && Store.dispatch(GlobalActions.purgeMember());
+        wx.hideLoading();
       });
   }
 })

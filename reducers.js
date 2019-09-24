@@ -95,7 +95,7 @@ function member(state = DEFAULT_MEMBER, { type, res }) {
         key: 'member',
         data: res
       });
-      return { ...state, ...res };
+      return res;
       break;
     case UPDATE_MEMBER:
       wx.setStorage({
