@@ -1,5 +1,9 @@
 @import '/assets/stylesheets/weui.wxss';
 
+.contact {
+  background: none;
+}
+
 .contact::after {
-  border: none; 
+  border: none;
 }
