@@ -17,5 +17,5 @@ export const success = {
 }
 export const customerService = {
   contact: ['联系客服', 'Having trouble?'],
-  description: ['无法绑定敬请联系客服手动添加', 'Non 8-digit must be linked manually']
+  description: ['无法绑定敬请联系客服手动添加', "We're here to help"]
 }
