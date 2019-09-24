@@ -23,21 +23,6 @@ Page({
     this.unsubscribe = Store.subscribe(() => {
       mapStateToPage(Store, this, { member: 'global.member' });
     });
-    if (member) {
-      let { name, gender, tel, school, birthday, email } = member;
-      if (!name || gender === undefined || !tel || !school || !birthday || !email)
-        wx.showModal({
-          title: localePackage.implement.title[locale],
-          content: localePackage.implement.content[locale],
-          confirmColor: palette.primary,
-          success: function () {
-            wx.navigateTo({
-              url: '/pages/modify/modify',
-            })
-          },
-          confirmText: localePackage.implement.confirm[locale]
-        });
-    }
   },
   onShow: function () {
     this.fetchData();
@@ -48,13 +33,21 @@ Page({
   onPullDownRefresh: function () {
     this.fetchData(wx.stopPullDownRefresh);
   },
-  fetchData: function (cb) {
+  fetchData: function (callback) {
     let { user: { openid }, member } = Store.getState().global;
     promisfy.fetch(`/member/${ openid }`)
       .then(data => {
         data ? Store.dispatch(GlobalActions.updateMember(data)) : member && Store.dispatch(GlobalActions.purgeMember());
+        console.log(data.incomplete);
+        data.incomplete && wx.showModal({
+          title: localePackage.implement.title[this.data.locale],
+          content: localePackage.implement.content[this.data.locale],
+          confirmColor: palette.primary,
+          confirmText: localePackage.implement.confirm[this.data.locale],
+          success: function (res) { res.confirm && wx.navigateTo({ url: '/pages/modify/modify' }) }
+        });
+        callback && callback();
       });
-    cb && cb();
   },
   feedback,
   switchSchema: function () {
