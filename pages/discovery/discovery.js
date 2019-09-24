@@ -25,7 +25,7 @@ Page({
         return promisfy.fetch('/region/nearest', { lat: latitude, long: longitude })
       })
       .then(region => {
-        region ? wx.showModal({ title: localePackage.modal.noservice.title[this.data.locale], content: localePackage.modal.noservice.content[this.data.locale], showCancel: false, confirmColor: palette.primary }) : Store.dispatch(GlobalActions.setRegion(data));
+        region ? Store.dispatch(GlobalActions.setRegion(data)) : wx.showModal({ title: localePackage.modal.noservice.title[this.data.locale], content: localePackage.modal.noservice.content[this.data.locale], showCancel: false, confirmColor: palette.primary });
         this.fetchData();
       })
       .catch(e => { this.fetchData() }) : this.fetchData();
