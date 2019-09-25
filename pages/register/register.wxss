@@ -1,0 +1,45 @@
+@import '/assets/stylesheets/weui.wxss';
+
+.stages {
+  box-sizing: border-box;
+  padding: 30px 40px !important;
+  background: none !important;
+}
+
+.payment {
+  height: 85vh;
+  box-sizing: border-box;
+  padding: 0 40px 60px 40px;
+}
+
+.payment instructions van-icon {
+  padding: 7px 15px;
+}
+
+.contact {
+  background: none;
+}
+
+.contact::after {
+  border: none;
+}
+
+.success-headline {
+  font-size: 24pt !important;
+  padding: 20px;
+}
+
+.form-button-wrapper {
+  box-sizing: border-box;
+  padding-top: 10px;
+}
+
+.form-button {
+  background-color: #d1233e !important;
+  color: white !important;
+  overflow: hidden !important;
+  border-radius: 5px !important;
+  text-transform: capitalize;
+  padding: 0 30px;
+  font-weight: bold;
+}

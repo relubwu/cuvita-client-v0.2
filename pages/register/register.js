@@ -7,7 +7,7 @@ const minimumAge = 16;
 
 Page({
   data: {
-    localePackage
+    localePackage, palette,
   },
   onLoad: function () {
     let { locale } = Store.getState().global;
@@ -16,10 +16,12 @@ Page({
     });
     this.setData({
       locale,
+      stages: [{ text: localePackage.stages[0][locale] }, { text: localePackage.stages[1][locale] }, { text: localePackage.stages[2][locale] }],
+      currentStage: 0,
       fields: [
         [
           { tag: 'van-field', name: 'name', type: 'text', label: localePackage.name.label[locale], placeholder: localePackage.name.placeholder[locale], required: true },
-          { tag: 'van-field', name: 'tel', type: 'text', label: localePackage.tel.label[locale], placeholder: localePackage.tel.placeholder[locale], required: true },
+          { tag: 'van-field', name: 'tel', type: 'number', label: localePackage.tel.label[locale], placeholder: localePackage.tel.placeholder[locale], required: true },
           { tag: 'van-field', name: 'email', type: 'text', label: localePackage.email.label[locale], placeholder: localePackage.email.placeholder[locale], required: true, is: 'email' },
           { tag: 'van-picker', name: 'school', title: localePackage.school.label[locale], required: true },
           { tag: 'van-picker', name: 'gender', options: [['男', '女', '其他'], ['Male', 'Female', 'Non-Binary']][locale], values: [0, 1, 2], title: localePackage.gender.label[locale], required: true, is: 'integer' },
@@ -32,7 +34,7 @@ Page({
       mask: true
     });
     promisfy.fetch(`/school`)
-      .then(({ data }) => {
+      .then(data => {
         this.setData({
           ['fields[0][3].options']: data.matrix[locale],
           ['fields[0][3].values']: data.values,
@@ -42,39 +44,56 @@ Page({
       });
   },
   onSubmit: function ({ detail }) {
-    wx.showLoading({ title: GlobalLocalePackage.loading[this.data.locale] });
+    wx.showLoading({ title: GlobalLocalePackage.loading[this.data.locale], mask: true });
     promisfy.post('/member/register', { ...detail, openid: Store.getState().global.user.openid })
-      .then(({ data }) => { 
+      .then(bundle => { 
         wx.hideLoading();
-        return promisfy.requestPayment(data);
+        this.setData({ bundle });
+        this.proceed(1);
+        return promisfy.requestPayment(bundle);
       })
-      .then(res => {
-        return promisfy.fetch(`/member/${ Store.getState().global.user.openid }`)
+      .then(() => {
+        wx.showLoading({ title: localePackage.pendingVerification[this.data.locale], mask: true });
+        return new Promise((resolve) => { setTimeout(resolve, 3000) });
       })
-      .then(({ data, statusCode }) => {
-        if (statusCode === 404) {
-          wx.showToast({
-            title: localePackage.unexpectedFail[this.data.locale],
-            icon: 'none'
-          });
+      .then(() => {
+        return promisfy.fetch(`/member/${Store.getState().global.user.openid}`)
+      })
+      .then(member => {
+        wx.hideLoading();
+        if (member) {
+          this.proceed(2);
+          Store.dispatch(GlobalActions.updateMember(member));
         } else {
-          Store.dispatch(GlobalActions.updateMember(data));
+          this.proceed(0);
           wx.showModal({
-            title: localePackage.modal.success.title[this.data.locale],
-            content: localePackage.modal.success.content[this.data.locale],
-            confirmColor: palette.primary,
+            title: localePackage.modal.fail.title[this.data.locale],
+            content: localePackage.modal.fail.content[this.data.locale],
             showCancel: false,
-            success: function () { 
-              wx.navigateBack({ delta: 1 });
-            }
+            confirmColor: palette.primary
           });
         }
       })
       .catch(e => {
-        wx.showToast({
+        this.proceed(0);
+        e.errMsg ? wx.showToast({
           title: localePackage.paymentFailed[this.data.locale],
+          icon: 'none'
+        }) : wx.showToast({
+          title: localePackage.unexpectedFail[this.data.locale],
           icon: 'none'
         });
       });
+  },
+  proceed: function (currentStage) {
+    this.setData({ currentStage });
+  },
+  undo: function () {
+    this.data.currentStage > 0 && this.setData({ currentStage: --this.data.currentStage });
+  },
+  exit: function () {
+    wx.navigateBack({
+      delta: 1
+    });
   }
 })

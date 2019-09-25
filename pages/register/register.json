@@ -1,5 +1,7 @@
 {
   "usingComponents": {
-    "form": "/components/form/form"
+    "form": "/components/form/form",
+    "van-steps": "/miniprogram_npm/vant-weapp/steps/index",
+    "van-icon": "/miniprogram_npm/vant-weapp/icon/index"
   }
 }
