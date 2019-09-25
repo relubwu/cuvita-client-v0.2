@@ -1,30 +1,30 @@
 <van-steps steps="{{ stages }}" active="{{ currentStage }}" active-color="{{ palette.primary }}" custom-class="stages"/>
 <view style="{{ currentStage === 0 ? '' : 'display: none;' }}">
-  <form fields="{{ fields }}" padding="0" action="{{ localePackage.submit[locale] }}" bind:submit="onSubmit" />
+  <form fields="{{ fields }}" padding="0" action="{{ localePackage.form.submit[locale] }}" bind:submit="onSubmit" />
   <view wx:if="{{ currentStage === 0 }}" class="weui-footer">
     <view class="weui-footer__links">
-      <button class="weui-footer__link contact" open-type="contact">{{ localePackage.customerService.contact[locale] }}</button>
+      <button class="weui-footer__link contact" open-type="contact">{{ localePackage.misc.contact[locale] }}</button>
     </view>
   </view>
 </view>
 <view style="{{ currentStage === 1 ? '' : 'display: none !important;' }};" class="fvw d-flex-column align-items-center justify-content-between payment">
   <view class="fw d-flex-column align-items-center instructions">
-    <label class="descriptive">{{ localePackage.pendingTransaction[locale] }}</label>
+    <label class="descriptive">{{ localePackage.transaction.pending[locale] }}</label>
     <van-icon name="wechat" color="{{ palette.descriptive }}" size="24pt"/>
   </view>
   <view class="d-flex-row align-items-center justify-content-center" bind:tap="undo">
-    <van-icon name="arrow-left" color="{{ palette.descriptive }}" class="d-flex-row align-items-center"/><label class="descriptive">{{ localePackage.prev[locale] }}</label>
+    <van-icon name="arrow-left" color="{{ palette.descriptive }}" class="d-flex-row align-items-center"/><label class="descriptive">{{ localePackage.misc.prev[locale] }}</label>
   </view>
 </view>
 <view style="{{ currentStage === 2 ? '' : 'display: none !important;' }};" class="fvw d-flex-column align-items-center justify-content-between result">
   <view class="fw d-flex-column align-items-center">
     <image class="container" src="https://cuvita-1254391499.cos.na-siliconvalley.myqcloud.com/images/member_welcome.svg" />
     <view class="container d-flex-column align-items-center" style="padding: 7px 30px !important;">
-      <label class="success-headline">{{ localePackage.successHeader[locale] }}</label>
-      <label class="descriptive" style="text-align: center; text-transform: none !important;">{{ localePackage.successMessage[locale] }}</label>
+      <label class="success-headline">{{ localePackage.success.header[locale] }}</label>
+      <label class="descriptive" style="text-align: center; text-transform: none !important;">{{ localePackage.success.message[locale] }}</label>
     </view>
   </view>
   <view class="d-flex-row align-items-center form-button-wrapper">
-    <button size="large" class="form-button" bind:tap="exit" >开启会员之旅</button>
+    <button size="large" class="form-button" bind:tap="exit" >{{ localePackage.success.exit[locale] }}</button>
   </view>
 </view>
