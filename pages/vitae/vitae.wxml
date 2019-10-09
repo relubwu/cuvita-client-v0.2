@@ -1,5 +1,4 @@
-<landing wx:if="{{ !member }}" />
-<view wx:if="{{ !!member }}">
+<view wx:if="{{ member }}">
   <!-- CARD -->
   <view class="card fw">
     <image class="card-background" src="/assets/images/banner.png" class="fvw fh" mode="" />
@@ -17,3 +16,4 @@
     <view class="body-bottom-inset" style="padding-bottom: {{ systemInfo.safeAreaInset ? 'calc(4rem + 34px)' : '4rem' }};" />
   </view>
 </view>
+<landing wx:else="{{ member }}" />
