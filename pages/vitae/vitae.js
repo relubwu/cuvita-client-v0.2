@@ -38,7 +38,6 @@ Page({
     promisfy.fetch(`/member/${ openid }`)
       .then(data => {
         data ? Store.dispatch(GlobalActions.updateMember(data)) : member && Store.dispatch(GlobalActions.purgeMember());
-        console.log(data.incomplete);
         data.incomplete && wx.showModal({
           title: localePackage.implement.title[this.data.locale],
           content: localePackage.implement.content[this.data.locale],
