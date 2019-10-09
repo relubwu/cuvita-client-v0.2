@@ -1,6 +1,6 @@
 import * as localePackage from '../register/locale-package';
 
-export const { name, gender, tel, email, school, birthday } = localePackage;
+export const { form } = localePackage;
 
 export const title = ["会员信息", "Membership"];
 export const header = ["修改会员信息", "Information"];
