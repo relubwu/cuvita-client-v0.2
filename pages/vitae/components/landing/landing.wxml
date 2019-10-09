@@ -8,12 +8,10 @@
       </swiper-item>
     </swiper>
   </view>
-  <view class="d-flex-row align-items-center form-button-wrapper">
-    <button class="form-button button-link" bind:tap="link">{{ localePackage.link[locale] }}</button>
-    <button class="form-button button-register" bind:tap="register">{{ localePackage.register[locale] }}</button>
+  <view class="d-flex-row justify-content-center action-button-wrapper">
+    <button class="action-button action-button-secondary" bind:tap="link">{{ localePackage.link[locale] }}</button>
+    <button class="action-button action-button-primary" bind:tap="register">{{ localePackage.register[locale] }}</button>
   </view>
-    <!-- <van-button size="large" custom-class="button button-link" catch:click="link">{{ localePackage.link[locale] }}</van-button>
-    <van-button size="large" custom-class="button button-register" catch:click="register">{{ localePackage.register[locale] }}</van-button> -->
   <view class="footer-wrapper">
     <view class="weui-footer">
       <view class="weui-footer__text">{{ localePackage.disclaimer[locale] }}</view>
