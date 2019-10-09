@@ -1,2 +1,17 @@
-<!--pages/boxoffice/boxoffice.wxml-->
-<text>pages/boxoffice/boxoffice.wxml</text>
+<wxs src="controller.wxs" module="controller" />
+<form-header header="{{ event.name[locale] }}" description="{{ event.date }}" />
+<view class="container">
+  <van-radio-group value="{{ policy }}">
+    <van-cell-group border="{{ false }}" custom-class="policy">
+    <van-cell wx:for="{{ policies }}" wx:for-item="policy" wx:key="{{ policy.alias }}" title="{{ policy.name[locale] }}" label="{{ policy.description[locale] }}" clickable data-name="{{ policy.alias }}" bind:click="onChange" value-class="d-flex-none" border="{{ index !== policies.length - 1 }}" >
+      <view class="d-flex-row align-items-center">
+        <label class="policy-pricetag">{{ policy.merchandise.price ? controller.toTag(policy.merchandise.price) : 'Free' }}</label>
+        <van-radio name="{{ policy.alias }}" checked-color="{{ palette.primary }}" class="d-flex-column justify-content-center" />
+      </view>
+    </van-cell>
+    </van-cell-group>
+  </van-radio-group>
+</view>
+<view class="d-flex-row justify-content-center action-button-wrapper">
+  <button class="action-button action-button-primary" bind:tap="link">{{ localePackage.checkout[locale] }}</button>
+</view>

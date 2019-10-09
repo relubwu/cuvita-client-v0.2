@@ -1,66 +1,51 @@
-// pages/boxoffice/boxoffice.js
+import palette from '../../config/palette.config';
+import autofiller from '../../utils/form-autofiller';
+import * as promisfy from '../../lib/wx.promisfy';
+import * as localePackage from 'locale-package';
+
+const { Store, GlobalActions, GlobalLocalePackage } = getApp();
+
 Page({
-
-  /**
-   * Page initial data
-   */
   data: {
-
+    palette,
+    localePackage,
+    policy: '',
+    event: {
+      name: ['Event Name', 'Event Name'],
+      date: new Date().toLocaleString()
+    },
+    policies: [
+      {
+        name: ['General Admission', 'General Admission'],
+        description: ['GA Description', 'GA Description'],
+        alias: 'stdga',
+        merchandise: {
+          price: 25000
+        }
+      },
+      {
+        name: ['Membership Exclusive', 'Membership Exclusive'],
+        description: ['Membership Exclusive Description', 'Membership Exclusive Description'],
+        alias: 'stdmex'
+      },
+      {
+        name: ['Ticket type #3', 'Ticket type #3'],
+        description: ['Membership Exclusive Description', 'Membership Exclusive Description'],
+        alias: 't3',
+        merchandise: {
+          price: 25000
+        }
+      }
+    ]
   },
-
-  /**
-   * Lifecycle function--Called when page load
-   */
   onLoad: function (options) {
-
+    let { locale, member } = Store.getState().global;
+    wx.setNavigationBarTitle({ title: localePackage.title[locale] });
+    this.setData({ locale, member });
   },
-
-  /**
-   * Lifecycle function--Called when page is initially rendered
-   */
-  onReady: function () {
-
-  },
-
-  /**
-   * Lifecycle function--Called when page show
-   */
-  onShow: function () {
-
-  },
-
-  /**
-   * Lifecycle function--Called when page hide
-   */
-  onHide: function () {
-
-  },
-
-  /**
-   * Lifecycle function--Called when page unload
-   */
-  onUnload: function () {
-
-  },
-
-  /**
-   * Page event handler function--Called when user drop down
-   */
-  onPullDownRefresh: function () {
-
-  },
-
-  /**
-   * Called when page reach bottom
-   */
-  onReachBottom: function () {
-
-  },
-
-  /**
-   * Called when user click on the top right corner to share
-   */
-  onShareAppMessage: function () {
-
+  onChange: function ({ currentTarget: { dataset: { name } } }) {
+    this.setData({
+      policy: name
+    });
   }
 })

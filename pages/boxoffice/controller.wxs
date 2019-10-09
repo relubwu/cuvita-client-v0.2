@@ -1,0 +1,6 @@
+module.exports = {
+  toTag: function (price) {
+    var unit = price / 100;
+    return unit.toFixed(2) + ' ¥';
+  }
+}
