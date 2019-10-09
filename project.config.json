@@ -40,7 +40,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 15,
+			"current": 14,
 			"list": [
 				{
 					"id": 0,
@@ -142,16 +142,9 @@
 				},
 				{
 					"id": 14,
-					"name": "concierge-landing",
-					"pathName": "pages/concierge-landing/concierge-landing",
+					"name": "boxoffice",
+					"pathName": "pages/boxoffice/boxoffice",
 					"query": "",
-					"scene": null
-				},
-				{
-					"id": 15,
-					"name": "concierge-portal",
-					"pathName": "pages/concierge-portal/concierge-portal",
-					"query": "id=5d79274e035cffa3073b49e5",
 					"scene": null
 				}
 			]
