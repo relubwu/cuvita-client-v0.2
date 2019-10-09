@@ -1,1 +1,2 @@
-<form header="{{ localePackage.header[locale] }}" description="{{ localePackage.description[locale] }}" fields="{{ fields }}" action="{{ localePackage.submit[locale] }}" bind:submit="onSubmit" />
+<form-header header="{{ localePackage.header[locale] }}" description="{{ localePackage.description[locale] }}" />
+<form fields="{{ fields }}" action="{{ localePackage.submit[locale] }}" bind:submit="onSubmit" />
