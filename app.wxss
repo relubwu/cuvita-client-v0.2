@@ -35,6 +35,11 @@ page {
   flex-direction: row;
 }
 
+.d-flex-none {
+  display: flex !important;
+  flex: none !important;
+}
+
 .justify-content-start {
   justify-content: flex-start;
 }
@@ -144,4 +149,29 @@ page {
   transition-property: transform;
   -webkit-transition-timing-function: ease-out;
   transition-timing-function: ease-out;
+}
+
+/**
+ * Action Button
+ */
+.action-button-wrapper {
+  box-sizing: border-box;
+  padding: 42px 0px;
+}
+
+.action-button {
+  border-radius: 5px !important;
+  text-transform: capitalize;
+  padding: 0 30px;
+  font-weight: bold;
+}
+
+.action-button-primary {
+  color: white !important;
+  background-color: #d1233e !important;
+}
+
+.action-button-secondary {
+  color: black !important;
+  background-color: white !important;
 }
