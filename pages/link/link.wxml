@@ -1,4 +1,5 @@
-<form header="{{ localePackage.header[locale] }}" description="{{ localePackage.description[locale] }}" fields="{{ fields }}" action="{{ localePackage.submit[locale] }}" bind:submit="onSubmit" />
+<form-header header="{{ localePackage.header[locale] }}" description="{{ localePackage.description[locale] }}" />
+<form fields="{{ fields }}" action="{{ localePackage.submit[locale] }}" bind:submit="onSubmit" />
 <view class="weui-footer">
   <view class="weui-footer__links">
     <button class="weui-footer__link contact" open-type="contact">{{ localePackage.customerService.contact[locale] }}</button>

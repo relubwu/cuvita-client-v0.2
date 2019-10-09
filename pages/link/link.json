@@ -1,5 +1,6 @@
 {
   "usingComponents": {
-    "form": "/components/form/form"
+    "form": "/components/form/form",
+    "form-header": "/components/form-header/form-header"
   }
 }
