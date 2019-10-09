@@ -1,0 +1,4 @@
+<view class="form-header" style="padding: {{ padding || '30px 40px' }};">
+  <view class="form-title">{{ header }}</view>
+  <view class="form-description">{{ description }}</view>
+</view>

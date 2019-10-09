@@ -1,0 +1,21 @@
+.form-header {
+    padding: 30px 40px;
+}
+
+.form-footer{
+    padding-bottom: 10px;
+    text-align: center;
+}
+
+.form-title {
+    text-align: left;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.form-description {
+    margin-top: 5px;
+    color: #b2b2b2;
+    text-align: left;
+    font-size: 11pt;
+}
