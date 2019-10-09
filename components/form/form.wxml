@@ -1,11 +1,8 @@
-<view class="form-header" style="padding: {{ padding || '30px 40px' }};">
-  <view class="form-title">{{ header }}</view>
-  <view class="form-description">{{ description }}</view>
-</view>
 <form bind:submit="onSubmit">
   <van-cell-group wx:for="{{ fields }}" wx:key="{{ index }}" wx:for-item="group" wx:for-index="groupIndex" border="{{ false }}">
     <view wx:for="{{ group }}" wx:key="{{ groupIndex }}" wx:for-item="field">
-      <van-field wx:if="{{ field.tag === 'van-field' }}" name="{{ field.name }}" type="{{ field.type }}" value="{{ value[field.name] }}" label="{{ field.label }}" placeholder="{{ field.placeholder }}" error-message="{{ error[ field.name ] || '' }}" error-message-align="right" input-align="right" />
+      <van-field wx:if="{{ field.tag === 'van-field' }}" name="{{ field.name }}" type="{{ field.type }}" value="{{ value[field.name] }}" label="{{ field.label }}" placeholder="{{ field.placeholder }}" error-message="{{ error[ field.name ] || '' }}" error-message-align="right"
+        input-align="right" />
       <van-cell wx:if="{{ field.tag === 'van-picker' }}" title="{{ field.title }}" is-link value="{{ label[ field.name ] }}" bind:click="toggle" data-name="{{ field.name }}" />
       <van-popup wx:if="{{ field.tag === 'van-picker' }}" show="{{ popup[ field.name ] }}" position="bottom" overlay="{{ true }}" bind:close="toggle" data-name="{{ field.name }}">
         <van-picker columns="{{ field.options }}" data-name="{{ field.name }}" data-values="{{ field.values }}" show-toolbar bind:cancel="toggle" bind:confirm="confirmPicker" defaultIndex="{{ index[ field.name ] }}" />
@@ -19,6 +16,6 @@
     </view>
   </van-cell-group>
   <view class="d-flex-row align-items-center form-button-wrapper">
-    <button disabled="{{ pending }}" size="large" class="form-button" form-type="submit" >{{ action }}</button>
+    <button disabled="{{ pending }}" size="large" class="form-button" catch:tap="onSubmit">{{ action }}</button>
   </view>
 </form>

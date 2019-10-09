@@ -8,11 +8,8 @@ Component({
     addGlobalClass: true
   },
   properties: {
-    header: { type: String },
-    description: { type: String },
     fields: { type: Array },
-    action: { type: String },
-    padding: { type: String, value: "30px 40px" }
+    action: { type: String }
   },
   observers: {
     fields: function () {

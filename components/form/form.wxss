@@ -1,29 +1,4 @@
 /** Form **/
-.form-header {
-    padding: 30px 40px;
-}
-
-.form-footer{
-    padding-bottom: 10px;
-    text-align: center;
-}
-
-.form-title {
-    text-align: left;
-    font-size: 20px;
-    font-weight: bold;
-}
-
-.form-description {
-    margin-top: 5px;
-    color: #b2b2b2;
-    text-align: left;
-    font-size: 11pt;
-}
-
-.form-group {
-  padding: 7px 0;
-}
 
 .form-button-wrapper {
   box-sizing: border-box;
@@ -31,13 +6,16 @@
 }
 
 .form-button {
-  background-color: #d1233e !important;
-  color: white !important;
-  overflow: hidden !important;
+  background-color: #d1233e;
+  color: white;
   border-radius: 5px !important;
   text-transform: capitalize;
   padding: 0 30px;
   font-weight: bold;
+}
+
+.form-group {
+  padding: 7px 0;
 }
 
 .form-steps-wrapper {
